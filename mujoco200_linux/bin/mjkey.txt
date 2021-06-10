@@ -1,0 +1,20 @@
+MuJoCo Pro Personal license activation key, number 78630, type 6.
+
+Issued to Arti Bhounsule <abhoun2@uic.edu>.
+
+Expires May 24, 2022.
+
+This file activates MuJoCo Pro on a single computer with id:
+LINUX_nPs_NSB2V69TSSE0X189g0a0u1ODS47mM70064
+
+Do not modify this file. Its entire content, including the
+plain text section, is used by the activation manager.
+
+7660d771448a29ad2f3d8a9af3cd414464f206aac3e370bd537197fa85807af9
+2e44728949783474358eba3f9edb71c927645a7a3b52b53b72d515aef0d67b5c
+73629f53273f35a495544e404c9f2cb2e74232ad978c506b7ee64060824f17a2
+9fab78edddef35d07748a3c923e9c4b8ab8324c99601dc4031a381f1c6f258cd
+60f3304f2163c8b439164d74ace225eac3a082aca4072d62c15a48de065673dd
+ce30745367ad4f3946c40690988459eee0f17c1e5b12e33a3d93cacf323ea02d
+df7d25a7ce06cf60f260daed65b34e18cc1005b8bff0c7642d32491dda34d5f7
+2c25f22762e9fac058d6c0a7204ef9f93076823c0c3c2cdf144861c39a3df5c3

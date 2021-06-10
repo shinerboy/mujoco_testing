@@ -1,0 +1,23 @@
+Mon May 24 14:20:06 2021
+ERROR: Could not open activation key file ../../../mjkey.txt
+
+Mon May 24 14:21:52 2021
+ERROR: Load model error: XML parse error at line 0, column 0:
+Failed to open file
+
+
+Fri Jun  4 15:00:38 2021
+ERROR: Load model error: XML parse error at line 0, column 0:
+Failed to open file
+
+
+Fri Jun  4 15:01:10 2021
+ERROR: Load model error: XML parse error at line 0, column 0:
+Failed to open file
+
+
+Fri Jun  4 15:02:40 2021
+ERROR: Load model error: XML parse error at line 0, column 0:
+Failed to open file
+
+

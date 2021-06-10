@@ -1,0 +1,6 @@
+COMMON=-O2 -I../include -L../bin -std=c++11 -mavx -pthread -Wl,-rpath,'$$ORIGIN'
+
+all:
+	g++ $(COMMON) digit_test.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/digit_test
+	g++ $(COMMON) pd.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/pd
+	#rm *.o
