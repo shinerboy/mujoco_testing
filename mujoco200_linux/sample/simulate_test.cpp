@@ -1925,7 +1925,7 @@ void init(void)
         mju_error("Headers and library have different versions");
 
     // activate MuJoCo license
-    mj_activate("mjkey.txt");
+    mj_activate("../../../mjkey.txt");
 
     // init GLFW, set timer callback (milliseconds)
     if (!glfwInit())

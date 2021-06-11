@@ -180,7 +180,7 @@ int main(int argc, const char** argv)
 {
 
     // activate software
-    mj_activate("mjkey.txt");
+    mj_activate("../../../mjkey.txt");
 
 
     // load and compile model
