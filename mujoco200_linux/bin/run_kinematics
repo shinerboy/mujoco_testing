@@ -1,0 +1,3 @@
+make -f makefile2 -C ../sample
+./digit_kinematics ../model/digit_test.xml
+

@@ -1,0 +1,4 @@
+make -f makefile2 -C ../sample
+#./digit_test ../model/digit_welded_test.xml
+./digit_test_position ../model/digit_test.xml
+#./digit_test ../model/digit_test2.xml

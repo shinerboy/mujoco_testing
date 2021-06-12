@@ -15,14 +15,6 @@
 #include "stdlib.h"
 #include "string.h"
 
-#include "cstdio"
-#include "cstdlib"
-#include "cstring"
-// Libraries for sleep
-#include <chrono>
-#include <thread>
-#define NUM_MOTORS 20 //20 motors
-
 
 // MuJoCo data structures
 mjModel* m = NULL;                  // MuJoCo model
@@ -39,38 +31,18 @@ bool button_right =  false;
 double lastx = 0;
 double lasty = 0;
 
-// holders of one step history of time and position to calculate dertivatives
-mjtNum position_history = 0;
-mjtNum previous_time = 0;
-
-// controller related variables
-float_t ctrl_update_freq = 100;
-mjtNum last_update = 0.0;
-mjtNum ctrl;
-
-//To test joint positions
-static double target_position[] = {
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-  0.0,
-};
+//Joint order: 
+// 1 base, 2 LHR, 3 LHY, 4, LHP, 5 LAchillesRod
+// 6 LKnee, 7 LShin, 8 LTarsus, 9 LHeelSpring, 10 LToeA, 
+// 11 LToeARod, 12 LToeB, 13 LToeBRod, 14 LToePitch, 15 LToeRoll, 
+// // Left Arm
+// 16 LSR, 17 LSP, 18 LSY, 19 LElbow, 
+// // Right Leg
+// 20 RHR, 21 RHY, 22, RHP, 23 RAchillesRod
+// 24 RKnee, 25 RShin, 26 RTarsus, 27 RHeelSpring, 28 RToeA, 
+// 29 RToeARod, 30 RToeB, 31 RToeBRod, 32 RToePitch, 33 RToeRoll, 
+// // Right Arm
+// 34 RSR, 35 RSP, 36 RSY, 37 RElbow, 
 
 
 // keyboard callback
@@ -140,49 +112,6 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
     mjv_moveCamera(m, mjMOUSE_ZOOM, 0, -0.05*yoffset, &scn, &cam);
 }
 
-//control loop callback
-void mycontroller(const mjModel* m, mjData* d)
-{
-    // printouts for debugging purposes
-    std::cout << "number of position coordinates: " << m->nq << std::endl;
-    std::cout << "number of degrees of freedom: " << m->nv << std::endl;
-    int nn=3;
-    std::cout << "joint position: " << d->qpos[nn] << std::endl;
-    std::cout << "joint velocity: " << d->qvel[nn] << std::endl;
-    std::cout << "Sensor output: " << d->sensordata[nn] << std::endl;
-
-    // controller with true values, but it is cheating.
-//    ctrl = 3.5*(-d->qvel[0]-10.0*d->qpos[0]);
-
-    // controller with sensor readings
-    if (previous_time == 0)
-    {
-        previous_time = d->time;
-        return;
-    }
-    if (d->time - last_update > 1.0/ctrl_update_freq)
-    {
-        
-        mjtNum vel = (d->sensordata[0] - position_history)/(d->time-previous_time);
-        //ctrl = 3.5*(-vel-10.0*d->sensordata[0]);
-        ctrl = 2;
-        last_update = d->time;
-        position_history = d->sensordata[0];
-        previous_time = d->time;
-    }
-    //d->ctrl[2] = 2.0;
-    //d->ctrl[1] = ctrl;
-    //d->ctrl[2] = ctrl;
-
-    for (int i = 4; i < NUM_MOTORS; ++i) {
-
-      d->ctrl[i] =
-        10.0 * (target_position[i] - d->qpos[i]);
-    }
-
-    std::cout << "torque effort: " << ctrl << std::endl;
-}
-
 
 // main function
 int main(int argc, const char** argv)
@@ -211,14 +140,11 @@ int main(int argc, const char** argv)
     
     //printf("%d \n",m->nq);
     //*************************** written by pab 6/4/2021 ********************/
-    //d->qpos[30]=40*3.14/180; //this is in joint qposadr 
-    //d->qpos[31]=-20*3.14/180; //this is in joint qposadr 
-    //d->qpos[32]=-10*3.14/180; //this is in joint qposadr 
-    //d->qpos[33]=30*3.14/180; //this is in joint qposadr 
-    //d->qpos[0]=0*3.14/180; //this is in joint qposadr 
-    //d->qpos[1]=0*3.14/180; //this is in joint qposadr 
-    //d->qpos[2]=0*3.14/180; //this is in joint qposadr 
-    //d->qpos[3]=45*3.14/180; //this is in joint qposadr 
+    d->qpos[30]=0*40*3.14/180; //this is in joint qposadr 
+    d->qpos[1]=0.0; //this is in joint qposadr 
+    d->qpos[31]=0*-20*3.14/180; //this is in joint qposadr 
+    d->qpos[32]=0*-10*3.14/180; //this is in joint qposadr 
+    d->qpos[33]=0*30*3.14/180; //this is in joint qposadr 
     //mju_copy(d->qpos, m->key_qpos, m->nq*keyframenumber);
     mj_kinematics(m,d);
     //xpos
@@ -243,7 +169,6 @@ int main(int argc, const char** argv)
     printf(" \t%1.3f \t %1.3f \t %1.3f \n",d->xmat[9*i+0],d->xmat[9*i+1],d->xmat[9*i+2]);
     printf(" \t %1.3f \t %1.3f \t %1.3f \n",d->xmat[9*i+3],d->xmat[9*i+4],d->xmat[9*i+5]);
     printf(" \t %1.3f \t %1.3f \t %1.3f \n",d->xmat[9*i+6],d->xmat[9*i+7],d->xmat[9*i+8]);
-    printf(" \t %1.3f \t %1.3f \t %1.3f \n",d->xpos[6],d->xpos[7],d->xpos[8]);
     //printf("Cartesian position of body orientation (xquat) = %1.3f \t %1.3f \t %1.3f \t %1.3f \n",d->xquat[4*i],d->xquat[4*i+1],d->xquat[4*i+2],d->xquat[4*i+3]);
     printf(" \n");
     printf("Cartesian position of body com (xipos) = %1.3f \t %1.3f \t %1.3f \n",d->xipos[3*i],d->xipos[3*i+1],d->xipos[3*i+2]);
@@ -280,20 +205,6 @@ int main(int argc, const char** argv)
     glfwSetCursorPosCallback(window, mouse_move);
     glfwSetMouseButtonCallback(window, mouse_button);
     glfwSetScrollCallback(window, scroll);
-
-    // install control callback
-    mjcb_control = mycontroller;
-
-    // initial position
-    //d->qpos[0] = 1.57;
-
-    // run main loop, target real-time simulation and 60 fps rendering
-    mjtNum timezero = d->time;
-    double_t update_rate = 0.01;
-
-    // making sure the first time step updates the ctrl previous_time
-    last_update = timezero-1.0/ctrl_update_freq;
-
 
     // run main loop, target real-time simulation and 60 fps rendering
     while( !glfwWindowShouldClose(window) )

@@ -30,3 +30,38 @@ ERROR: Invalid activation key
 Thu Jun 10 16:13:51 2021
 ERROR: Invalid activation key
 
+Fri Jun 11 14:35:03 2021
+ERROR: Load model error: XML parse error at line 0, column 0:
+Failed to open file
+
+
+Fri Jun 11 14:35:44 2021
+ERROR: Load model error: XML Error: invalid keyword: 'weld'
+Element 'joint', line 63, column 7
+
+
+Fri Jun 11 14:55:29 2021
+ERROR: Load model error: XML Error: Schema violation: unrecognized element
+
+Element 'weld', line 63, column 7
+
+
+Fri Jun 11 15:00:57 2021
+ERROR: Load model error: XML Error: invalid keyword: 'fixed'
+Element 'joint', line 63, column 7
+
+
+Fri Jun 11 15:12:22 2021
+ERROR: Load model error: Error: range[0] should be smaller than range[1] in joint 'fixed-joint' (id = 0)
+Object name = fixed-joint, id = 0, line = 64, column = 7
+
+Fri Jun 11 15:13:03 2021
+ERROR: Load model error: Error: range[0] should be smaller than range[1] in joint '' (id = 0)
+Object name = , id = 0, line = 64, column = 7
+
+Fri Jun 11 16:16:15 2021
+ERROR: Invalid activation key
+
+Fri Jun 11 18:43:02 2021
+ERROR: Invalid activation key
+

@@ -1,0 +1,37 @@
+June 11, 2021
+
+These are the files not in the original mujoco distribution
+
+1) simple pd control
+^^^^^^^^^^^^^^^^^^^^^^^^^
+In bin type ./run_pd
+
+Relevant C file is sample/pd.cpp
+Relevant model is model/invertedPendulum.xml
+
+2) get digit kinematics
+^^^^^^^^^^^^^^^^^^^^^^^^^
+In bin type ./run_kinematics
+
+Relevant C file is sample/digit_kinematics.cpp
+Relevant model is model/digit_kinematics.xml
+
+C files prints the kinematics in world frame
+Model has gravity turned off
+
+3) get digit control
+^^^^^^^^^^^^^^^^^^^^^^^^^
+In bin type ./run_control
+
+Relevant C file is sample/digit_control.cpp
+Relevant model is model/digit_control.xml
+
+C files is work in progress
+Model has base joint welded so the system has four trees, two hands and two legs that can be controlled individually
+
+
+4) Need more info about a particular model 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+From bin do the following
+./compile ../model/digit_control.xml digit_control.txt
+
