@@ -14,10 +14,20 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
+#include <Eigen/Dense>
+//#include "../../../eigen-master/Eigen/Eigen"
+//#include "../../../eigen-master/Eigen/Dense"
+//#include "../../../eigen-master/Eigen/Core"
 extern "C"{
-#include "../../../lowlevelapi_test/matram.h"
+//#include "../../../lowlevelapi_test/matram.h"
 //#include "../../../lowlevelapi_test/controller.h"
+#include "../../../lowlevelapi_test/libtest.h"
+//#include "./../../lowlevelapi_test/pbplots/pbPlots.h"
+//#include "./../../lowlevelapi_test/pbplots/supportLib.h"
 }
+
+using namespace std;
+using namespace Eigen::MatrixXd;
 
 
 
@@ -109,6 +119,23 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
 void mycontroller(const mjModel* m, mjData* d)
 {
 
+    int a =1;
+    int b =5;
+    int c;
+    sumtest(a, b, &c);
+    printf("%i\n", c);
+
+      MatrixXd m(2,2);
+  m(0,0) = 3;
+  m(1,0) = 2.5;
+  m(0,1) = -1;
+  m(1,1) = m(1,0) + m(0,1);
+  std::cout << m << std::endl;
+
+    //Matrix <float, 3, 3,> matrixA;
+    //matrixA.setZero();
+    //cout << matrixA << endl;
+
 
     // printouts for debugging purposes
     //std::cout << "number of position coordinates: " << m->nq << std::endl;
@@ -193,6 +220,8 @@ void mycontroller(const mjModel* m, mjData* d)
     //for (int i=0;i<=22;i++)
       printf("%f \n",d->sensordata[L_elbow_sensor_adr]);
 
+      
+
       //printf("\n");
 
 /*
@@ -221,6 +250,8 @@ void mycontroller(const mjModel* m, mjData* d)
 // main function
 int main(int argc, const char** argv)
 {
+    
+    //printf("%i", c);
     // check command-line arguments
     if( argc!=2 )
     {

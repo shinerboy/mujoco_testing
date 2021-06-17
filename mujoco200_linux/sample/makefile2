@@ -5,8 +5,9 @@ all:
 	g++ $(COMMON) digit_test_position.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/digit_test_position
 	
 	#g++ ../bin/digit_control ../../../lowlevelapi_test/matram.o  
-	g++ $(COMMON) -I../../../CBLAS/include -I../../../CBLAS/src -I../../../lapack-3.9.1/LAPACKE/include digit_leg_control_test.cpp -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/digit_leg_control_test 
-	gfortran -o digit_fortran_control ../bin/digit_control ../../../lowlevelapi_test/pbplots/pbPlots.o ../../../lowlevelapi_test/pbplots/supportLib.o ../../../lowlevelapi_test/matram.o ../../../CBLAS/lib/cblas_LINUX.a ../../../CBLAS/lib/libblas.a  ../../../CBLAS/lib/liblapacke.a ../../../CBLAS/lib/libcblas.a -llapack
+	g++ $(COMMON) -I../../../eigen-master -I../../../CBLAS/include -I../../../CBLAS/src -I../../../lapack-3.9.1/LAPACKE/include -I../../../lapack-3.9.1/LAPACKE/src -I../lapack-3.9.1/SRC digit_leg_control_test.cpp -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/digit_leg_control_test ../../../lowlevelapi_test/libtest.o -llapack
+	#g++ $(COMMON) -I../../../CBLAS/include -I../../../CBLAS/src -I../../../lapack-3.9.1/LAPACKE/include -I../lapack-3.9.1/SRC digit_leg_control_test.cpp -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 
+	#gfortran -o ../bin/digit_leg_control_test ../../../lowlevelapi_test/libtest.o ../../../lowlevelapi_test/matram.o ../../../lowlevelapi_test/pbplots/pbPlots.o ../../../lowlevelapi_test/pbplots/supportLib.o ../../../CBLAS/lib/cblas_LINUX.a ../../../CBLAS/lib/libblas.a  ../../../CBLAS/lib/liblapacke.a ../../../CBLAS/lib/libcblas.a  -llapack
 	g++ $(COMMON) digit_kinematics.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/digit_kinematics
 	g++ $(COMMON) digit_control.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/digit_control
 	g++ $(COMMON) pd.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/pd
