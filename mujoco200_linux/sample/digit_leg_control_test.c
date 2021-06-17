@@ -126,6 +126,18 @@ void mycontroller(const mjModel* m, mjData* d)
     int c;
     sumtest(a, b, &c);
     printf("%i\n", c);
+    
+    double M[2][2]={0};
+    M[0][0]=1;
+    M[0][1]=2;
+    M[1][0]=3;
+    M[1][1]=4;
+
+
+    double Minv[2][2]={0};
+
+  matInv2(2, M, Minv);
+  matPrint(2,2,Minv);
 
      // MatrixXd m(2,2);
   //m(0,0) = 3;
