@@ -47,7 +47,8 @@
   </asset>
   <default>
     <default class='collision'>
-      <geom conaffinity='1' condim='3' contype='1' material='collision'/>
+      <!-- geom conaffinity='1' condim='3' contype='1' material='collision'/> -->
+      <geom conaffinity='0' condim='3' contype='0' material='collision'/>
     </default>
     <default class='robot'>
       <geom material='robot'/>
@@ -77,7 +78,8 @@
           <geom type='mesh' mesh='left-hip-yaw' material='robot'/>
           <body name='left-hip-pitch' pos='0 0.004 0.068' euler='90 0 135'>
             <inertial pos='0.060537 0.000521 -0.038857' mass='6.244279' fullinertia='0.011533 0.033345 0.033958 -0.000171 0.000148 0.000178'/>
-            <joint name='left-hip-pitch' type='hinge' axis='0 0 -1' range='-60 90' limited='true' damping='0' frictionloss='0' armature='0'/>
+            <!--joint name='left-hip-pitch' type='hinge' axis='0 0 -1' range='-60 90' limited='true' damping='0' frictionloss='0' armature='0'/> -->
+            <joint name='left-hip-pitch' type='hinge' axis='0 0 -1' range='-180 180' limited='true' damping='0' frictionloss='0' armature='0'/>
             <geom type='mesh' mesh='left-hip-pitch' material='robot'/>
             <geom type='cylinder' size ='0.05 0.072' pos='0 0 -0.04' euler='0 0 0' class='collision'/>
             <geom type='cylinder' size ='0.05 0.072' pos='0.12 0 -0.04' euler='0 0 0' class='collision'/>
@@ -90,7 +92,8 @@
             </body>
             <body name='left-knee' pos='0.12 0 0.0045' euler='0 0 -90'>
               <inertial pos='0.045641 0.042154 0.001657' mass='1.227077' fullinertia='0.002643 0.005098 0.007019 -0.001832 6.6e-05 4.5e-05'/>
-              <joint name='left-knee' type='hinge' axis='0 0 1' range='-71 50' limited='true' damping='0' frictionloss='0' armature='0'/>
+              <!-- joint name='left-knee' type='hinge' axis='0 0 1' range='-71 50' limited='true' damping='0' frictionloss='0' armature='0'/> -->
+              <joint name='left-knee' type='hinge' axis='0 0 1' range='-180 180' limited='true' damping='0' frictionloss='0' armature='0'/>
               <geom type='mesh' mesh='left-knee' material='robot'/>
               <body name='left-shin' pos='0.060677 0.047406 0' euler='0 0 0'>
                 <inertial pos='0.174265 0.010265 0.00107' mass='0.895793' fullinertia='0.001128 0.022492 0.022793 0.001098 0.000196 -3e-06'/>
@@ -108,7 +111,7 @@
                     <joint name='left-heel-spring' type='hinge' axis='0 0 1' range='-6 6' limited='true' stiffness='4375'/>
                     <geom type='mesh' mesh='left-heel-spring' material='robot'/>
                   </body>
-                  <body name='left-toe-A' pos='0.059 -0.034 -0.0276' euler='-180 0 91.96'>
+                  <!-- <body name='left-toe-A' pos='0.059 -0.034 -0.0276' euler='-180 0 91.96'>
                     <inertial pos='0.005161 1e-06 -0.002248' mass='0.01' fullinertia='2.9e-05 5.8e-05 7.4e-05 0 -4e-06 -0'/>
                     <joint name='left-toe-A' type='hinge' axis='0 0 1' range='-55.4 51.3' limited='true' damping='0' frictionloss='0' armature='0'/>
                     <geom type='mesh' mesh='left-toe-A' material='robot'/>
@@ -141,7 +144,7 @@
                       <geom type='box' size='0.04 0.1175 0.0115' pos='0 -0.0437 -0.0255' euler='-60 0 0' class='collision'/>
                       <site name='left-foot' pos='0 -0.05456 -0.0315' euler='-60 0 -90' size='0.01'/>
                     </body>
-                  </body>
+                  </body> -->
                 </body>
               </body>
             </body>
@@ -289,8 +292,8 @@
     </body>
   </worldbody>
   <equality>
-    <connect name='left-toe-A-rod' body1='left-toe-roll' body2='left-toe-A-rod' anchor='0.0179 -0.009551 -0.054164'/>
-    <connect name='left-toe-B-rod' body1='left-toe-roll' body2='left-toe-B-rod' anchor='-0.0181 -0.009551 -0.054164'/>
+    <!-- connect name='left-toe-A-rod' body1='left-toe-roll' body2='left-toe-A-rod' anchor='0.0179 -0.009551 -0.054164'/>
+    <connect name='left-toe-B-rod' body1='left-toe-roll' body2='left-toe-B-rod' anchor='-0.0181 -0.009551 -0.054164'/> -->
     <connect name='left-achillies-rod' body1='left-heel-spring' body2='left-achillies-rod' anchor='0.113789 -0.011056 0'/>
     <connect name='right-toe-A-rod' body1='right-toe-roll' body2='right-toe-A-rod' anchor='0.0179 0.009551 -0.054164'/>
     <connect name='right-toe-B-rod' body1='right-toe-roll' body2='right-toe-B-rod' anchor='-0.0181 0.009551 -0.054164'/>
@@ -299,10 +302,12 @@
   <actuator>
     <motor name='left-hip-roll' joint='left-hip-roll' gear='80' ctrllimited='true' ctrlrange='-1.4 1.4'/>
     <motor name='left-hip-yaw' joint='left-hip-yaw' gear='50' ctrllimited='true' ctrlrange='-1.4 1.4'/>
-    <motor name='left-hip-pitch' joint='left-hip-pitch' gear='16' ctrllimited='true' ctrlrange='-12.5 12.5'/>
-    <motor name='left-knee' joint='left-knee' gear='16' ctrllimited='true' ctrlrange='-12.5 12.5'/>
-    <motor name='left-toe-A' joint='left-toe-A' gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'/>
-    <motor name='left-toe-B' joint='left-toe-B' gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'/>
+    <motor name='left-hip-pitch' joint='left-hip-pitch' gear='16' ctrllimited='true' ctrlrange='-50 50'/>
+    <motor name='left-knee' joint='left-knee' gear='16' ctrllimited='true' ctrlrange='-50 50'/>
+    <!--motor name='left-hip-pitch' joint='left-hip-pitch' gear='16' ctrllimited='true' ctrlrange='-12.5 12.5'/>
+    <motor name='left-knee' joint='left-knee' gear='16' ctrllimited='true' ctrlrange='-12.5 12.5'/> -->
+    <!--motor name='left-toe-A' joint='left-toe-A' gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'/>
+    <motor name='left-toe-B' joint='left-toe-B' gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'/> -->
     <motor name='right-hip-roll' joint='right-hip-roll' gear='80' ctrllimited='true' ctrlrange='-1.4 1.4'/>
     <motor name='right-hip-yaw' joint='right-hip-yaw' gear='50' ctrllimited='true' ctrlrange='-1.4 1.4'/>
     <motor name='right-hip-pitch' joint='right-hip-pitch' gear='16' ctrllimited='true' ctrlrange='-12.5 12.5'/>
@@ -325,8 +330,8 @@
     <jointpos name='left-hip-yaw' joint='left-hip-yaw'/>
     <jointpos name='left-hip-pitch' joint='left-hip-pitch'/>
     <jointpos name='left-knee' joint='left-knee'/>
-    <jointpos name='left-toe-A' joint='left-toe-A'/>
-    <jointpos name='left-toe-B' joint='left-toe-B'/>
+    <!-- jointpos name='left-toe-A' joint='left-toe-A'/>
+    <jointpos name='left-toe-B' joint='left-toe-B'/> -->
     <jointpos name='right-hip-roll' joint='right-hip-roll'/>
     <jointpos name='right-hip-yaw' joint='right-hip-yaw'/>
     <jointpos name='right-hip-pitch' joint='right-hip-pitch'/>
@@ -349,8 +354,8 @@
     <jointvel name='left-knee-vel' joint='left-knee'/>
     <jointvel name='left-shin-vel' joint='left-shin'/>
     <jointvel name='left-tarsus-vel' joint='left-tarsus'/>
-    <jointvel name='left-toe-A-vel' joint='left-toe-A'/>
-    <jointvel name='left-toe-B-vel' joint='left-toe-B'/>
+    <!-- jointvel name='left-toe-A-vel' joint='left-toe-A'/>
+    <jointvel name='left-toe-B-vel' joint='left-toe-B'/> -->
     <jointvel name='right-hip-roll-vel' joint='right-hip-roll'/>
     <jointvel name='right-hip-yaw-vel' joint='right-hip-yaw'/>
     <jointvel name='right-hip-pitch-vel' joint='right-hip-pitch'/>

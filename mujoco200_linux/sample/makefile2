@@ -10,5 +10,6 @@ all:
 	g++ $(COMMON) digit_kinematics.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/digit_kinematics
 	g++ $(COMMON) digit_control.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/digit_control
 	g++ $(COMMON) pd.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/pd
+	gcc $(COMMON) pendulum.c      -lmujoco200 -lGL -lglew -lm ../bin/libglfw.so.3 -o ../bin/pendulum
 	
 	#rm *.o

@@ -65,3 +65,118 @@ ERROR: Invalid activation key
 Fri Jun 11 18:43:02 2021
 ERROR: Invalid activation key
 
+Fri Jun 18 00:23:40 2021
+ERROR: Load model error: Error: mass and inertia of moving bodies must be positive
+Object name = left-toe-A, id = 10, line = 111, column = 19
+
+Fri Jun 18 01:39:56 2021
+ERROR: Load model error: XML parse error at line 289, column 5:
+Error reading end tag.
+
+
+Fri Jun 18 01:40:55 2021
+ERROR: Load model error: Error: unknown element 'left-toe-roll' in equality constraint 0
+Object name = left-toe-A-rod, id = 0, line = 292, column = 5
+
+Fri Jun 18 13:45:24 2021
+ERROR: Invalid activation key
+
+Fri Jun 18 13:46:06 2021
+ERROR: Invalid activation key
+
+Fri Jun 18 13:46:18 2021
+ERROR: Load model error: XML Error: Include error: 'XML parse error at line 0, column 0:
+Failed to open file
+'
+Element 'include', line 10, column 3
+
+
+Fri Jun 18 13:46:42 2021
+ERROR: Load model error: XML Error: Include error: 'XML parse error at line 0, column 0:
+Failed to open file
+'
+Element 'include', line 10, column 3
+
+
+Fri Jun 18 15:30:09 2021
+ERROR: Load model error: Error: repeated name in geom array, position 4
+Object name = base, id = 4, line = 30, column = 9
+
+Fri Jun 18 15:31:26 2021
+ERROR: Stack overflow
+
+Fri Jun 18 15:43:01 2021
+ERROR: Stack overflow
+
+Fri Jun 18 15:43:11 2021
+ERROR: Stack overflow
+
+Fri Jun 18 15:44:09 2021
+ERROR: Stack overflow
+
+Fri Jun 18 15:46:17 2021
+ERROR: Load model error: XML parse error at line 118, column 9:
+Error reading end tag.
+
+
+Fri Jun 18 15:47:52 2021
+ERROR: Load model error: Error: could not open STL file '../model/torso.stl'
+Object name = base, id = 0, line = 24, column = 5
+
+Fri Jun 18 15:50:41 2021
+ERROR: Load model error: Error: unknown target body in camera 'lookat' (id = 1)
+Object name = lookat, id = 1, line = 79, column = 5
+
+Fri Jun 18 15:53:45 2021
+ERROR: Load model error: Error: unknown element 'pole5' in equality constraint 0
+Object name = left-achilles-rod, id = 0, line = 121, column = 5
+
+Fri Jun 18 15:55:11 2021
+ERROR: Stack overflow
+
+Fri Jun 18 15:55:59 2021
+ERROR: Load model error: XML parse error at line 15, column 77:
+Error parsing Element.
+
+
+Fri Jun 18 15:56:53 2021
+ERROR: Load model error: XML parse error at line 15, column 77:
+Error parsing Element.
+
+
+Fri Jun 18 15:56:58 2021
+ERROR: Load model error: XML parse error at line 15, column 77:
+Error parsing Element.
+
+
+Fri Jun 18 15:57:48 2021
+ERROR: Stack overflow
+
+Fri Jun 18 16:07:45 2021
+ERROR: Stack overflow
+
+Fri Jun 18 16:09:18 2021
+ERROR: Stack overflow
+
+Fri Jun 18 16:09:35 2021
+ERROR: Stack overflow
+
+Fri Jun 18 16:12:24 2021
+ERROR: Stack overflow
+
+Fri Jun 18 16:12:40 2021
+ERROR: Stack overflow
+
+Fri Jun 18 16:16:41 2021
+ERROR: Stack overflow
+
+Fri Jun 18 16:16:57 2021
+ERROR: Stack overflow
+
+Fri Jun 18 16:17:03 2021
+ERROR: Stack overflow
+
+Fri Jun 18 17:50:49 2021
+ERROR: Load model error: Error: invalid condim in geom '' (id = 1)
+Object name = , id = 1, line = 67, column = 7
+

@@ -38,7 +38,7 @@ time_t          s;  // Seconds
   long time_start_l;
   struct timespec spec;
   double time_start;
-  double tf = 0.50;
+  double tf = 1.0;
   double s0[1][2] = {0, 0};
   double sf[1][2] = {0, 0};
   double v0[1][2] = {0,0};
@@ -94,6 +94,8 @@ time_t          s;  // Seconds
     double *yt2;
     double *ya1; //to plot acceleration trajectory
     double *ya2;
+    double *yg1;
+    double *yg2;
 
 
 
@@ -241,6 +243,9 @@ void mycontroller(const mjModel* m, mjData* d)
     int L_elbow_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, L_elbow_joint_name);
     int L_elbow_jointID = mj_name2id(m, mjOBJ_JOINT, L_elbow_joint_name);
     int L_elbow_joint_adr = m->jnt_qposadr[L_elbow_jointID];
+    int L_elbow_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-elbow-vel");
+    int L_elbow_vel_sensor_adr = m->sensor_adr[L_elbow_vel_sensorID];
+    double L_elbow_ctrl_limit = m->actuator_ctrlrange[L_elbow_actuatorID];
     // Left Hip Roll
     const char* LHR_joint_name = "left-hip-roll";
     int LHR_sensorID = mj_name2id(m, mjOBJ_SENSOR, LHR_joint_name);
@@ -248,6 +253,9 @@ void mycontroller(const mjModel* m, mjData* d)
     int LHR_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, LHR_joint_name);
     int LHR_jointID = mj_name2id(m, mjOBJ_JOINT, LHR_joint_name);
     int LHR_joint_adr = m->jnt_qposadr[LHR_jointID];
+    int LHR_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-hip-roll-vel");
+    int LHR_vel_sensor_adr = m->sensor_adr[LHR_vel_sensorID];
+    double LHR_ctrl_limit = m->actuator_ctrlrange[LHR_actuatorID];
     // Left Hip yAW
     const char* LHY_joint_name = "left-hip-yaw";
     int LHY_sensorID = mj_name2id(m, mjOBJ_SENSOR, LHY_joint_name);
@@ -255,6 +263,9 @@ void mycontroller(const mjModel* m, mjData* d)
     int LHY_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, LHY_joint_name);
     int LHY_jointID = mj_name2id(m, mjOBJ_JOINT, LHY_joint_name);
     int LHY_joint_adr = m->jnt_qposadr[LHY_jointID];
+    int LHY_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-hip-yaw-vel");
+    int LHY_vel_sensor_adr = m->sensor_adr[LHY_vel_sensorID];
+    double LHY_ctrl_limit = m->actuator_ctrlrange[LHY_actuatorID];
     // Left Hip Pitch
     const char* LHP_joint_name = "left-hip-pitch";
     int LHP_sensorID = mj_name2id(m, mjOBJ_SENSOR, LHP_joint_name);
@@ -275,6 +286,36 @@ void mycontroller(const mjModel* m, mjData* d)
     int LK_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-knee-sensor");
     int LK_vel_sensor_adr = m->sensor_adr[LK_vel_sensorID];
     double LK_ctrl_limit = m->actuator_ctrlrange[LK_actuatorID];
+    // Left Shoulder Roll
+    const char* LSR_joint_name = "left-shoulder-roll";
+    int LSR_sensorID = mj_name2id(m, mjOBJ_SENSOR, LSR_joint_name);
+    int LSR_sensor_adr = m->sensor_adr[LSR_sensorID];
+    int LSR_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, LSR_joint_name);
+    int LSR_jointID = mj_name2id(m, mjOBJ_JOINT, LSR_joint_name);
+    int LSR_joint_adr = m->jnt_qposadr[LSR_jointID];
+    int LSR_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-shoulder-roll-vel");
+    int LSR_vel_sensor_adr = m->sensor_adr[LSR_vel_sensorID];
+    double LSR_ctrl_limit = m->actuator_ctrlrange[LSR_actuatorID];
+    // Left Shoulder yAW
+    const char* LSY_joint_name = "left-shoulder-yaw";
+    int LSY_sensorID = mj_name2id(m, mjOBJ_SENSOR, LSY_joint_name);
+    int LSY_sensor_adr = m->sensor_adr[LSY_sensorID];
+    int LSY_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, LSY_joint_name);
+    int LSY_jointID = mj_name2id(m, mjOBJ_JOINT, LSY_joint_name);
+    int LSY_joint_adr = m->jnt_qposadr[LSY_jointID];
+    int LSY_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-shoulder-yaw-vel");
+    int LSY_vel_sensor_adr = m->sensor_adr[LSY_vel_sensorID];
+    double LSY_ctrl_limit = m->actuator_ctrlrange[LSY_actuatorID];
+    // Left Shoulder Pitch
+    const char* LSP_joint_name = "left-shoulder-pitch";
+    int LSP_sensorID = mj_name2id(m, mjOBJ_SENSOR, LSP_joint_name);
+    int LSP_sensor_adr = m->sensor_adr[LSP_sensorID];
+    int LSP_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, LSP_joint_name);
+    int LSP_jointID = mj_name2id(m, mjOBJ_JOINT, LSP_joint_name);
+    int LSP_joint_adr = m->jnt_qposadr[LSP_jointID];
+    int LSP_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-shoulder-pitch-vel");
+    int LSP_vel_sensor_adr = m->sensor_adr[LSP_vel_sensorID];
+    double LSP_ctrl_limit = m->actuator_ctrlrange[LSP_actuatorID];
     // Right Hip Roll
     const char* RHR_joint_name = "right-hip-roll";
     int RHR_sensorID = mj_name2id(m, mjOBJ_SENSOR, RHR_joint_name);
@@ -282,6 +323,9 @@ void mycontroller(const mjModel* m, mjData* d)
     int RHR_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, RHR_joint_name);
     int RHR_jointID = mj_name2id(m, mjOBJ_JOINT, RHR_joint_name);
     int RHR_joint_adr = m->jnt_qposadr[RHR_jointID];
+    int RHR_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-hip-roll-vel");
+    int RHR_vel_sensor_adr = m->sensor_adr[RHR_vel_sensorID];
+    double RHR_ctrl_limit = m->actuator_ctrlrange[RHR_actuatorID];
     // Right Hip yAW
     const char* RHY_joint_name = "right-hip-yaw";
     int RHY_sensorID = mj_name2id(m, mjOBJ_SENSOR, RHY_joint_name);
@@ -289,6 +333,9 @@ void mycontroller(const mjModel* m, mjData* d)
     int RHY_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, RHY_joint_name);
     int RHY_jointID = mj_name2id(m, mjOBJ_JOINT, RHY_joint_name);
     int RHY_joint_adr = m->jnt_qposadr[RHY_jointID];
+    int RHY_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-hip-yaw-vel");
+    int RHY_vel_sensor_adr = m->sensor_adr[RHY_vel_sensorID];
+    double RHY_ctrl_limit = m->actuator_ctrlrange[RHY_actuatorID];
     // Right Hip Pitch
     const char* RHP_joint_name = "right-hip-pitch";
     int RHP_sensorID = mj_name2id(m, mjOBJ_SENSOR, RHP_joint_name);
@@ -296,6 +343,9 @@ void mycontroller(const mjModel* m, mjData* d)
     int RHP_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, RHP_joint_name);
     int RHP_jointID = mj_name2id(m, mjOBJ_JOINT, RHP_joint_name);
     int RHP_joint_adr = m->jnt_qposadr[RHP_jointID];
+    int RHP_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-hip-pitch-vel");
+    int RHP_vel_sensor_adr = m->sensor_adr[RHP_vel_sensorID];
+    double RHP_ctrl_limit = m->actuator_ctrlrange[RHP_actuatorID];
     // Right Knee
     const char* RK_joint_name = "right-knee";
     int RK_sensorID = mj_name2id(m, mjOBJ_SENSOR, RK_joint_name);
@@ -303,17 +353,68 @@ void mycontroller(const mjModel* m, mjData* d)
     int RK_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, RK_joint_name);
     int RK_jointID = mj_name2id(m, mjOBJ_JOINT, RK_joint_name);
     int RK_joint_adr = m->jnt_qposadr[RK_jointID];
+    int RK_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-knee-sensor");
+    int RK_vel_sensor_adr = m->sensor_adr[RK_vel_sensorID];
+    double RK_ctrl_limit = m->actuator_ctrlrange[RK_actuatorID];
+    // Right Shoulder Roll
+    const char* RSR_joint_name = "right-shoulder-roll";
+    int RSR_sensorID = mj_name2id(m, mjOBJ_SENSOR, RSR_joint_name);
+    int RSR_sensor_adr = m->sensor_adr[RSR_sensorID];
+    int RSR_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, RSR_joint_name);
+    int RSR_jointID = mj_name2id(m, mjOBJ_JOINT, RSR_joint_name);
+    int RSR_joint_adr = m->jnt_qposadr[RSR_jointID];
+    int RSR_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-shoulder-roll-vel");
+    int RSR_vel_sensor_adr = m->sensor_adr[RSR_vel_sensorID];
+    double RSR_ctrl_limit = m->actuator_ctrlrange[RSR_actuatorID];
+    // right Shoulder yAW
+    const char* RSY_joint_name = "right-shoulder-yaw";
+    int RSY_sensorID = mj_name2id(m, mjOBJ_SENSOR, RSY_joint_name);
+    int RSY_sensor_adr = m->sensor_adr[RSY_sensorID];
+    int RSY_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, RSY_joint_name);
+    int RSY_jointID = mj_name2id(m, mjOBJ_JOINT, RSY_joint_name);
+    int RSY_joint_adr = m->jnt_qposadr[RSY_jointID];
+    int RSY_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-shoulder-yaw-vel");
+    int RSY_vel_sensor_adr = m->sensor_adr[RSY_vel_sensorID];
+    double RSY_ctrl_limit = m->actuator_ctrlrange[RSY_actuatorID];
+    // Right Shoulder Pitch
+    const char* RSP_joint_name = "right-shoulder-pitch";
+    int RSP_sensorID = mj_name2id(m, mjOBJ_SENSOR, RSP_joint_name);
+    int RSP_sensor_adr = m->sensor_adr[RSP_sensorID];
+    int RSP_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, RSP_joint_name);
+    int RSP_jointID = mj_name2id(m, mjOBJ_JOINT, RSP_joint_name);
+    int RSP_joint_adr = m->jnt_qposadr[RSP_jointID];
+    int RSP_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-shoulder-pitch-vel");
+    int RSP_vel_sensor_adr = m->sensor_adr[RSP_vel_sensorID];
+    double RSP_ctrl_limit = m->actuator_ctrlrange[RSP_actuatorID];
+    // rIGHT ELBOW
+    const char* R_elbow_joint_name = "right-elbow";
+    int R_elbow_sensorID = mj_name2id(m, mjOBJ_SENSOR, R_elbow_joint_name);
+    int R_elbow_sensor_adr = m->sensor_adr[R_elbow_sensorID];
+    int R_elbow_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, R_elbow_joint_name);
+    int R_elbow_jointID = mj_name2id(m, mjOBJ_JOINT, R_elbow_joint_name);
+    int R_elbow_joint_adr = m->jnt_qposadr[R_elbow_jointID];
+    int R_elbow_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-elbow-vel");
+    int R_elbow_vel_sensor_adr = m->sensor_adr[R_elbow_vel_sensorID];
+    double R_elbow_ctrl_limit = m->actuator_ctrlrange[R_elbow_actuatorID];
 
     //int j = 26;
     //double ctrl = -100*(d->qpos[26]-0.75);
     //double ctrl = -100*(d->qpos[L_elbow_joint_adr]-0.75);
-    double L_elbow_ctrl = -150*(d->sensordata[L_elbow_sensor_adr]+0.5);
-    double LHR_ctrl = -150*(d->sensordata[LHR_sensor_adr]+0.0);
-    double LHY_ctrl = -150*(d->sensordata[LHY_sensor_adr]+0.0);
+    double L_elbow_ctrl = -1*(d->sensordata[L_elbow_sensor_adr]+0.0)-(1*d->sensordata[L_elbow_vel_sensor_adr]);
+    double LHR_ctrl = -10*(d->sensordata[LHR_sensor_adr]-20*M_PI/180)-(1*d->sensordata[LHR_vel_sensor_adr]);
+    double LHY_ctrl = -10*(d->sensordata[LHY_sensor_adr]+0.0)-(1*d->sensordata[LHY_vel_sensor_adr]);
     //double LHP_ctrl = -150*(d->sensordata[LHP_sensor_adr]+0.0);
-    double RHR_ctrl = -150*(d->sensordata[RHR_sensor_adr]+0.0);
-    double RHY_ctrl = -150*(d->sensordata[RHY_sensor_adr]+0.0);
-    double RHP_ctrl = -150*(d->sensordata[RHP_sensor_adr]+0.0);
+    double LSR_ctrl = -1*(d->sensordata[LSR_sensor_adr]+0.0)-(1*d->sensordata[LSR_vel_sensor_adr]);
+    double LSY_ctrl = -1*(d->sensordata[LSY_sensor_adr]+0.0)-(1*d->sensordata[LSY_vel_sensor_adr]);
+    double LSP_ctrl = -1*(d->sensordata[LSP_sensor_adr]+0.0)-(1*d->sensordata[LSP_vel_sensor_adr]);
+    double RHR_ctrl = -10*(d->sensordata[RHR_sensor_adr]+0.0)-(1*d->sensordata[RHR_vel_sensor_adr]);
+    double RHY_ctrl = -10*(d->sensordata[RHY_sensor_adr]+0.0)-(1*d->sensordata[RHY_vel_sensor_adr]);
+    double RHP_ctrl = -10*(d->sensordata[RHP_sensor_adr]+0.0)-(1*d->sensordata[RHP_vel_sensor_adr]);
+    double RK_ctrl = -10*(d->sensordata[RK_sensor_adr]+0.0)-(1*d->sensordata[RK_vel_sensor_adr]);
+    double RSR_ctrl = -1*(d->sensordata[RSR_sensor_adr]+0.0)-(1*d->sensordata[RSR_vel_sensor_adr]);
+    double RSY_ctrl = -1*(d->sensordata[RSY_sensor_adr]+0.0)-(1*d->sensordata[RSY_vel_sensor_adr]);
+    double RSP_ctrl = -1*(d->sensordata[RSP_sensor_adr]+0.0)-(1*d->sensordata[RSP_vel_sensor_adr]);
+    double R_elbow_ctrl = -1*(d->sensordata[R_elbow_sensor_adr]+0.0)-(1*d->sensordata[R_elbow_vel_sensor_adr]);
     //double ctrl = -100*(d->sensordata[16]-0.5);
     //printf("%f %f %f\n",d->qpos[j],d->sensordata[16],d->sensordata[43]);
     //d->ctrl[15] = ctrl;
@@ -321,9 +422,17 @@ void mycontroller(const mjModel* m, mjData* d)
     d->ctrl[LHY_actuatorID] = LHY_ctrl;
     d->ctrl[LHR_actuatorID] = LHR_ctrl;
     //d->ctrl[LHP_actuatorID] = LHP_ctrl;
+    d->ctrl[LSY_actuatorID] = LSY_ctrl;
+    d->ctrl[LSR_actuatorID] = LSR_ctrl;
+    d->ctrl[LSP_actuatorID] = LSP_ctrl;
     d->ctrl[RHY_actuatorID] = RHY_ctrl;
     d->ctrl[RHR_actuatorID] = RHR_ctrl;
     d->ctrl[RHP_actuatorID] = RHP_ctrl;
+    d->ctrl[RK_actuatorID] = RK_ctrl;
+    d->ctrl[RSR_actuatorID] = RSR_ctrl;
+    d->ctrl[RSP_actuatorID] = RSP_ctrl;
+    d->ctrl[RSY_actuatorID] = RSY_ctrl;
+    d->ctrl[R_elbow_actuatorID] = R_elbow_ctrl;
 
     printf("position = %f \n",d->qpos[L_elbow_joint_adr]);
     //for (int i=0;i<=22;i++)
@@ -342,6 +451,23 @@ void mycontroller(const mjModel* m, mjData* d)
     printf("%lf", d->sensordata[LHP_sensor_adr]);
     printf("\n");
 
+    printf("The hip pitch joint gravity torque is " );
+    printf("%lf", d->qfrc_bias[LHP_joint_adr]);
+    printf("\n");
+
+    printf("The hip pitch joint controller torque is " );
+    printf("%lf", uu[0]);
+    printf("\n");
+
+    printf("The knee joint gravity torque is " );
+    printf("%lf", d->qfrc_bias[LK_joint_adr]);
+    printf("\n");
+
+    printf("The knee joint controller torque is " );
+    printf("%lf", uu[1]);
+    printf("\n");
+
+
 
     theta1 = d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
     theta2 = d->sensordata[LK_sensor_adr]-82.25*(M_PI/180);
@@ -356,11 +482,11 @@ void mycontroller(const mjModel* m, mjData* d)
       v0[0][1] = d->sensordata[LK_vel_sensor_adr];
       a0[0][0]=0; //TODO get accelration from motor
       a0[0][1]=0;
-      sf[0][0] = 45*(M_PI/180);
+      sf[0][0] = (45+10)*(M_PI/180);
       //sf[0][0] = s0[0][0];
-      sf[0][1] = (-82.25)*(M_PI/180);
+      sf[0][1] = (-82.25-15)*(M_PI/180);
       //sf[0][1] = s0[0][1];
-      edt[0][0]=0;
+      edt[0][0]=0; //accumulated error for integral control
       edt[0][1]=0;
 
       counter = 1;
@@ -377,7 +503,7 @@ void mycontroller(const mjModel* m, mjData* d)
       a0[0][1]=0;
       sf[0][0] = (45-25)*(M_PI/180);
       //sf[0][0] = s0[0][0];
-      sf[0][1] = (-82.25+10)*(M_PI/180);
+      sf[0][1] = (-82.25+15)*(M_PI/180);
       //sf[0][1] = s0[0][1];
       edt[0][0]=0;
       edt[0][1]=0;
@@ -393,9 +519,9 @@ void mycontroller(const mjModel* m, mjData* d)
     if(msd<tf){
 
       //plotcounter=plotcounter+1;
-      double LHP_ctrl = -150*(d->sensordata[LHP_sensor_adr]+0.0);
+      double LHP_ctrl = (-200*(d->sensordata[LHP_sensor_adr]+0.0*(M_PI/180))/16)-(1*omega1);
       d->ctrl[LHP_actuatorID] = LHP_ctrl;
-      double LK_ctrl = -150*(d->sensordata[LK_sensor_adr]-20*(M_PI/180));
+      double LK_ctrl = (-200*(d->sensordata[LK_sensor_adr]-0*(M_PI/180))/16)-(1*omega2);
       d->ctrl[LK_actuatorID] = LK_ctrl;     
 
 
@@ -424,7 +550,7 @@ void mycontroller(const mjModel* m, mjData* d)
       z[2]=theta2;
       z[3]=omega2;
 
-      //c_controller2(uu,z,params,traj_des,timestep,edt); 
+      //c_controller(uu,z,params,traj_des,timestep,edt); 
       c_controller(uu,z,params,traj_des); 
 
       // if (uu[0]>(LK_ctrl_limit[0])){
@@ -440,8 +566,12 @@ void mycontroller(const mjModel* m, mjData* d)
       //  uu[1]=-1*(LHP_ctrl_limit[0]);
       // }
 
-      d->ctrl[LK_actuatorID] = uu[0];
-      d->ctrl[LHP_actuatorID] = uu[1];
+      //uu[0]=(-1*(d->sensordata[LHP_sensor_adr]+10.0*(M_PI/180)))-(1*omega1);
+      //uu[1]= (-1*(d->sensordata[LK_sensor_adr]-20.0*(M_PI/180)))-(1*omega2);   
+
+      d->ctrl[LHP_actuatorID] = uu[0]/16.0;
+      d->ctrl[LK_actuatorID] = uu[1]/16.0;
+
 
         ///////////////////////////
   }
@@ -478,8 +608,12 @@ void mycontroller(const mjModel* m, mjData* d)
       //  uu[1]=-1*(LHP_ctrl_limit[0]);
       // }
 
-      d->ctrl[LK_actuatorID] = uu[0];
-      d->ctrl[LHP_actuatorID] = uu[1];
+      //uu[0]=(-1*(d->sensordata[LHP_sensor_adr]+10.0*(M_PI/180)))-(1*omega1);
+      //uu[1]= (-1*(d->sensordata[LK_sensor_adr]-20.0*(M_PI/180)))-(1*omega2);   
+
+      d->ctrl[LHP_actuatorID] = uu[0]/16.0;
+      d->ctrl[LK_actuatorID] = uu[1]/16.0;
+      
     }
         
 
@@ -515,6 +649,10 @@ void mycontroller(const mjModel* m, mjData* d)
         ya1 [j]=traj_des[4];
         ya2 = realloc(ya2, (j+1)*sizeof(double));
         ya2 [j]=traj_des[5];
+        yg1 = realloc(yg1, (j+1)*sizeof(double));
+        yg1 [j]=d->qfrc_bias[LHP_joint_adr]*1; //LHP gravity joint torques
+        yg2 = realloc(yg2, (j+1)*sizeof(double));
+        yg2 [j]= d->qfrc_bias[LK_joint_adr]*1;
 
 
         
@@ -531,8 +669,8 @@ void mycontroller(const mjModel* m, mjData* d)
 
         matPlot2(xx,yy1,xx,yy2,j,"theta1vstraj_des_KP120_01.png",L"Hip Angle Position", L"time (s)",L"Position (rad)");
         matPlot2(xx,yy3,xx,yy4,j,"theta2vstraj_des_KP120_01.png",L"Knee Angle Position",L"time (s)",L"Position (rad)");
-        matPlot2(xx,yt1,xx,yt2,j,"hip_torque_and_knee_torque.png",L"Hip Torque (red) Knee Toruqe (blue)",L"time (s)",L"Torque (N-m)");
-        matPlot2(xx,ya1,xx,ya2,j,"hip_and knee_desired_acc.png",L"Hip Acceleration (red) Knee Acceleration (blue)",L"time (s)",L"rad/sec^2");
+        matPlot2(xx,yt1,xx,yg1,j,"hip_torque_and_gravity_torque.png",L"Hip Control (red) Gravity Torque (blue)",L"time (s)",L"Torque (N-m)");
+        matPlot2(xx,yt2,xx,yg2,j,"knee_torque_and_gravity_torque.png",L"Knee Control (red) Gravity (blue)",L"time (s)",L"Torque (N-m)");
         free(xx);
         free(yy1);
         free(yy2);
@@ -597,6 +735,8 @@ int main(int argc, const char** argv)
     yt2 = calloc(1, sizeof(double));
     ya1 = calloc(1, sizeof(double)); //to plot acceleration trajectory
     ya2 = calloc(1, sizeof(double));
+    yg1 = calloc(1, sizeof(double)); //to plot joint gravity torque
+    yg2 = calloc(1, sizeof(double));
   
 
 
