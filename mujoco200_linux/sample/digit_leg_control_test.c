@@ -38,7 +38,7 @@ time_t          s;  // Seconds
   long time_start_l;
   struct timespec spec;
   double time_start;
-  double tf = 1.0;
+  double tf = 0.25;
   double s0[1][2] = {0, 0};
   double sf[1][2] = {0, 0};
   double v0[1][2] = {0,0};
@@ -482,9 +482,9 @@ void mycontroller(const mjModel* m, mjData* d)
       v0[0][1] = d->sensordata[LK_vel_sensor_adr];
       a0[0][0]=0; //TODO get accelration from motor
       a0[0][1]=0;
-      sf[0][0] = (45+10)*(M_PI/180);
+      sf[0][0] = (45-10)*(M_PI/180);
       //sf[0][0] = s0[0][0];
-      sf[0][1] = (-82.25-15)*(M_PI/180);
+      sf[0][1] = (-82.25+15)*(M_PI/180);
       //sf[0][1] = s0[0][1];
       edt[0][0]=0; //accumulated error for integral control
       edt[0][1]=0;
@@ -501,9 +501,9 @@ void mycontroller(const mjModel* m, mjData* d)
       v0[0][1] = d->sensordata[LK_vel_sensor_adr];
       a0[0][0]=0; //TODO get accelration from motor
       a0[0][1]=0;
-      sf[0][0] = (45-25)*(M_PI/180);
+      sf[0][0] = (45+25)*(M_PI/180);
       //sf[0][0] = s0[0][0];
-      sf[0][1] = (-82.25+15)*(M_PI/180);
+      sf[0][1] = (-82.25-15)*(M_PI/180);
       //sf[0][1] = s0[0][1];
       edt[0][0]=0;
       edt[0][1]=0;

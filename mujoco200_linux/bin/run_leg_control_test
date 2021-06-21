@@ -1,3 +1,3 @@
 make -f makefile2 -C ../sample
-./digit_leg_control_test ../model/digit_welded_test.xml
+./digit_leg_control_test ../model/digit_no_foot_perfect_state.xml
 

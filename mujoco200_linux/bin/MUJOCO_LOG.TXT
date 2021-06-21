@@ -180,3 +180,576 @@ Fri Jun 18 17:50:49 2021
 ERROR: Load model error: Error: invalid condim in geom '' (id = 1)
 Object name = , id = 1, line = 67, column = 7
 
+Sat Jun 19 14:35:53 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 0.0420.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:54 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:35:58 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:28 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 0.0420.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0420.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:30 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:50 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 0.0420.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0420.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0350.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
+Sat Jun 19 14:36:51 2021
+WARNING: Unknown warning type Time = 0.0280.
+
