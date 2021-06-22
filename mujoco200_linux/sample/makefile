@@ -12,3 +12,8 @@ all:
 	g++ $(COMMON) uitools.o simulate_test.cpp -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/simulate_test
 	g++ $(COMMON) pd.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/pd
 	rm *.o
+
+digit_leg: 
+	gcc $(COMMON) digit_leg.c      -lmujoco200 -lGL -lglew -lm ../bin/libglfw.so.3 -o ../bin/digit_leg
+closed_chain:
+	gcc $(COMMON) closed_chain.c      -lmujoco200 -lGL -lglew -lm ../bin/libglfw.so.3 -o ../bin/closed_chain

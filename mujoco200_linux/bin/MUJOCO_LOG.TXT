@@ -753,3 +753,10 @@ WARNING: Unknown warning type Time = 0.0280.
 Sat Jun 19 14:36:51 2021
 WARNING: Unknown warning type Time = 0.0280.
 
+Mon Jun 21 15:31:40 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 0.2635.
+
+Mon Jun 21 19:33:22 2021
+ERROR: Load model error: Error: axis too small in joint 'left-hip-pitch' (id = 0)
+Object name = left-hip-pitch, id = 0, line = 83, column = 7
+

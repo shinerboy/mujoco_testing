@@ -11,5 +11,6 @@ all:
 	g++ $(COMMON) digit_control.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/digit_control
 	g++ $(COMMON) pd.cpp      -lmujoco200 -lGL -lglew ../bin/libglfw.so.3 -o ../bin/pd
 	gcc $(COMMON) pendulum.c      -lmujoco200 -lGL -lglew -lm ../bin/libglfw.so.3 -o ../bin/pendulum
+	gcc $(COMMON) digit_leg.c      -lmujoco200 -lGL -lglew -lm ../bin/libglfw.so.3 -o ../bin/digit_leg
 	
 	#rm *.o
