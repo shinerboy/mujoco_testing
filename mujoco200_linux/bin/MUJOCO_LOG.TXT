@@ -760,3 +760,12 @@ Mon Jun 21 19:33:22 2021
 ERROR: Load model error: Error: axis too small in joint 'left-hip-pitch' (id = 0)
 Object name = left-hip-pitch, id = 0, line = 83, column = 7
 
+Tue Jun 22 18:59:17 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 1.1300.
+
+Tue Jun 22 18:59:50 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 1.1300.
+
+Tue Jun 22 20:43:30 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 1.1300.
+

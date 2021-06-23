@@ -38,7 +38,7 @@ time_t          s;  // Seconds
   long time_start_l;
   struct timespec spec;
   double time_start;
-  double tf = 0.25;
+  double tf = 0.5;
   double s0[1][2] = {0, 0};
   double sf[1][2] = {0, 0};
   double v0[1][2] = {0,0};
@@ -469,16 +469,16 @@ void mycontroller(const mjModel* m, mjData* d)
 
 
 
-    theta1 = d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
+    theta1 = -1*d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
     theta2 = d->sensordata[LK_sensor_adr]-82.25*(M_PI/180);
-    omega1 = d->sensordata[LHP_vel_sensor_adr];
+    omega1 = -1*d->sensordata[LHP_vel_sensor_adr];
     omega2 = d->sensordata[LK_vel_sensor_adr];
 
     if (msd>=tf && counter ==0)
     {
-      s0[0][0] = d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
+      s0[0][0] = -1*d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
       s0[0][1] = d->sensordata[LK_sensor_adr]-82.25*(M_PI/180);
-      v0[0][0] = d->sensordata[LHP_vel_sensor_adr];
+      v0[0][0] = -1*d->sensordata[LHP_vel_sensor_adr];
       v0[0][1] = d->sensordata[LK_vel_sensor_adr];
       a0[0][0]=0; //TODO get accelration from motor
       a0[0][1]=0;
@@ -495,9 +495,9 @@ void mycontroller(const mjModel* m, mjData* d)
     }
     if (msd>=2*tf && counter ==1)
     {
-      s0[0][0] = d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
+      s0[0][0] = -1*d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
       s0[0][1] = d->sensordata[LK_sensor_adr]-82.25*(M_PI/180);
-      v0[0][0] = d->sensordata[LHP_vel_sensor_adr];
+      v0[0][0] = -1*d->sensordata[LHP_vel_sensor_adr];
       v0[0][1] = d->sensordata[LK_vel_sensor_adr];
       a0[0][0]=0; //TODO get accelration from motor
       a0[0][1]=0;
@@ -519,7 +519,7 @@ void mycontroller(const mjModel* m, mjData* d)
     if(msd<tf){
 
       //plotcounter=plotcounter+1;
-      double LHP_ctrl = (-200*(d->sensordata[LHP_sensor_adr]+0.0*(M_PI/180))/16)-(1*omega1);
+      double LHP_ctrl = (-200*(d->sensordata[LHP_sensor_adr]+0.0*(M_PI/180))/16)-(-1*omega1);
       d->ctrl[LHP_actuatorID] = LHP_ctrl;
       double LK_ctrl = (-200*(d->sensordata[LK_sensor_adr]-0*(M_PI/180))/16)-(1*omega2);
       d->ctrl[LK_actuatorID] = LK_ctrl;     
@@ -569,7 +569,7 @@ void mycontroller(const mjModel* m, mjData* d)
       //uu[0]=(-1*(d->sensordata[LHP_sensor_adr]+10.0*(M_PI/180)))-(1*omega1);
       //uu[1]= (-1*(d->sensordata[LK_sensor_adr]-20.0*(M_PI/180)))-(1*omega2);   
 
-      d->ctrl[LHP_actuatorID] = uu[0]/16.0;
+      d->ctrl[LHP_actuatorID] = -1*uu[0]/16.0;
       d->ctrl[LK_actuatorID] = uu[1]/16.0;
 
 
@@ -611,7 +611,7 @@ void mycontroller(const mjModel* m, mjData* d)
       //uu[0]=(-1*(d->sensordata[LHP_sensor_adr]+10.0*(M_PI/180)))-(1*omega1);
       //uu[1]= (-1*(d->sensordata[LK_sensor_adr]-20.0*(M_PI/180)))-(1*omega2);   
 
-      d->ctrl[LHP_actuatorID] = uu[0]/16.0;
+      d->ctrl[LHP_actuatorID] = -1*uu[0]/16.0;
       d->ctrl[LK_actuatorID] = uu[1]/16.0;
       
     }
