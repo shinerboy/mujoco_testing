@@ -769,3 +769,7 @@ WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Ti
 Tue Jun 22 20:43:30 2021
 WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 1.1300.
 
+Fri Jun 25 19:33:29 2021
+ERROR: Load model error: Error: more than 6 dofs in body 'base'
+Object name = base, id = 1, line = 61, column = 5
+
