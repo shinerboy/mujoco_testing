@@ -12,7 +12,7 @@ Model from https://github.com/deepmind/dm_control/blob/master/dm_control/suite/p
   <include file="pendulum/skybox.xml"/>
   <include file="pendulum/materials.xml"/>
 
-  <option gravity='0 0 -9.8' iterations='50' solver='Newton' timestep='0.000500'>
+  <option gravity='0 0 -9.81' iterations='50' solver='Newton' timestep='0.000500'>
     <flag contact="disable" energy="enable"/>
   </option>
 
@@ -79,7 +79,8 @@ Model from https://github.com/deepmind/dm_control/blob/master/dm_control/suite/p
     <camera name="fixed" pos="0 -1.5 2" xyaxes='1 0 0 0 1 1'/>
     <camera name="lookat" mode="targetbodycom" target="left-hip-pitch" pos="0 0 0"/>
     <body name='left-hip-pitch' pos='0 0.0 1' euler='90 0 -45'>
-      <inertial pos='0.060537 0.000521 -0.038857' mass='6.244279' fullinertia='0.011533 0.033345 0.033958 -0.000171 0.000148 0.000178'/>
+      <!--inertial pos='0.060537 0.000521 -0.038857' mass='6.244279' fullinertia='0.011533 0.033345 0.033958 -0.000171 0.000148 0.000178'/> -->
+      <inertial pos='0.0605 0.0 0' mass='6.2443' fullinertia='0.011533 0.033345 0.033958 -0.000171 0.000148 0.000178'/>
       <geom type='box' size='0.02 0.02 0.02' pos='0.060537 0.000521 -0.038857' euler='0 0 0'/>
       <!--joint name='left-hip-pitch' type='hinge' axis='0 0 -1' range='-60 90' limited='true' damping='0' frictionloss='0' armature='0'/> -->
       <joint name='left-hip-pitch' type='hinge' axis='0 0 -1' range='-180 180' limited='true' damping='0' frictionloss='0' armature='0'/>
@@ -90,52 +91,48 @@ Model from https://github.com/deepmind/dm_control/blob/master/dm_control/suite/p
       <geom type='box' size='0.02 0.02 0.02' pos='0 0 0' euler='0 0 0'/>
       <!-- body name='left-achillies-rod' pos='0 0 0.046' euler='4.09 0.05 -82.27'> -->
       <!--body name='left-achillies-rod' pos='0 0 0.0' euler='4.09 0.05 -82.27'>-->
-      <body name='left-achillies-rod' pos='0 0 0' euler='-0.5 0 -82.27'>
-        <inertial pos='0.2506 0 0' mass='0.178148' fullinertia='3e-06 0.004501 0.004501 0 0 0'/>
+      <!--body name='left-achillies-rod' pos='0 0 0' euler='-0.5 0 -82.27'> -->
+      <body name='left-achillies-rod' pos='0 0 0' euler='0.0 0 -82.25'>
+        <inertial pos='0.250 0 0' mass='0.1781' fullinertia='3e-06 0.004501 0.004501 0 0 0'/>
         <!--geom type='box' size='0.02 0.02 0.02' pos='0.2506 0 0' euler='0 0 0'/>-->
         <joint name='left-achillies-rod' type='ball' limited='false' damping='0'/>
         <geom type='mesh' mesh='left-achillies-rod' material='robot'/>
         <!-- geom type='capsule' size ='0.007 0.25' pos='0.25 0 0' euler='4 90 0' class='collision'/> -->
       </body>
-      <body name='left-knee' pos='0.12 0 0.0045' euler='0 0 -90'>
-        <inertial pos='0.045641 0.042154 0.001657' mass='1.227077' fullinertia='0.002643 0.005098 0.007019 -0.001832 6.6e-05 4.5e-05'/>
+      <!--body name='left-knee' pos='0.12 0 0.0045' euler='0 0 -90'>-->
+      <body name='left-knee' pos='0.12 0.00 0.0' euler='0 0 -90'>
+        <inertial pos='0.22 0.0525 0.0' mass='2.1229' fullinertia='0.02643 0.05098 0.04850 -0.001832 6.6e-05 4.5e-05'/>
+        <!--inertial pos='0.045641 0.042154 0.001657' mass='1.227077' fullinertia='0.002643 0.005098 0.007019 -0.001832 6.6e-05 4.5e-05'/> -->
         <geom type='box' size='0.02 0.02 0.02' pos='0.045641 0.042154 0.001657' euler='0 0 0'/>
         <!-- joint name='left-knee' type='hinge' axis='0 0 1' range='-71 50' limited='true' damping='0' frictionloss='0' armature='0'/> -->
         <joint name='left-knee' type='hinge' axis='0 0 1' range='-180 180' limited='true' damping='0' frictionloss='0' armature='0'/>
         <geom type='mesh' mesh='left-knee' material='robot'/> 
         <geom type='box' size='0.02 0.02 0.02' pos='0 0 0' euler='0 0 0'/>
-        <body name='left-shin' pos='0.060677 0.047406 0' euler='0 0 0'>
-          <inertial pos='0.174265 0.010265 0.00107' mass='0.895793' fullinertia='0.001128 0.022492 0.022793 0.001098 0.000196 -3e-06'/>
-          <geom type='box' size='0.02 0.02 0.02' pos='0.174265 0.010265 0.00107' euler='0 0 0'/>
-          <joint name='left-shin' type='hinge' axis='0 0 1' limited='false' stiffness='6000'/>
-          <geom type='mesh' mesh='left-shin' material='robot'/>
-          <!--geom type='cylinder' size ='0.03 0.1715' pos='0.23 0 0' euler='0 90 0' class='collision'/> -->
-          <!-- geom type='cylinder' size ='0.05 0.1' pos='0.125 0.009 0' euler='90 84 0' class='collision'/> -->
+        <body name='left-tarsus' pos='0.4954 0.067425 0' euler='0 0 103'>
+          <!--inertial pos='0.100777 -0.029183 0.000678' mass='1.322865' fullinertia='0.000932 0.016409 0.016501 0.00061 0.000102 9e-06'/> -->
+          <inertial pos='0.103199 -0.01891077 0.0' mass='1.322865' fullinertia='0.000932 0.016409 0.016501 0.00061 0.000102 9e-06'/>
+          <geom type='box' size='0.02 0.02 0.02' pos='0.100777 -0.029183 0.000678' euler='0 0 0'/>
+          <joint name='left-tarsus' type='hinge' axis='0 0 1' range='-50.3 71.6' limited='true'/>
+          <geom type='mesh' mesh='left-tarsus' material='robot'/>
+          <!-- geom type='capsule' size ='0.02 0.18' pos='0.21 -0.03 0' euler='0 90 0' class='collision'/> -->
           <geom type='box' size='0.02 0.02 0.02' pos='0 0 0' euler='0 0 0'/>
-          <body name='left-tarsus' pos='0.434759 0.02 0' euler='0 0 103'>
-            <inertial pos='0.100777 -0.029183 0.000678' mass='1.322865' fullinertia='0.000932 0.016409 0.016501 0.00061 0.000102 9e-06'/>
-            <geom type='box' size='0.02 0.02 0.02' pos='0.100777 -0.029183 0.000678' euler='0 0 0'/>
-            <joint name='left-tarsus' type='hinge' axis='0 0 1' range='-50.3 71.6' limited='true'/>
-            <geom type='mesh' mesh='left-tarsus' material='robot'/>
-            <!-- geom type='capsule' size ='0.02 0.18' pos='0.21 -0.03 0' euler='0 90 0' class='collision'/> -->
+          <!--body name='left-heel-spring' pos='-0.01766 -0.029456 -0.00104' euler='4.47 0.32 155.8'> -->
+          <body name='left-heel-spring' pos='-0.00 0.000 0.0' euler='0 0 -193'>
+            <inertial pos='0 0 0.06' mass='0.2300' fullinertia='5.5e-05 0.00074 0.000701 1.5e-05 1e-06 -0'/>
+            <geom type='box' size='0.02 0.02 0.02' pos='0.049086 0.004739 -4.5e-05' euler='0 0 0'/>
+            <joint name='left-heel-spring' type='hinge' axis='0 0 1' range='-0.1 0.1' limited='true' stiffness='43750'/>
             <geom type='box' size='0.02 0.02 0.02' pos='0 0 0' euler='0 0 0'/>
-            <body name='left-heel-spring' pos='-0.01766 -0.029456 0.00104' euler='4.47 0.32 155.8'>
-              <inertial pos='0.049086 0.004739 -4.5e-05' mass='0.230018' fullinertia='5.5e-05 0.00074 0.000701 1.5e-05 1e-06 -0'/>
-              <geom type='box' size='0.02 0.02 0.02' pos='0.049086 0.004739 -4.5e-05' euler='0 0 0'/>
-              <joint name='left-heel-spring' type='hinge' axis='0 0 1' range='-6 6' limited='true' stiffness='4375'/>
-              <geom type='box' size='0.02 0.02 0.02' pos='0 0 0' euler='0 0 0'/>
-              <geom type='mesh' mesh='left-heel-spring' material='robot'/>
-              <geom type='box' size='0.02 0.02 0.02' pos='0.1135 -0.0106 -0.006' euler='0 0 0'/>
-            </body>
+            <geom type='mesh' mesh='left-heel-spring' material='robot'/>
+            <geom type='box' size='0.02 0.02 0.02' pos='0.12 0 0' euler='0 0 0'/>
           </body>
-        </body>
+        </body>   
       </body>
     </body>
   </worldbody>
   <equality>
     <!--connect name='left-achillies-rod' body1='left-heel-spring' body2='left-achillies-rod' anchor='-0.3027 -0.0045 0.6020'/> -->
     <!--connect name='left-achillies-rod' body1='left-heel-spring' body2='left-achillies-rod' anchor='0.113789 -0.011056 0'/> -->
-    <connect name='left-achillies-rod' body1='left-heel-spring' body2='left-achillies-rod' anchor='0.1135 -0.0106 -0.006'/>
+    <connect name='left-achillies-rod' body1='left-heel-spring' body2='left-achillies-rod' anchor='0.12 0 0'/>
   </equality>
   <actuator>
     <motor name='left-hip-pitch' joint='left-hip-pitch' gear='16' ctrllimited='true' ctrlrange='-50 50'/>

@@ -69,7 +69,7 @@ time_t          s;  // Seconds
   long time_start_l;
   struct timespec spec;
   double time_start;
-  double tf = 1;
+  double tf = 2;
   double s0[1][2] = {0, 0};
   double sf[1][2] = {0, 0};
   double v0[1][2] = {0,0};
@@ -93,7 +93,13 @@ time_t          s;  // Seconds
   double theta2;
   double omega1;
   double omega2; 
+  double uu0;
+  double uu1;
+  double g0;
+  double g1;
   ///////////////////////
+  double LHP_ctrl;
+  double LK_ctrl;
 
   
   //double traj_des[4]={0};
@@ -332,13 +338,32 @@ void mycontroller(const mjModel* m, mjData* d)
     printf("%lf", uu[0]);
     printf("\n");
 
-    printf("The knee joint gravity torque is " );
-    printf("%lf", d->qfrc_bias[LK_joint_adr]);
+    printf("The knee joint PD torque is " );
+    printf("%lf", LK_ctrl*16);
     printf("\n");
 
-    printf("The knee joint controller torque is " );
-    printf("%lf", uu[1]);
+    printf("The knee joint start controller torque is " );
+    printf("%lf", uu1);
     printf("\n");
+
+    printf("The knee joint gravity torque is " );
+    printf("%lf", g1);
+    printf("\n");
+
+    printf("The hip joint PD torque is " );
+    printf("%lf", LHP_ctrl*16);
+    printf("\n");
+    printf("\n");
+
+    printf("The hip joint start controller torque is " );
+    printf("%lf", uu0);
+    printf("\n");
+
+    printf("The hip joint gravity torque is " );
+    printf("%lf", g0);
+    printf("\n");
+
+
 
 
 
@@ -355,10 +380,10 @@ void mycontroller(const mjModel* m, mjData* d)
       v0[0][1] = d->sensordata[LK_vel_sensor_adr];
       a0[0][0]=0; //TODO get accelration from motor
       a0[0][1]=0;
-      sf[0][0] = (45-10)*(M_PI/180);
-      //sf[0][0] = s0[0][0];
-      sf[0][1] = (-82.25-15)*(M_PI/180);
-      //sf[0][1] = s0[0][1];
+      //sf[0][0] = (45-10)*(M_PI/180);
+      sf[0][0] = s0[0][0];
+      //sf[0][1] = (-82.25-15)*(M_PI/180);
+      sf[0][1] = s0[0][1];
       edt[0][0]=0; //accumulated error for integral control
       edt[0][1]=0;
 
@@ -387,14 +412,15 @@ void mycontroller(const mjModel* m, mjData* d)
     printf("%d \n", counter);
 
 
+
     
 
     if(msd<tf){
 
       //plotcounter=plotcounter+1;
-      double LHP_ctrl = (-200*(d->sensordata[LHP_sensor_adr]+0.0*(M_PI/180))/16)-(-1*omega1);
+      LHP_ctrl = (-200*(d->sensordata[LHP_sensor_adr]+25*(M_PI/180))/16)-(-1*omega1);
       d->ctrl[LHP_actuatorID] = LHP_ctrl;
-      double LK_ctrl = (-200*(d->sensordata[LK_sensor_adr]-0*(M_PI/180))/16)-(1*omega2);
+      LK_ctrl = (-200*(d->sensordata[LK_sensor_adr]+15*(M_PI/180))/16)-(1*omega2);
       d->ctrl[LK_actuatorID] = LK_ctrl;     
 
 
@@ -424,7 +450,7 @@ void mycontroller(const mjModel* m, mjData* d)
       z[3]=omega2;
 
       //c_controller(uu,z,params,traj_des,timestep,edt); 
-      c_controller(uu,z,params,traj_des); 
+      c_controller3(uu,z,params,traj_des); 
 
       // if (uu[0]>(LK_ctrl_limit[0])){
       //  uu[0]=LK_ctrl_limit;
@@ -444,6 +470,12 @@ void mycontroller(const mjModel* m, mjData* d)
 
       d->ctrl[LHP_actuatorID] = -1*uu[0]/16.0;
       d->ctrl[LK_actuatorID] = uu[1]/16.0;
+      if(j==1){
+        uu0 = uu[0];
+        uu1=uu[1];
+        g0 = d->qfrc_bias[LHP_joint_adr];
+        g1 = d->qfrc_bias[LK_joint_adr];
+      }
 
 
         ///////////////////////////
@@ -467,7 +499,7 @@ void mycontroller(const mjModel* m, mjData* d)
       z[3]=omega2;
 
       //c_controller2(uu,z,params,traj_des,timestep,edt);
-      c_controller(uu,z,params,traj_des); 
+      c_controller3(uu,z,params,traj_des); 
       // if (uu[0]>(LK_ctrl_limit[0])){
       //  uu[0]=LK_ctrl_limit;
       // }

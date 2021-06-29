@@ -773,3 +773,17 @@ Fri Jun 25 19:33:29 2021
 ERROR: Load model error: Error: more than 6 dofs in body 'base'
 Object name = base, id = 1, line = 61, column = 5
 
+Mon Jun 28 18:37:49 2021
+ERROR: Load model error: Error: inertia must satisfy A + B >= C; use 'balanceinertia' to fix
+Object name = left-knee, id = 3, line = 103, column = 7
+
+Mon Jun 28 18:38:14 2021
+ERROR: Load model error: Error: inertia must satisfy A + B >= C; use 'balanceinertia' to fix
+Object name = left-knee, id = 3, line = 103, column = 7
+
+Mon Jun 28 18:46:45 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 3. The simulation is unstable. Time = 0.0020.
+
+Mon Jun 28 18:47:05 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 3. The simulation is unstable. Time = 0.0020.
+

@@ -1,6 +1,6 @@
 <mujoco model='digit-test'>
   <compiler angle='degree' eulerseq='xyz' meshdir='stl'/>
-  <option gravity='0 0 -9.80' iterations='50' solver='Newton' timestep='0.000500'/>
+  <option gravity='0 0 -9.8' iterations='50' solver='Newton' timestep='0.000500'/>
   <asset>
     <material name='collision' rgba='0.1 0.5 0.9 0.4'/>
     <material name='plane' reflectance='0.000000' texrepeat='1 1' texture='plane' texuniform='true'/>
@@ -58,11 +58,11 @@
   </default>
   <worldbody>
     <geom name='floor' type='plane' conaffinity='15' condim='3' material='plane' pos='0 0 0' size='5 5 0.125'/>
-    <body name='base' pos='0 0 0.89' euler='0 0 0'>
+    <body name='base' pos='0 0 1.15' euler='0 0 0'>
       <inertial pos='0.001637 0.0002 0.259547' mass='15.028392' fullinertia='0.376284 0.342655 0.100648 -8.8e-05 0.008378 6.7e-05'/>
       <joint name='body_x' type='slide' axis='1 0 0' pos='0 0 0' limited='false'/>
       <joint name='body_z' type='slide' axis='0 0 1' pos='0 0 0' limited='false' ref='0.0'/>
-      <joint name='body_pitch' type='hinge' axis='0 1 0' pos='0 0 0' limited='false'/>
+      <joint name='body-pitch' type='hinge' axis='0 1 0' pos='0 0 0' limited='false'/>
       <!--joint type='free' limited='false'/> -->
       <geom type='mesh' mesh='base' material='robot'/>
       <geom type='box' size='0.0975 0.087 0.245' pos='0.008 0 0.21' euler='0 0 0' class='collision'/>
@@ -303,12 +303,14 @@
     <motor name='left-hip-yaw' joint='left-hip-yaw' gear='50' ctrllimited='true' ctrlrange='-1.4 1.4'/>
     <motor name='left-hip-pitch' joint='left-hip-pitch' gear='16' ctrllimited='true' ctrlrange='-12.5 12.5'/>
     <motor name='left-knee' joint='left-knee' gear='16' ctrllimited='true' ctrlrange='-12.5 12.5'/>
+    <position name='left-knee-servo' joint='left-knee' ctrllimited='true' ctrlrange='-180 180'/>
     <motor name='left-toe-A' joint='left-toe-A' gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'/>
     <motor name='left-toe-B' joint='left-toe-B' gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'/>
     <motor name='right-hip-roll' joint='right-hip-roll' gear='80' ctrllimited='true' ctrlrange='-1.4 1.4'/>
     <motor name='right-hip-yaw' joint='right-hip-yaw' gear='50' ctrllimited='true' ctrlrange='-1.4 1.4'/>
     <motor name='right-hip-pitch' joint='right-hip-pitch' gear='16' ctrllimited='true' ctrlrange='-12.5 12.5'/>
     <motor name='right-knee' joint='right-knee' gear='16' ctrllimited='true' ctrlrange='-12.5 12.5'/>
+    <position name='right-knee-servo' joint='right-knee' ctrllimited='true' ctrlrange='-180 180'/>
     <motor name='right-toe-A' joint='right-toe-A' gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'/>
     <motor name='right-toe-B' joint='right-toe-B' gear='50' ctrllimited='true' ctrlrange='-0.9 0.9'/>
     <motor name='left-shoulder-roll' joint='left-shoulder-roll' gear='80' ctrllimited='true' ctrlrange='-1.4 1.4'/>
@@ -343,6 +345,8 @@
     <jointpos name='right-shoulder-pitch' joint='right-shoulder-pitch'/>
     <jointpos name='right-shoulder-yaw' joint='right-shoulder-yaw'/>
     <jointpos name='right-elbow' joint='right-elbow'/>
+    <jointpos name='body-pitch' joint='body-pitch'/>
+    <jointpos name="right-toe-pitch" joint="right-toe-pitch"/>
     <frameangvel name='base-angvel' objtype='body' objname='base' />
     <framelinvel name='base-linvel' objtype='body' objname='base' />
     <jointvel name='left-hip-roll-vel' joint='left-hip-roll'/>
@@ -369,6 +373,7 @@
     <jointvel name='right-shoulder-pitch-vel' joint='right-shoulder-pitch'/>
     <jointvel name='right-shoulder-yaw-vel' joint='right-shoulder-yaw'/>
     <jointvel name='right-elbow-vel' joint='right-elbow'/>
+    <jointvel name='body-pitch-vel' joint='body-pitch'/>
   </sensor>
 </mujoco>
 

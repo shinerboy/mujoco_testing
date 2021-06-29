@@ -1,0 +1,3 @@
+make  closed_chain_control -C ../sample
+./closed_chain_control
+
