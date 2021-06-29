@@ -87,6 +87,8 @@ time_t          s;  // Seconds
   int counter=0; //Counter used for finite state machine/state transitions
   int plotcounter = 5; //Used to plot only during one cycle
   int plotbreak=0;
+  double a1_offset = 0;
+  double a2_offset=0;
 
   //////////////////////
   double theta1;
@@ -250,17 +252,17 @@ void mycontroller(const mjModel* m, mjData* d)
     sumtest(a, b, &c);
     printf("%i\n", c);
     
-    double M[2][2]={0};
-    M[0][0]=1;
-    M[0][1]=2;
-    M[1][0]=3;
-    M[1][1]=4;
+   // double M[2][2]={0};
+   // M[0][0]=1;
+   // M[0][1]=2;
+    //M[1][0]=3;
+   // M[1][1]=4;
 
 
-    double Minv[2][2]={0};
+    //double Minv[2][2]={0};
 
-  matInv2(2, M, Minv);
-  matPrint(2,2,Minv);
+  //matInv2(2, M, Minv);
+  //atPrint(2,2,Minv);
 
      // MatrixXd m(2,2);
   //m(0,0) = 3;
@@ -362,46 +364,57 @@ void mycontroller(const mjModel* m, mjData* d)
     printf("The hip joint gravity torque is " );
     printf("%lf", g0);
     printf("\n");
+    printf("%lf",msd);
+    printf("\n");
+
+
+    //printf("inertia matrix: ");
+      //mju_printMat(d->qM,10,10);
 
 
 
 
 
-    theta1 = -1*d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
-    theta2 = d->sensordata[LK_sensor_adr]-82.25*(M_PI/180);
+    theta1 = -1*d->sensordata[LHP_sensor_adr]+a1_offset*(M_PI/180);
+    theta2 = d->sensordata[LK_sensor_adr]-a2_offset*(M_PI/180);
     omega1 = -1*d->sensordata[LHP_vel_sensor_adr];
     omega2 = d->sensordata[LK_vel_sensor_adr];
 
     if (msd>=tf && counter ==0)
     {
-      s0[0][0] = -1*d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
-      s0[0][1] = d->sensordata[LK_sensor_adr]-82.25*(M_PI/180);
+      s0[0][0] = -1*d->sensordata[LHP_sensor_adr]+a1_offset*(M_PI/180);
+      s0[0][1] = d->sensordata[LK_sensor_adr]-a2_offset*(M_PI/180);
       v0[0][0] = -1*d->sensordata[LHP_vel_sensor_adr];
       v0[0][1] = d->sensordata[LK_vel_sensor_adr];
       a0[0][0]=0; //TODO get accelration from motor
       a0[0][1]=0;
-      //sf[0][0] = (45-10)*(M_PI/180);
-      sf[0][0] = s0[0][0];
-      //sf[0][1] = (-82.25-15)*(M_PI/180);
-      sf[0][1] = s0[0][1];
+      sf[0][0] = (a1_offset-10)*(M_PI/180);
+      //sf[0][0] = s0[0][0];
+      sf[0][1] = (a2_offset-15)*(M_PI/180);
+      //sf[0][1] = s0[0][1];
       edt[0][0]=0; //accumulated error for integral control
       edt[0][1]=0;
 
       counter = 1;
       plotcounter=0;
       j=0;
+      printf("inertia matrix: ");
+      mju_printMat(d->qM,5,5);
+      //mjtNum* dense_M = mj_stackAlloc(d, m->nv*m->nv); // Allocate array of specified size on mjData stack. Call mju_error on stack overflow. MJAPI mjtNum* mj_stackAlloc(mjData* d, int size);
+    //mj_fullM(m, dense_M, d->qM);//MJAPI void mj_fullM(const mjModel* m, mjtNum* dst, const mjtNum* M);
+    //mju_printMat(dense_M, m->nv, m->nv);
     }
     if (msd>=2*tf && counter ==1)
     {
-      s0[0][0] = -1*d->sensordata[LHP_sensor_adr]+45*(M_PI/180);
-      s0[0][1] = d->sensordata[LK_sensor_adr]-82.25*(M_PI/180);
+      s0[0][0] = -1*d->sensordata[LHP_sensor_adr]+a1_offset*(M_PI/180);
+      s0[0][1] = d->sensordata[LK_sensor_adr]-a2_offset*(M_PI/180);
       v0[0][0] = -1*d->sensordata[LHP_vel_sensor_adr];
       v0[0][1] = d->sensordata[LK_vel_sensor_adr];
       a0[0][0]=0; //TODO get accelration from motor
       a0[0][1]=0;
-      sf[0][0] = (45+25)*(M_PI/180);
+      sf[0][0] = (a1_offset+25)*(M_PI/180);
       //sf[0][0] = s0[0][0];
-      sf[0][1] = (-82.25+15)*(M_PI/180);
+      sf[0][1] = (a2_offset+15)*(M_PI/180);
       //sf[0][1] = s0[0][1];
       edt[0][0]=0;
       edt[0][1]=0;
@@ -418,9 +431,9 @@ void mycontroller(const mjModel* m, mjData* d)
     if(msd<tf){
 
       //plotcounter=plotcounter+1;
-      LHP_ctrl = (-200*(d->sensordata[LHP_sensor_adr]+25*(M_PI/180))/16)-(-1*omega1);
+      LHP_ctrl = (-600*(d->sensordata[LHP_sensor_adr]+25*(M_PI/180))/16)-(-1*omega1);
       d->ctrl[LHP_actuatorID] = LHP_ctrl;
-      LK_ctrl = (-200*(d->sensordata[LK_sensor_adr]+15*(M_PI/180))/16)-(1*omega2);
+      LK_ctrl = (-600*(d->sensordata[LK_sensor_adr]-15*(M_PI/180))/16)-(1*omega2);
       d->ctrl[LK_actuatorID] = LK_ctrl;     
 
 
@@ -450,7 +463,7 @@ void mycontroller(const mjModel* m, mjData* d)
       z[3]=omega2;
 
       //c_controller(uu,z,params,traj_des,timestep,edt); 
-      c_controller3(uu,z,params,traj_des); 
+      c_controller4(uu,z,params,traj_des); 
 
       // if (uu[0]>(LK_ctrl_limit[0])){
       //  uu[0]=LK_ctrl_limit;
@@ -499,7 +512,7 @@ void mycontroller(const mjModel* m, mjData* d)
       z[3]=omega2;
 
       //c_controller2(uu,z,params,traj_des,timestep,edt);
-      c_controller3(uu,z,params,traj_des); 
+      c_controller4(uu,z,params,traj_des); 
       // if (uu[0]>(LK_ctrl_limit[0])){
       //  uu[0]=LK_ctrl_limit;
       // }
@@ -655,7 +668,7 @@ int main(int argc, const char** argv)
 
     // check command-line arguments
     if( argc<2 )
-        m = mj_loadXML("../model/closed_chain.xml", 0, error, 1000);
+        m = mj_loadXML("../model/closed_chain2.xml", 0, error, 1000);
 
     else
         if( strlen(argv[1])>4 && !strcmp(argv[1]+strlen(argv[1])-4, ".mjb") )

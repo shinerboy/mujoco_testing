@@ -787,3 +787,33 @@ WARNING: Nan, Inf or huge value in QACC at DOF 3. The simulation is unstable. Ti
 Mon Jun 28 18:47:05 2021
 WARNING: Nan, Inf or huge value in QACC at DOF 3. The simulation is unstable. Time = 0.0020.
 
+Mon Jun 28 22:18:41 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 32.9755.
+
+Mon Jun 28 22:45:46 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 27.2260.
+
+Mon Jun 28 22:46:02 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 30.8870.
+
+Tue Jun 29 01:14:47 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 28.2965.
+
+Tue Jun 29 01:21:49 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 33.2150.
+
+Tue Jun 29 02:13:32 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 32.8335.
+
+Tue Jun 29 03:15:08 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 22.7595.
+
+Tue Jun 29 03:16:13 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 22.7815.
+
+Tue Jun 29 14:47:30 2021
+ERROR: Load model error: XML Error: Schema violation: unique sub-element 'inertial' found 2 time(s)
+
+Element 'body', line 80, column 5
+
+
