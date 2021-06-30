@@ -500,8 +500,8 @@ void mycontroller(const mjModel* m, mjData* d)
     d->ctrl[LHY_actuatorID] = LHY_ctrl;
     //d->ctrl[LHR_actuatorID] = LHR_ctrl;
     //d->ctrl[LHP_actuatorID] = LHP_ctrl;
-    d->ctrl[LSY_actuatorID] = LSY_ctrl;
-    d->ctrl[LSR_actuatorID] = LSR_ctrl;
+    //d->ctrl[LSY_actuatorID] = LSY_ctrl;
+    //d->ctrl[LSR_actuatorID] = LSR_ctrl;
     d->ctrl[LSP_actuatorID] = LSP_ctrl;
     //d->ctrl[LTA_actuatorID] = LTA_ctrl;
     //d->ctrl[LTB_actuatorID] = LTB_ctrl;
@@ -857,6 +857,8 @@ int main(int argc, const char** argv)
 
     // make data
     d = mj_makeData(m);
+
+    //mj_saveLastXML("test_save_xml.xml", m, NULL, 0);
 
     d->qpos[30]=-20.0/180.0*mjPI; //LHR
     d->qpos[3]=20.0/180.0*mjPI; //RHR
