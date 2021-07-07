@@ -23,7 +23,7 @@
 //extern "C"{
 #include "../../../lowlevelapi_test/libtest.h"
 #include "../../../lowlevelapi_test/matram.h"
-#include "../../../lowlevelapi_test/controller_walk.h"
+#include "../../../lowlevelapi_test/controller.h"
 #include "../../../lowlevelapi_test/traj.h"
 #include "../../../lowlevelapi_test/get_params_walk.h"
 #include "../../../lowlevelapi_test/parallel_toe.h"
@@ -658,9 +658,9 @@ void mycontroller(const mjModel* m, mjData* d)
       double LK_ctrl = (-500*(d->sensordata[LK_sensor_adr]-(-theta2_mo+mid1_angle2)))-(1*omega2);
       d->ctrl[LK_actuatorID] = LK_ctrl;
 
-      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-mid1_angle1-0.5)))-(-1*omega1);
+      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-mid1_angle1)))-(-1*omega1);
       d->ctrl[RHP_actuatorID] = RHP_ctrl;
-      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+mid1_angle2-0.5)))-(1*omega2);
+      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+mid1_angle2)))-(1*omega2);
       d->ctrl[RK_actuatorID] = RK_ctrl;
 
 

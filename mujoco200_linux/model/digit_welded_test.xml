@@ -1,6 +1,6 @@
 <mujoco model='digit-test'>
   <compiler angle='degree' eulerseq='xyz' meshdir='stl'/>
-  <option gravity='0 0 -9.80665' iterations='50' solver='Newton' timestep='0.000500'/>
+  <option gravity='0 0 0' iterations='50' solver='Newton' timestep='0.000500'/>
   <asset>
     <material name='collision' rgba='0.1 0.5 0.9 0.4'/>
     <material name='plane' reflectance='0.000000' texrepeat='1 1' texture='plane' texuniform='true'/>
