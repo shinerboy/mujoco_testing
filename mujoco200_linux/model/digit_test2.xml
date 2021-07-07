@@ -322,6 +322,10 @@
     <motor name='right-shoulder-pitch' joint='right-shoulder-pitch' gear='80' ctrllimited='true' ctrlrange='-1.4 1.4'/>
     <motor name='right-shoulder-yaw' joint='right-shoulder-yaw' gear='50' ctrllimited='true' ctrlrange='-1.4 1.4'/>
     <motor name='right-elbow' joint='right-elbow' gear='80' ctrllimited='true' ctrlrange='-1.4 1.4'/>
+    <position name='left-toe-A-servo' joint='left-toe-A' ctrllimited='true' ctrlrange='-180 180'/>
+    <position name='left-toe-B-servo' joint='left-toe-B' ctrllimited='true' ctrlrange='-180 180'/>
+    <position name='right-toe-A-servo' joint='right-toe-A' ctrllimited='true' ctrlrange='-180 180'/>
+    <position name='right-toe-B-servo' joint='right-toe-B' ctrllimited='true' ctrlrange='-180 180'/>
   </actuator>
   <sensor>
     <framepos  name='base-pos' objtype='body' objname='base' />

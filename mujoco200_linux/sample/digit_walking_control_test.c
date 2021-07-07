@@ -515,8 +515,8 @@ void mycontroller(const mjModel* m, mjData* d)
     //d->ctrl[LTB_actuatorID] = LTB_ctrl;
     d->ctrl[RHY_actuatorID] = RHY_ctrl;
     //d->ctrl[RHR_actuatorID] = RHR_ctrl;
-    d->ctrl[RHP_actuatorID] = RHP_ctrl;
-    d->ctrl[RK_actuatorID] = RK_ctrl;
+    //d->ctrl[RHP_actuatorID] = RHP_ctrl;
+    //d->ctrl[RK_actuatorID] = RK_ctrl;
     d->ctrl[RSR_actuatorID] = RSR_ctrl;
     d->ctrl[RSP_actuatorID] = RSP_ctrl;
     d->ctrl[RSY_actuatorID] = RSY_ctrl;
@@ -653,27 +653,27 @@ void mycontroller(const mjModel* m, mjData* d)
     if(msd<tf){
 
       //plotcounter=plotcounter+1;
-      double LHP_ctrl = (-500*(d->sensordata[LHP_sensor_adr]-(theta1_mo-mid1_angle1)))-(-1*omega1);
-      d->ctrl[LHP_actuatorID] = LHP_ctrl;
-      double LK_ctrl = (-500*(d->sensordata[LK_sensor_adr]-(-theta2_mo+mid1_angle2)))-(1*omega2);
-      d->ctrl[LK_actuatorID] = LK_ctrl;
+      double LHP_ctrl = (-500*(d->sensordata[LHP_sensor_adr]-(theta1_mo-fs1_angle1)))-(-1*omega1);
+      //d->ctrl[LHP_actuatorID] = LHP_ctrl;
+      double LK_ctrl = (-500*(d->sensordata[LK_sensor_adr]-(-theta2_mo+fs1_angle2)))-(1*omega2);
+      //d->ctrl[LK_actuatorID] = LK_ctrl;
 
-      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-mid1_angle1-0.5)))-(-1*omega1);
-      d->ctrl[RHP_actuatorID] = RHP_ctrl;
-      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+mid1_angle2-0.5)))-(1*omega2);
-      d->ctrl[RK_actuatorID] = RK_ctrl;
+      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-fs2_angle1)))-(-1*omega1);
+      //d->ctrl[RHP_actuatorID] = RHP_ctrl;
+      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+fs2_angle2)))-(1*omega2);
+      //d->ctrl[RK_actuatorID] = RK_ctrl;
 
 
       //Left toe control
       double LTA_ctrl = (500*(d->sensordata[LToe_pitch_sensor_adr]-Ltoe_pitch));
-      d->ctrl[LTA_actuatorID] = LTA_ctrl;
+      //d->ctrl[LTA_actuatorID] = LTA_ctrl;
       double LTB_ctrl = (-500*(d->sensordata[LToe_pitch_sensor_adr]-Ltoe_pitch));
-      d->ctrl[LTB_actuatorID] = LTB_ctrl;     
+      //d->ctrl[LTB_actuatorID] = LTB_ctrl;     
 
       double RTA_ctrl = (500*(d->sensordata[RToe_pitch_sensor_adr]+Rtoe_pitch));
-      d->ctrl[RTA_actuatorID] = RTA_ctrl;
+      //d->ctrl[RTA_actuatorID] = RTA_ctrl;
       double RTB_ctrl = (-500*(d->sensordata[RToe_pitch_sensor_adr]+Rtoe_pitch));
-      d->ctrl[RTB_actuatorID] = RTB_ctrl;  
+      //d->ctrl[RTB_actuatorID] = RTB_ctrl;  
 
 
 
@@ -923,7 +923,7 @@ int main(int argc, const char** argv)
     d->qpos[3]=20.0/180.0*mjPI; //RHR
 
     d->qpos[5]=theta1_mo-mid1_angle1;//30.0/180.0*mjPI; //LHP
-    d->ctrl[4] = -theta2_mo+mid1_angle2+0.3;//LK servo
+    d->ctrl[4] = -theta2_mo+mid1_angle2;//LK servo
     d->qpos[32]=-theta1_mo+mid2_angle1;//RHP
     d->ctrl[11] = theta2_mo-mid2_angle2;//RK servo
 
