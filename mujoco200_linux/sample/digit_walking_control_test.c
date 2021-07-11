@@ -27,6 +27,8 @@
 #include "../../../lowlevelapi_test/traj.h"
 #include "../../../lowlevelapi_test/get_params_walk.h"
 #include "../../../lowlevelapi_test/parallel_toe.h"
+#include "../../../lowlevelapi_test/getcom.h"
+#include "../../../lowlevelapi_test/getphaseangles.h"
 
 //#include "./../../lowlevelapi_test/pbplots/pbPlots.h"
 //#include "./../../lowlevelapi_test/pbplots/supportLib.h"
@@ -39,7 +41,7 @@ time_t          s;  // Seconds
 long time_start_l;
 struct timespec spec;
 double time_start;
-double tf = 3;
+double tf = 5;
 double s0[1][2] = {0, 0};
 double sf[1][2] = {0, 0};
 double v0[1][2] = {0,0};
@@ -72,14 +74,28 @@ double *uu;
   double theta1_mo = +45*(M_PI/180); //Add this to sensor reading to get angle in model frame. Subtract to desired model angle to get mujoco angle
   double theta2_mo = -82.25*(M_PI/180); //Add this to sensor reading to get angle in model frame. Subtract to desired model angle to get mujoco angle
 
-  double mid1_angle1 = 0.388961234296406; //Midstance Hip Pitch of stance leg
-  double mid1_angle2 = -0.911380565589932; //Midstance Knee of stance leg
-  double fs1_angle1 = 0.179521724057087; //Foot strike Hip pitch of trailing leg
-  double fs1_angle2 = -0.911380565589932; //Foot strike Knee of trailing leg
-  double mid2_angle1 = 0.555804955644691; //Midstance Hip Pitch of swing leg
-  double mid2_angle2 = -1.259523521544439; //Midstance knee of swing leg
-  double fs2_angle1 = 0.598400744535726;  //Foot strike Hip Pitch of leading leg
-  double fs2_angle2 = -0.911380565589932;  //Foot strike knee of leading leg
+  //Used for get phase angle method
+  double L; //desired leg length.
+  double step_angle; //desired step angle
+
+  double mid1_angle1; //Midstance Hip Pitch of stance leg
+  double mid1_angle2; //Midstance Knee of stance leg
+  double fs1_angle1; //Foot strike Hip pitch of trailing leg
+  double fs1_angle2; //Foot strike Knee of trailing leg
+  double mid2_angle1; //Midstance Hip Pitch of swing leg
+  double mid2_angle2; //Midstance knee of swing leg
+  double fs2_angle1;  //Foot strike Hip Pitch of leading leg
+  double fs2_angle2;  //Foot strike knee of leading leg
+
+
+  // double mid1_angle1 = 0.388961234296406; //Midstance Hip Pitch of stance leg
+  // double mid1_angle2 = -0.911380565589932; //Midstance Knee of stance leg
+  // double fs1_angle1 = 0.179521724057087; //Foot strike Hip pitch of trailing leg
+  // double fs1_angle2 = -0.911380565589932; //Foot strike Knee of trailing leg
+  // double mid2_angle1 = 0.555804955644691; //Midstance Hip Pitch of swing leg
+  // double mid2_angle2 = -1.259523521544439; //Midstance knee of swing leg
+  // double fs2_angle1 = 0.598400744535726;  //Foot strike Hip Pitch of leading leg
+  // double fs2_angle2 = -0.911380565589932;  //Foot strike knee of leading leg
 
   ///////////////////////
 
@@ -295,12 +311,14 @@ void mycontroller(const mjModel* m, mjData* d)
     int LK_joint_adr = m->jnt_qposadr[LK_jointID];
     printf("the LK joint address is: ");
     printf("%d \n",LK_joint_adr); //10
-    int LK_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-knee-sensor");
+    int LK_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-knee-vel");
     int LK_vel_sensor_adr = m->sensor_adr[LK_vel_sensorID];
     double LK_ctrl_limit = m->actuator_ctrlrange[LK_actuatorID];
     int LK_servoID = mj_name2id(m, mjOBJ_ACTUATOR, "left-knee-servo");
     printf("the LK servo ID is: ");
     printf("%d \n",LK_servoID); //4
+    printf("The LKnee position is: ");
+    printf("%f \n", d->sensordata[LK_sensor_adr]);
     // Left toe A
     const char* LTA_joint_name = "left-toe-A";
     int LTA_sensorID = mj_name2id(m, mjOBJ_SENSOR, LTA_joint_name);
@@ -396,7 +414,7 @@ void mycontroller(const mjModel* m, mjData* d)
     int RK_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, RK_joint_name);
     int RK_jointID = mj_name2id(m, mjOBJ_JOINT, RK_joint_name);
     int RK_joint_adr = m->jnt_qposadr[RK_jointID];
-    int RK_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-knee-sensor");
+    int RK_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-knee-vel");
     int RK_vel_sensor_adr = m->sensor_adr[RK_vel_sensorID];
     double RK_ctrl_limit = m->actuator_ctrlrange[RK_actuatorID];
     int RK_servoID = mj_name2id(m, mjOBJ_ACTUATOR, "right-knee-servo");
@@ -478,20 +496,30 @@ void mycontroller(const mjModel* m, mjData* d)
     printf("the body pitch joint address is: ");
     printf("%d \n",body_pitch_joint_adr); //30
 
+    const char* LTarsus_joint_name = "left-tarsus";
+    int LTarsus_jointID = mj_name2id(m, mjOBJ_JOINT, LTarsus_joint_name);
+    int LTarsus_joint_adr = m->jnt_qposadr[LTarsus_jointID];
+    printf("the LTarsus joint address is: ");
+    printf("%d \n",LTarsus_joint_adr); //
+    int LTarsus_sensorID = mj_name2id(m, mjOBJ_SENSOR, LTarsus_joint_name);
+    int LTarsus_sensor_adr = m->sensor_adr[LTarsus_sensorID];
+    printf("The LTarsus position is: ");
+    printf("%f \n", d->sensordata[LTarsus_sensor_adr]);
+
     //int j = 26;
     //double ctrl = -100*(d->qpos[26]-0.75);
     //double ctrl = -100*(d->qpos[L_elbow_joint_adr]-0.75);
     double L_elbow_ctrl = -1*(d->sensordata[L_elbow_sensor_adr]+0.0)-(1*d->sensordata[L_elbow_vel_sensor_adr]);
-    double LHR_ctrl = -10*(d->sensordata[LHR_sensor_adr]-20*M_PI/180)-(1*d->sensordata[LHR_vel_sensor_adr]);
-    double LHY_ctrl = -10*(d->sensordata[LHY_sensor_adr]+0.0)-(1*d->sensordata[LHY_vel_sensor_adr]);
+    double LHR_ctrl = -100*(d->sensordata[LHR_sensor_adr]-20*M_PI/180)-(10*d->sensordata[LHR_vel_sensor_adr]);
+    double LHY_ctrl = -100*(d->sensordata[LHY_sensor_adr]+0.0)-(1*d->sensordata[LHY_vel_sensor_adr]);
     //double LHP_ctrl = -150*(d->sensordata[LHP_sensor_adr]+0.0);
     double LSR_ctrl = -1*(d->sensordata[LSR_sensor_adr]+0.0)-(1*d->sensordata[LSR_vel_sensor_adr]);
     double LSY_ctrl = -1*(d->sensordata[LSY_sensor_adr]+0.0)-(1*d->sensordata[LSY_vel_sensor_adr]);
     double LSP_ctrl = -1*(d->sensordata[LSP_sensor_adr]+0.0)-(1*d->sensordata[LSP_vel_sensor_adr]);
     double LTA_ctrl = -1*(d->sensordata[LTA_sensor_adr]+0.0)-(1*d->sensordata[LTA_vel_sensor_adr]);
     double LTB_ctrl = -1*(d->sensordata[LTB_sensor_adr]+0.0)-(1*d->sensordata[LTB_vel_sensor_adr]);
-    double RHR_ctrl = -10*(d->sensordata[RHR_sensor_adr]+20*M_PI/180)-(1*d->sensordata[RHR_vel_sensor_adr]);
-    double RHY_ctrl = -10*(d->sensordata[RHY_sensor_adr]+0.0)-(1*d->sensordata[RHY_vel_sensor_adr]);
+    double RHR_ctrl = -100*(d->sensordata[RHR_sensor_adr]+20*M_PI/180)-(10*d->sensordata[RHR_vel_sensor_adr]);
+    double RHY_ctrl = -100*(d->sensordata[RHY_sensor_adr]+0.0)-(1*d->sensordata[RHY_vel_sensor_adr]);
     double RHP_ctrl = -500*(d->sensordata[RHP_sensor_adr]-(-theta1_mo+mid2_angle1))-(1*d->sensordata[RHP_vel_sensor_adr]);
     double RK_ctrl = -500*(d->sensordata[RK_sensor_adr]-(theta2_mo-mid2_angle2))-(1*d->sensordata[RK_vel_sensor_adr]);
     double RSR_ctrl = -1*(d->sensordata[RSR_sensor_adr]+0.0)-(1*d->sensordata[RSR_vel_sensor_adr]);
@@ -506,7 +534,7 @@ void mycontroller(const mjModel* m, mjData* d)
     //d->ctrl[15] = ctrl;
     d->ctrl[L_elbow_actuatorID] = L_elbow_ctrl;
     d->ctrl[LHY_actuatorID] = LHY_ctrl;
-    //d->ctrl[LHR_actuatorID] = LHR_ctrl;
+    d->ctrl[LHR_actuatorID] = LHR_ctrl;
     //d->ctrl[LHP_actuatorID] = LHP_ctrl;
     //d->ctrl[LSY_actuatorID] = LSY_ctrl;
     //d->ctrl[LSR_actuatorID] = LSR_ctrl;
@@ -514,7 +542,7 @@ void mycontroller(const mjModel* m, mjData* d)
     //d->ctrl[LTA_actuatorID] = LTA_ctrl;
     //d->ctrl[LTB_actuatorID] = LTB_ctrl;
     d->ctrl[RHY_actuatorID] = RHY_ctrl;
-    //d->ctrl[RHR_actuatorID] = RHR_ctrl;
+    d->ctrl[RHR_actuatorID] = RHR_ctrl;
     //d->ctrl[RHP_actuatorID] = RHP_ctrl;
     //d->ctrl[RK_actuatorID] = RK_ctrl;
     d->ctrl[RSR_actuatorID] = RSR_ctrl;
@@ -572,7 +600,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
     omega0 = -1*d->sensordata[body_pitch_vel_sensor_adr];
     omega1 = -1*d->sensordata[LHP_vel_sensor_adr];
-    omega2=  d->sensordata[RHP_sensor_adr];
+    omega2=  d->sensordata[RHP_vel_sensor_adr];
     omega3 = d->sensordata[LK_vel_sensor_adr];
     omega4 = -1*d->sensordata[RK_vel_sensor_adr];
 
@@ -607,6 +635,11 @@ void mycontroller(const mjModel* m, mjData* d)
 
     printf("The right toe-pitch actual position is: ");
     printf("%f \n", d->sensordata[RToe_pitch_sensor_adr]);
+
+    printf("mid1 angle1 is: %f \n", mid1_angle1);
+    printf("mid1 angle2 is: %f \n", mid1_angle2);
+    printf("mid2 angle1 is: %f \n", mid2_angle1);
+    printf("mid2 angle2 is: %f \n", mid2_angle2);
 
     if (msd>=tf && counter ==10)
     {
@@ -652,16 +685,30 @@ void mycontroller(const mjModel* m, mjData* d)
 
     if(msd<tf){
 
-      //plotcounter=plotcounter+1;
-      double LHP_ctrl = (-500*(d->sensordata[LHP_sensor_adr]-(theta1_mo-fs1_angle1)))-(-1*omega1);
-      //d->ctrl[LHP_actuatorID] = LHP_ctrl;
-      double LK_ctrl = (-500*(d->sensordata[LK_sensor_adr]-(-theta2_mo+fs1_angle2)))-(1*omega2);
-      //d->ctrl[LK_actuatorID] = LK_ctrl;
+        const char* body_z_joint_name = "body_z";
+        int body_z_jointID = mj_name2id(m, mjOBJ_JOINT, body_z_joint_name);
+        int body_z_joint_adr = m->jnt_qposadr[body_z_jointID];
+        //d->qpos[body_z_joint_adr] = -0.92;
 
-      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-fs2_angle1)))-(-1*omega1);
-      //d->ctrl[RHP_actuatorID] = RHP_ctrl;
-      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+fs2_angle2)))-(1*omega2);
-      //d->ctrl[RK_actuatorID] = RK_ctrl;
+       // d->qpos[2]=theta1_mo-mid1_angle1;//30.0/180.0*mjPI; //LHP
+
+        //d->qpos[7] = 0.524087;//-theta2_mo+mid1_angle2;
+    //d->qpos[9] = -0.524487 ;
+
+        //d->ctrl[4] = -theta2_mo-mid1_angle2;//LK servo
+
+    //d->qpos[2]=theta1_mo-mid1_angle1;//30.0/180.0*mjPI; //LHP
+
+      //plotcounter=plotcounter+1;
+      double LHP_ctrl = (-500*(d->sensordata[LHP_sensor_adr]-(theta1_mo-mid1_angle1)))-(-10*omega1);
+      d->ctrl[LHP_actuatorID] = LHP_ctrl;
+      double LK_ctrl = (-500*(d->sensordata[LK_sensor_adr]-(-theta2_mo+mid1_angle2)))-(10*omega3);
+      d->ctrl[LK_actuatorID] = LK_ctrl;
+
+      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-mid2_angle1)))-(10*omega2);
+      d->ctrl[RHP_actuatorID] = RHP_ctrl;
+      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+mid2_angle2)))-(-10*omega4);
+      d->ctrl[RK_actuatorID] = RK_ctrl;
 
 
       //Left toe control
@@ -671,9 +718,9 @@ void mycontroller(const mjModel* m, mjData* d)
       //d->ctrl[LTB_actuatorID] = LTB_ctrl;     
 
       double RTA_ctrl = (500*(d->sensordata[RToe_pitch_sensor_adr]+Rtoe_pitch));
-      //d->ctrl[RTA_actuatorID] = RTA_ctrl;
+      d->ctrl[RTA_actuatorID] = RTA_ctrl;
       double RTB_ctrl = (-500*(d->sensordata[RToe_pitch_sensor_adr]+Rtoe_pitch));
-      //d->ctrl[RTB_actuatorID] = RTB_ctrl;  
+      d->ctrl[RTB_actuatorID] = RTB_ctrl;  
 
 
 
@@ -873,11 +920,41 @@ int main(int argc, const char** argv)
 
   time_start_l  = (spec.tv_sec)*1000+(spec.tv_nsec)/1.0e6;
   time_start = (double)time_start_l;
-  params = (double*)malloc(sizeof(double)*23);
+  params = (double*)malloc(sizeof(double)*27);
     traj_des = (double *)malloc(sizeof(double)*4);
     z = (double *)malloc(sizeof(double)*4);
     uu = (double *)malloc(sizeof(double)*2);
     get_params(params);
+
+    L=0.9;
+    step_angle=0*M_PI/180;
+    getphaseangles(&mid1_angle1, &mid1_angle2, params, &L, &step_angle);
+
+    L=0.7;
+    step_angle=0*M_PI/180;
+    getphaseangles(&mid2_angle1, &mid2_angle2, params, &L, &step_angle);
+
+    L=0.9;
+    step_angle=-12*M_PI/180;
+    getphaseangles(&fs1_angle1, &fs1_angle2, params, &L, &step_angle);
+
+    L=0.9;
+    step_angle=12*M_PI/180;
+    getphaseangles(&fs2_angle1, &fs2_angle2, params, &L, &step_angle);
+
+
+  //   double mid1_angle1; //Midstance Hip Pitch of stance leg
+  // double mid1_angle2; //Midstance Knee of stance leg
+  // double fs1_angle1; //Foot strike Hip pitch of trailing leg
+  // double fs1_angle2; //Foot strike Knee of trailing leg
+  // double mid2_angle1; //Midstance Hip Pitch of swing leg
+  // double mid2_angle2; //Midstance knee of swing leg
+  // double fs2_angle1;  //Foot strike Hip Pitch of leading leg
+  // double fs2_angle2;  //Foot strike knee of leading leg
+
+
+
+
 
     xx = calloc(1, sizeof(double));//for plotting 
     yy1 = calloc(1, sizeof(double));
@@ -919,22 +996,56 @@ int main(int argc, const char** argv)
 
     //mj_saveLastXML("test_save_xml.xml", m, NULL, 0);
 
-    d->qpos[30]=-20.0/180.0*mjPI; //LHR
-    d->qpos[3]=20.0/180.0*mjPI; //RHR
+    const char* LHR_joint_name = "left-hip-roll";
+        int LHR_jointID = mj_name2id(m, mjOBJ_JOINT, LHR_joint_name);
+        int LHR_joint_adr = m->jnt_qposadr[LHR_jointID];
+    const char* RHR_joint_name = "right-hip-roll";
+        int RHR_jointID = mj_name2id(m, mjOBJ_JOINT, RHR_joint_name);
+        int RHR_joint_adr = m->jnt_qposadr[RHR_jointID];
+    const char* LHP_joint_name = "left-hip-pitch";
+        int LHP_jointID = mj_name2id(m, mjOBJ_JOINT, LHP_joint_name);
+        int LHP_joint_adr = m->jnt_qposadr[LHP_jointID];
+    const char* RHP_joint_name = "right-hip-pitch";
+        int RHP_jointID = mj_name2id(m, mjOBJ_JOINT, RHP_joint_name);
+        int RHP_joint_adr = m->jnt_qposadr[RHP_jointID];
+    const char* LK_joint_name = "left-knee";
+        int LK_jointID = mj_name2id(m, mjOBJ_JOINT, LK_joint_name);
+        int LK_joint_adr = m->jnt_qposadr[LK_jointID];
+    const char* RK_joint_name = "right-knee";
+        int RK_jointID = mj_name2id(m, mjOBJ_JOINT, RK_joint_name);
+        int RK_joint_adr = m->jnt_qposadr[RK_jointID];
+    const char* body_z_joint_name = "body_z";
+        int body_z_jointID = mj_name2id(m, mjOBJ_JOINT, body_z_joint_name);
+        int body_z_joint_adr = m->jnt_qposadr[body_z_jointID];
 
-    d->qpos[5]=theta1_mo-mid1_angle1;//30.0/180.0*mjPI; //LHP
-    d->ctrl[4] = -theta2_mo+mid1_angle2;//LK servo
-    d->qpos[32]=-theta1_mo+mid2_angle1;//RHP
-    d->ctrl[11] = theta2_mo-mid2_angle2;//RK servo
+
+
+    d->qpos[LHR_joint_adr]=20.0/180.0*mjPI; //LHR
+    d->qpos[RHR_joint_adr]=-20.0/180.0*mjPI; //RHR
+
+    for(int i=0;i<1;i++){
+        d->qpos[LHP_joint_adr]=theta1_mo-mid1_angle1;//30.0/180.0*mjPI; //LHP
+        //d->ctrl[4] = -theta2_mo-mid1_angle2;//-1.4;//LK servo
+        d->qpos[LK_joint_adr] = -theta2_mo+mid1_angle2;//0.524087;//
+        //d->qpos[9] = -0.524487 ;
+        d->qpos[RHP_joint_adr]=-theta1_mo+mid2_angle1;//RHP
+        //d->ctrl[11] = theta2_mo-mid2_angle2;//RK servo
+        d->qpos[RK_joint_adr] = theta2_mo-mid2_angle2;
+        int base = mj_name2id(m, mjOBJ_BODY, "base");
+        //d->xpos[base*3+2]=10;
+        d->qpos[body_z_joint_adr] = -0.92;
+         }
+
+    
 
     //d->qpos[5]=0+theta1_mo-0.5;//30.0/180.0*mjPI; //LHP
     //d->ctrl[4] = 0-theta2_mo-0.5;//LK servo
     //d->qpos[32]=0-theta1_mo+0.5;//RHP
     //d->ctrl[11] = 0+theta2_mo+0.8;//RK servo
 
-    d->qpos[0]=0; //
-    d->qpos[1]=0;//
-    d->qpos[2]=0; //
+    //d->qpos[0]=0; //
+    //d->qpos[1]=0;//
+    //d->qpos[2]=0; //
     //d->qvel[3]=0; //LHR
     //d->qvel[30]=0; //RHR
     //d->qvel[5]=0;//30.0/180.0*mjPI; //LHP
@@ -1020,12 +1131,12 @@ int main(int argc, const char** argv)
 
 
     //set camera distance
-    cam.azimuth = -160;
-    cam.elevation = -22.8;
+    cam.azimuth = 90;//-160;
+    cam.elevation = 0;//-22.8;
     cam.distance = 4;
     cam.lookat[0] = -0.18;
     cam.lookat[1] = 0.2;
-    cam.lookat[2] = 0.48;
+    cam.lookat[2] = 0.9;//0.48;
     // run main loop, target real-time simulation and 60 fps rendering
     while( !glfwWindowShouldClose(window) )
     {
