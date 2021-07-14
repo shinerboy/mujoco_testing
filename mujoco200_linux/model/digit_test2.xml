@@ -47,7 +47,8 @@
   </asset>
   <default>
     <default class='collision'>
-      <geom conaffinity='1' condim='3' contype='1' material='collision'/>
+      <!--geom conaffinity='1' condim='3' contype='1' material='collision'/> -->
+      <geom contype='3' conaffinity='1' condim='1'  solref='.01 1' solimp='.99 .99 .01' material='collision'/> 
     </default>
     <default class='robot'>
       <geom material='robot'/>
@@ -57,7 +58,8 @@
     <motor ctrllimited='true'/>
   </default>
   <worldbody>
-    <geom name='floor' type='plane' conaffinity='15' condim='3' material='plane' pos='0 0 0' size='5 5 0.125'/>
+    <!--geom name='floor' type='plane' conaffinity='15' condim='3' material='plane' pos='0 0 0' size='5 5 0.125'/> -->
+    <geom name='floor' type='plane' conaffinity='7' condim='3' material='plane' pos='0 0 0' size='5 5 0.125'/>
     <!-- body name='base' pos='0 0 1.15' euler='0 0 0'> -->
     <body name='base' pos='0 0 2' euler='0 0 0'>
       <inertial pos='0.001637 0.0002 0.259547' mass='15.028392' fullinertia='0.376284 0.342655 0.100648 -8.8e-05 0.008378 6.7e-05'/>
@@ -127,7 +129,8 @@
                     <joint name='left-toe-B' type='hinge' axis='0 0 1' range='-52.3 72.45' limited='true' damping='1.000000' frictionloss='1.000000' armature='0.035'/>
                     <geom type='mesh' mesh='left-toe-B' material='robot'/>
                     <body name='left-toe-B-rod' pos='0.057 0 -0.008' euler='-0.22 -3.08 91.38'>
-                      <inertial pos='0.142991 0 0' mass='0.079507' fullinertia='1e-06 0.000768 0.000768 -0 -0 0'/>
+                      <!--inertial pos='0.142991 0 0' mass='0.079507' fullinertia='1e-06 0.000768 0.000768 -0 -0 0'/>-->
+                      <inertial pos='0.142991 0 0' mass='0.01' fullinertia='1e-06 0.000768 0.000768 -0 -0 0'/>
                       <joint name='left-toe-B-rod' type='ball' limited='false' damping='0.010000'/>
                       <geom type='mesh' mesh='left-toe-B-rod' material='robot'/>
                       <geom type='capsule' size ='0.007 0.144' pos='0.144 0 0' euler='4 90 0' class='collision'/>
@@ -138,7 +141,8 @@
                     <joint name='left-toe-pitch' type='hinge' axis='0 0 1' range='-45 45' limited='true'/>
                     <geom type='mesh' mesh='left-toe-pitch' material='robot'/>
                     <body name='left-toe-roll' pos='0 0 0' euler='0 90 0'>
-                      <inertial pos='9e-06 -0.028084 -0.023204' mass='0.531283' fullinertia='0.00187 0.001616 0.000843 -0 0 0.000566'/>
+                      <!--inertial pos='9e-06 -0.028084 -0.023204' mass='0.531283' fullinertia='0.00187 0.001616 0.000843 -0 0 0.000566'/>-->
+                      <inertial pos='9e-06 -0.028084 -0.023204' mass='0.01' fullinertia='0.00187 0.001616 0.000843 -0 0 0.000566'/>
                       <joint name='left-toe-roll' type='hinge' axis='0 0 1' range='-35 35' limited='true'/>
                       <geom type='mesh' mesh='left-toe-roll' material='robot'/>
                       <geom type='box' size='0.04 0.1175 0.0115' pos='0 -0.0437 -0.0255' euler='-60 0 0' class='collision'/>
@@ -246,11 +250,13 @@
                     </body>
                   </body>
                   <body name='right-toe-pitch' pos='0.408 0.04 0' euler='0 0 -68.5'>
-                    <inertial pos='-0.000141 -2e-06 3e-06' mass='0.043881' fullinertia='5e-06 8e-06 4e-06 0 0 -0'/>
+                    <!--inertial pos='-0.000141 -2e-06 3e-06' mass='0.043881' fullinertia='5e-06 8e-06 4e-06 0 0 -0'/> -->
+                    <inertial pos='-0.000141 -2e-06 3e-06' mass='0.01' fullinertia='5e-06 8e-06 4e-06 0 0 -0'/>
                     <joint name='right-toe-pitch' type='hinge' axis='0 0 1' range='-45 45' limited='true'/>
                     <geom type='mesh' mesh='right-toe-pitch' material='robot'/>
                     <body name='right-toe-roll' pos='0 0 0' euler='0 90 0'>
-                      <inertial pos='9e-06 0.028084 -0.023204' mass='0.531283' fullinertia='0.00187 0.001616 0.000843 0 0 -0.000566'/>
+                      <!--inertial pos='9e-06 0.028084 -0.023204' mass='0.531283' fullinertia='0.00187 0.001616 0.000843 0 0 -0.000566'/> -->
+                      <inertial pos='9e-06 0.028084 -0.023204' mass='0.01' fullinertia='0.00187 0.001616 0.000843 0 0 -0.000566'/>
                       <joint name='right-toe-roll' type='hinge' axis='0 0 1' range='-35 35' limited='true'/>
                       <geom type='mesh' mesh='right-toe-roll' material='robot'/>
                       <geom type='box' size='0.04 0.1175 0.0115' pos='0 0.0437 -0.0255' euler='60 0 0' class='collision'/>
@@ -328,7 +334,7 @@
     <position name='right-toe-B-servo' joint='right-toe-B' ctrllimited='true' ctrlrange='-180 180'/>
   </actuator>
   <sensor>
-    <framepos  name='base-pos' objtype='body' objname='base' />
+    <framepos  name='base-pos' objtype='xbody' objname='base' />
     <framequat name='base-quat' objtype='body' objname='base' />
     <jointpos name='left-hip-roll' joint='left-hip-roll'/>
     <jointpos name='left-hip-yaw' joint='left-hip-yaw'/>
@@ -352,7 +358,9 @@
     <jointpos name='right-elbow' joint='right-elbow'/>
     <jointpos name='left-tarsus' joint='left-tarsus'/>
     <jointpos name='right-tarsus' joint='right-tarsus'/>
-    <!-- jointpos name='body-pitch' joint='body-pitch'/> -->
+    <jointpos name='body-pitch' joint='body-pitch'/>
+    <jointpos name='body_x' joint='body_x'/>
+    <jointpos name='body_z' joint='body_z'/>
     <jointpos name="right-toe-pitch" joint="right-toe-pitch"/>
     <jointpos name="left-toe-pitch" joint="left-toe-pitch"/>
     <frameangvel name='base-angvel' objtype='body' objname='base' />
@@ -381,7 +389,10 @@
     <jointvel name='right-shoulder-pitch-vel' joint='right-shoulder-pitch'/>
     <jointvel name='right-shoulder-yaw-vel' joint='right-shoulder-yaw'/>
     <jointvel name='right-elbow-vel' joint='right-elbow'/>
-    <!--jointvel name='body-pitch-vel' joint='body-pitch'/> -->
+    <jointvel name='body-pitch-vel' joint='body-pitch'/> 
+    <framepos  name='left-toe-pos' objtype='xbody' objname='left-toe-pitch' />
+    <framepos  name='right-toe-pos' objtype='xbody' objname='right-toe-pitch' />
+    <framepos  name='left-hip-pos' objtype='xbody' objname='left-hip-pitch' />
   </sensor>
 </mujoco>
 

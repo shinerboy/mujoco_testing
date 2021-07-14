@@ -638,7 +638,7 @@ int main(int argc, const char** argv)
   time_start_l  = (spec.tv_sec)*1000+(spec.tv_nsec)/1.0e6;
   time_start = (double)time_start_l;
   params = (double*)malloc(sizeof(double)*23);
-    traj_des = (double *)malloc(sizeof(double)*4);
+    traj_des = (double *)malloc(sizeof(double)*6);
     z = (double *)malloc(sizeof(double)*4);
     uu = (double *)malloc(sizeof(double)*2);
     get_params(params);
