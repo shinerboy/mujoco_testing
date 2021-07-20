@@ -259,7 +259,7 @@
                       <inertial pos='9e-06 0.028084 -0.023204' mass='0.01' fullinertia='0.00187 0.001616 0.000843 0 0 -0.000566'/>
                       <joint name='right-toe-roll' type='hinge' axis='0 0 1' range='-35 35' limited='true'/>
                       <geom type='mesh' mesh='right-toe-roll' material='robot'/>
-                      <geom type='box' size='0.04 0.1175 0.0115' pos='0 0.0437 -0.0255' euler='60 0 0' class='collision'/>
+                      <geom type='box' size='0.04 0.1175 0.0115' pos='0 0.0437 -0.0255' euler='60 0 0' class='collision' />
                       <site name='right-foot' pos='0 0.05456 -0.0315' euler='60 0 90' size='0.01'/>
                     </body>
                   </body>
