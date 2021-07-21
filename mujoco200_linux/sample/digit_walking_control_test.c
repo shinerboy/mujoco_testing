@@ -774,7 +774,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = 0.0;
+      sf[0][0] = 0;
       sf[0][1] = fs1_angle1;
       sf[0][2] = fs2_angle1;
       sf[0][3] = mid1_angle2;
@@ -819,7 +819,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = 0.0;
+      sf[0][0] = 0;
       sf[0][1] = fs2_angle1;
       sf[0][2] = mid2_angle1;
       sf[0][3] = fs2_angle2;
@@ -854,7 +854,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = -0.07;
+      sf[0][0] = 0;
       sf[0][1] = mid1_angle1;
       sf[0][2] = fs2_angle1;
       sf[0][3] = mid1_angle2;
@@ -890,7 +890,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = -0.07;
+      sf[0][0] = 0;
       sf[0][1] = mid1_angle1;
       sf[0][2] = mid2_angle1;
       sf[0][3] = mid1_angle2;
