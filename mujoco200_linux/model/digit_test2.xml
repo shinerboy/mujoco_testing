@@ -363,6 +363,10 @@
     <jointpos name='body_z' joint='body_z'/>
     <jointpos name="right-toe-pitch" joint="right-toe-pitch"/>
     <jointpos name="left-toe-pitch" joint="left-toe-pitch"/>
+    <jointpos name="left-heel-spring" joint="left-heel-spring"/>
+    <jointpos name="right-heel-spring" joint="right-heel-spring"/>
+    <jointpos name="left-shin" joint="left-shin"/>
+    <jointpos name="right-shin" joint="right-shin"/>
     <frameangvel name='base-angvel' objtype='body' objname='base' />
     <framelinvel name='base-linvel' objtype='body' objname='base' />
     <jointvel name='left-hip-roll-vel' joint='left-hip-roll'/>
