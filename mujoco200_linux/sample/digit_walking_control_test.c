@@ -43,6 +43,7 @@ struct timespec spec;
 double time_start;
 double tf = 5;
 double traj_time = 0.35;//0.7 works well
+double stage_time=0;
 double s0[1][5] = {0, 0, 0, 0, 0};
 double sf[1][5] = {0, 0, 0, 0, 0};
 double v0[1][5] = {0, 0, 0, 0, 0};
@@ -61,7 +62,9 @@ double y_com;
 double x_Bf; //x position of base frame
 double y_Bf;//y position of base frame
 double LToe_x;
+double LToe_y;
 double RToe_x;
+double RToe_y;
 double stanceToe_x;
 double LtoeA_pitch;
 double LtoeB_pitch;
@@ -76,6 +79,7 @@ double *uu;
   int counter=-1; //Counter used for finite state machine/state transitions
   int plotcounter = 50; //Used to plot only during one cycle
   int plotbreak=0;
+  int stage=0; //Used to keep track of state machine stage (4 stages)
 
   //////////////////////
   double theta0;
@@ -547,12 +551,14 @@ void mycontroller(const mjModel* m, mjData* d)
         int RHP_pos_sensorID = mj_name2id(m, mjOBJ_SENSOR, RHP_pos_name);
         int RHP_pos_sensor_adr = m->sensor_adr[RHP_pos_sensorID];
     //ground_z=d->sensordata[LToe_sensor_adr+2];
-    ground_z=0.0618; //0.061728 rounded up
+    ground_z=0.065; //0.061728 rounded up
     LToe_x=d->sensordata[LToe_sensor_adr];
+    LToe_y=d->sensordata[LToe_sensor_adr+2];
     LHP_x = d->sensordata[LHP_pos_sensor_adr];
     LHP_y = d->sensordata[LHP_pos_sensor_adr+2];
 
     RToe_x=d->sensordata[RToe_sensor_adr];
+    RToe_y=d->sensordata[RToe_sensor_adr+2];
     RHP_x = d->sensordata[RHP_pos_sensor_adr];
     RHP_y = d->sensordata[RHP_pos_sensor_adr+2];
 
@@ -774,10 +780,10 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = 0;
+      sf[0][0] = -0.05;
       sf[0][1] = fs1_angle1;
       sf[0][2] = fs2_angle1;
-      sf[0][3] = mid1_angle2;
+      sf[0][3] = fs1_angle2;
       sf[0][4] = fs2_angle2;
 
       //sf[0][1] = s0[0][1];
@@ -799,7 +805,7 @@ void mycontroller(const mjModel* m, mjData* d)
       LtoeA_pitch=d->sensordata[LTA_sensor_adr];//get actuator position
       LtoeB_pitch=d->sensordata[LTB_sensor_adr];
     }
-    if (msd>=tf+traj_time && counter ==1)
+    if (stage == 1 && counter ==1)
     {
       s0[0][0] = theta0;
       s0[0][1] = theta2;
@@ -819,10 +825,10 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = 0;
-      sf[0][1] = fs2_angle1;
+      sf[0][0] = -0.05;
+      sf[0][1] = mid1_angle1;
       sf[0][2] = mid2_angle1;
-      sf[0][3] = fs2_angle2;
+      sf[0][3] = mid1_angle2;
       sf[0][4] = mid2_angle2;
 
       //sf[0][1] = s0[0][1];
@@ -834,7 +840,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       counter = 2;
     }
-    if (msd>=tf+2*traj_time && counter ==2)
+    if (stage == 2 && counter ==2)
     {
       s0[0][0] = theta0;
       s0[0][1] = theta2;
@@ -854,10 +860,10 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = 0;
-      sf[0][1] = mid1_angle1;
+      sf[0][0] = -0.05;
+      sf[0][1] = fs1_angle1;
       sf[0][2] = fs2_angle1;
-      sf[0][3] = mid1_angle2;
+      sf[0][3] = fs1_angle2;
       sf[0][4] = fs2_angle2;
 
       //sf[0][1] = s0[0][1];
@@ -870,7 +876,7 @@ void mycontroller(const mjModel* m, mjData* d)
       counter = 3;
     }
 
-    if (msd>=tf+3*traj_time && counter ==3)
+    if (stage == 3 && counter ==3)
     {
       s0[0][0] = theta0;
       s0[0][1] = theta1;
@@ -890,7 +896,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = 0;
+      sf[0][0] = -0.05;
       sf[0][1] = mid1_angle1;
       sf[0][2] = mid2_angle1;
       sf[0][3] = mid1_angle2;
@@ -976,7 +982,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
     }
 
-    else if(msd>=tf && msd<tf+traj_time && counter==1){
+    else if(msd>=tf && stage==0 && counter==1){
         printf("--------------------------------------------------------------------------------------");
         stanceToe_x = LToe_x;
 
@@ -1072,17 +1078,21 @@ void mycontroller(const mjModel* m, mjData* d)
       double LTA_ctrl = (-100*(d->sensordata[LTA_sensor_adr]-LtoeA_pitch));
       d->ctrl[LTA_actuatorID] = LTA_ctrl;
       double LTB_ctrl = (-100*(d->sensordata[LTB_sensor_adr]-LtoeB_pitch));
-      d->ctrl[LTB_actuatorID] = LTB_ctrl;   
+      d->ctrl[LTB_actuatorID] = LTB_ctrl;
 
+      if (RToe_y <= ground_z){
+        stage=1;
+        stage_time=msd;
+      }
 
         ///////////////////////////
   }
 
-    else if(msd>=tf+traj_time && msd<tf+2*traj_time && counter==2){
+    else if(stage==1 && counter==2){
         printf("****************************************************************************8");
         stanceToe_x = RToe_x;
        
-       if (msd < tf+2*traj_time){
+       if (msd < stage_time+traj_time){
 
             for(int i=0;i<5;i++){
             ctraj(&ss[0][i],&vv[0][i],&aa[0][i],msd,tf+traj_time,tf+2*traj_time, s0[0][i], sf[0][i], v0[0][i], vf[0][i], a0[0][i], af[0][i]);
@@ -1147,24 +1157,29 @@ void mycontroller(const mjModel* m, mjData* d)
       //double LTB_ctrl = (-5*(d->sensordata[LToe_pitch_sensor_adr]-Ltoe_pitch));
       //d->ctrl[LTB_actuatorID] = LTB_ctrl;     
 
-      double RTA_ctrl = (-100*(d->sensordata[RTA_sensor_adr]-RtoeA_pitch));
+      double RTA_ctrl = (-10*(d->sensordata[RTA_sensor_adr]-RtoeA_pitch));
       d->ctrl[RTA_actuatorID] = RTA_ctrl;
-      double RTB_ctrl = (-100*(d->sensordata[RTB_sensor_adr]-RtoeB_pitch));
+      double RTB_ctrl = (-10*(d->sensordata[RTB_sensor_adr]-RtoeB_pitch));
       d->ctrl[RTB_actuatorID] = RTB_ctrl;  
 
       //anchor foot
       double LTA_ctrl = (500*(d->sensordata[LToe_pitch_sensor_adr]-Ltoe_pitch));
       d->ctrl[LTA_actuatorID] = LTA_ctrl;
       double LTB_ctrl = (-500*(d->sensordata[LToe_pitch_sensor_adr]-Ltoe_pitch));
-      d->ctrl[LTB_actuatorID] = LTB_ctrl;   
+      d->ctrl[LTB_actuatorID] = LTB_ctrl; 
+
+      if (msd >= stage_time+traj_time){
+        stage=2;
+        stage_time=msd;
+      }
       
     }
 
-    else if(msd>=tf+2*traj_time && msd<tf+3*traj_time && counter==3){
+    else if(stage==2 && counter==3){
         printf("****************************************************************************8");
         stanceToe_x = RToe_x;
        
-       if (msd < tf+3*traj_time){
+       if (msd < stage_time+traj_time){
 
             for(int i=0;i<5;i++){
             ctraj(&ss[0][i],&vv[0][i],&aa[0][i],msd,tf+2*traj_time,tf+3*traj_time, s0[0][i], sf[0][i], v0[0][i], vf[0][i], a0[0][i], af[0][i]);
@@ -1239,10 +1254,15 @@ void mycontroller(const mjModel* m, mjData* d)
       d->ctrl[LTA_actuatorID] = LTA_ctrl;
       double LTB_ctrl = (-500*(d->sensordata[LToe_pitch_sensor_adr]-Ltoe_pitch));
       d->ctrl[LTB_actuatorID] = LTB_ctrl;   
+
+      if (LToe_y <= ground_z){
+        stage=3;
+        stage_time=msd;
+      }
       
     }
 
-    else if(msd>=tf+3*traj_time && msd<tf+4*traj_time && counter==4){
+    else if(stage==3 && counter==4){
         printf("--------------------------------------------------------------------------------------");
         stanceToe_x = LToe_x;
 
@@ -1250,7 +1270,7 @@ void mycontroller(const mjModel* m, mjData* d)
         //d->qpos[body_pitch_joint_adr] = 0.0;
         //d->qpos[body_z_joint_adr] = 1.5;
 
-        if (msd < tf+4*traj_time){
+        if (msd < stage_time + traj_time){
 
             for(int i=0;i<5;i++){
             ctraj(&ss[0][i],&vv[0][i],&aa[0][i],msd,tf+3*traj_time,tf+4*traj_time, s0[0][i], sf[0][i], v0[0][i], vf[0][i], a0[0][i], af[0][i]);
@@ -1335,10 +1355,15 @@ void mycontroller(const mjModel* m, mjData* d)
       d->ctrl[RTB_actuatorID] = RTB_ctrl;  
 
       //anchor foot
-      double LTA_ctrl = (-100*(d->sensordata[LTA_sensor_adr]-LtoeA_pitch));
+      double LTA_ctrl = (-10*(d->sensordata[LTA_sensor_adr]-LtoeA_pitch));
       d->ctrl[LTA_actuatorID] = LTA_ctrl;
-      double LTB_ctrl = (-100*(d->sensordata[LTB_sensor_adr]-LtoeB_pitch));
+      double LTB_ctrl = (-10*(d->sensordata[LTB_sensor_adr]-LtoeB_pitch));
       d->ctrl[LTB_actuatorID] = LTB_ctrl;   
+
+      if (msd >= stage_time + traj_time){
+        stage=4;
+        stage_time=msd;
+      }
 
 
         ///////////////////////////
@@ -1355,6 +1380,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
         tf=msd;
         counter=0;
+        stage=0;
         plotcounter=plotcounter+1;
         
       }
@@ -1397,8 +1423,8 @@ void mycontroller(const mjModel* m, mjData* d)
 
        
 
-        matPlot2(xx,yy1,xx,yy2,j,"xcom_vs_stancefootx_0.35_.05_.05_-.01_-.01.png",L"COM (red) vs Foot (blue)", L"time (s)",L"X Position (m)");
-        matPlot2(xx,yy3,xx,yy3,j,"xcom_error_0.35_.05_.05_-.01_-.01.png",L"COM Tracking Error", L"time (s)",L"X Position Error (m)");
+        //matPlot2(xx,yy1,xx,yy2,j,"xcom_vs_stancefootx_0.35_.05_.05_-.01_-.01.png",L"COM (red) vs Foot (blue)", L"time (s)",L"X Position (m)");
+        //matPlot2(xx,yy3,xx,yy3,j,"xcom_error_0.35_.05_.05_-.01_-.01.png",L"COM Tracking Error", L"time (s)",L"X Position Error (m)");
         //matPlot2(xx,yt1,xx,yg1,j,"hip_torque_and_gravity_torque.png",L"Hip Control (red) Gravity Torque (blue)",L"time (s)",L"Torque (N-m)");
         //matPlot2(xx,yt2,xx,yg2,j,"knee_torque_and_gravity_torque.png",L"Knee Control (red) Gravity (blue)",L"time (s)",L"Torque (N-m)");
         free(xx);
@@ -1465,11 +1491,11 @@ int main(int argc, const char** argv)
     getphaseangles(&mid2_angle1, &mid2_angle2, params, &L, &step_angle);
 
     L=0.9;
-    step_angle=-12*M_PI/180;
+    step_angle=-4*M_PI/180;
     getphaseangles(&fs1_angle1, &fs1_angle2, params, &L, &step_angle);
 
     L=0.90;
-    step_angle=0*M_PI/180;
+    step_angle=4*M_PI/180;
     getphaseangles(&fs2_angle1, &fs2_angle2, params, &L, &step_angle);
 
 
