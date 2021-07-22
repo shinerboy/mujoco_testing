@@ -74,6 +74,10 @@ double LHP_x;
 double LHP_y;
 double RHP_x;
 double RHP_y;
+double LHS_defl; //Left Heel Spring deflection
+double RHS_defl;
+double LShin_defl;
+double RShin_defl;
 
 double *uu;
   int counter=-1; //Counter used for finite state machine/state transitions
@@ -364,6 +368,14 @@ void mycontroller(const mjModel* m, mjData* d)
     const char* LToe_pitch_joint_name = "left-toe-pitch";
     int LToe_pitch_sensorID = mj_name2id(m, mjOBJ_SENSOR, LToe_pitch_joint_name);
     int LToe_pitch_sensor_adr = m->sensor_adr[LToe_pitch_sensorID];
+    //Left heel spring joint sensor
+    const char* LHeel_spring_joint_name = "left-heel-spring";
+    int LHeel_spring_sensorID = mj_name2id(m, mjOBJ_SENSOR, LHeel_spring_joint_name);
+    int LHeel_spring_sensor_adr = m->sensor_adr[LHeel_spring_sensorID];
+    //Left shin spring joint sensor
+    const char* LShin_spring_joint_name = "left-shin";
+    int LShin_spring_sensorID = mj_name2id(m, mjOBJ_SENSOR, LShin_spring_joint_name);
+    int LShin_spring_sensor_adr = m->sensor_adr[LShin_spring_sensorID];
     // Left Shoulder Roll
     const char* LSR_joint_name = "left-shoulder-roll";
     int LSR_sensorID = mj_name2id(m, mjOBJ_SENSOR, LSR_joint_name);
@@ -465,6 +477,14 @@ void mycontroller(const mjModel* m, mjData* d)
     const char* RToe_pitch_joint_name = "right-toe-pitch";
     int RToe_pitch_sensorID = mj_name2id(m, mjOBJ_SENSOR, RToe_pitch_joint_name);
     int RToe_pitch_sensor_adr = m->sensor_adr[RToe_pitch_sensorID];
+    //Right heel spring joint sensor
+    const char* RHeel_spring_joint_name = "right-heel-spring";
+    int RHeel_spring_sensorID = mj_name2id(m, mjOBJ_SENSOR, RHeel_spring_joint_name);
+    int RHeel_spring_sensor_adr = m->sensor_adr[RHeel_spring_sensorID];
+    //Right shin spring joint sensor
+    const char* RShin_spring_joint_name = "right-shin";
+    int RShin_spring_sensorID = mj_name2id(m, mjOBJ_SENSOR, RShin_spring_joint_name);
+    int RShin_spring_sensor_adr = m->sensor_adr[RShin_spring_sensorID];
     // Right Shoulder Roll
     const char* RSR_joint_name = "right-shoulder-roll";
     int RSR_sensorID = mj_name2id(m, mjOBJ_SENSOR, RSR_joint_name);
@@ -551,7 +571,7 @@ void mycontroller(const mjModel* m, mjData* d)
         int RHP_pos_sensorID = mj_name2id(m, mjOBJ_SENSOR, RHP_pos_name);
         int RHP_pos_sensor_adr = m->sensor_adr[RHP_pos_sensorID];
     //ground_z=d->sensordata[LToe_sensor_adr+2];
-    ground_z=0.065; //0.061728 rounded up
+    ground_z=0.0645; //0.061728 rounded up
     LToe_x=d->sensordata[LToe_sensor_adr];
     LToe_y=d->sensordata[LToe_sensor_adr+2];
     LHP_x = d->sensordata[LHP_pos_sensor_adr];
@@ -561,6 +581,11 @@ void mycontroller(const mjModel* m, mjData* d)
     RToe_y=d->sensordata[RToe_sensor_adr+2];
     RHP_x = d->sensordata[RHP_pos_sensor_adr];
     RHP_y = d->sensordata[RHP_pos_sensor_adr+2];
+
+    LHS_defl=d->sensordata[LHeel_spring_sensor_adr]; //Left Heel Spring deflection
+    RHS_defl=d->sensordata[RHeel_spring_sensor_adr];
+    LShin_defl=d->sensordata[LShin_spring_sensor_adr];
+    RShin_defl=d->sensordata[RShin_spring_sensor_adr];
 
     //int j = 26;
     //double ctrl = -100*(d->qpos[26]-0.75);
@@ -1391,12 +1416,16 @@ void mycontroller(const mjModel* m, mjData* d)
         yy2 = realloc(yy2, (j+1)*sizeof(double));
         xx = realloc(xx, (j+1)*sizeof(double));
         xx [j]=cont_time;
-        yy1 [j]=x_com; //actual red 
-        yy2 [j]=stanceToe_x; //desired blue
+        //yy1 [j]=x_com; //actual red 
+        //yy2 [j]=stanceToe_x; //desired blue
+        yy1 [j]=LHS_defl; //actual red 
+        yy2 [j]=RHS_defl; //desired blue
         yy3 = realloc(yy3, (j+1)*sizeof(double));
         yy4 = realloc(yy4, (j+1)*sizeof(double));    
-        yy3 [j]=x_com-stanceToe_x; //actual red 
-        yy4 [j]=traj_des[4]; //desired blue
+        //yy3 [j]=x_com-stanceToe_x; //actual red 
+        //yy4 [j]=traj_des[4]; //desired blue
+        yy3 [j]=LShin_defl; //actual red 
+        yy4 [j]=RShin_defl; //desired blue
         yt1 = realloc(yt1, (j+1)*sizeof(double));
         yt2 = realloc(yt2, (j+1)*sizeof(double));
         yt1 [j]=uu[0]; //hip torque
@@ -1425,7 +1454,9 @@ void mycontroller(const mjModel* m, mjData* d)
 
         //matPlot2(xx,yy1,xx,yy2,j,"xcom_vs_stancefootx_0.35_.05_.05_-.01_-.01.png",L"COM (red) vs Foot (blue)", L"time (s)",L"X Position (m)");
         //matPlot2(xx,yy3,xx,yy3,j,"xcom_error_0.35_.05_.05_-.01_-.01.png",L"COM Tracking Error", L"time (s)",L"X Position Error (m)");
-        //matPlot2(xx,yt1,xx,yg1,j,"hip_torque_and_gravity_torque.png",L"Hip Control (red) Gravity Torque (blue)",L"time (s)",L"Torque (N-m)");
+        matPlot2(xx,yy1,xx,yy2,j,"heel_spring_deflection.png",L"LHS (red) vs RHS (blue)", L"time (s)",L"Position (rad)");
+        matPlot2(xx,yy3,xx,yy4,j,"shin_spring_deflection.png",L"LShin (red) RShin (blue)", L"time (s)",L"Position (rad)");
+                //matPlot2(xx,yt1,xx,yg1,j,"hip_torque_and_gravity_torque.png",L"Hip Control (red) Gravity Torque (blue)",L"time (s)",L"Torque (N-m)");
         //matPlot2(xx,yt2,xx,yg2,j,"knee_torque_and_gravity_torque.png",L"Knee Control (red) Gravity (blue)",L"time (s)",L"Torque (N-m)");
         free(xx);
         free(yy1);
