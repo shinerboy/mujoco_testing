@@ -108,6 +108,11 @@ double *uu;
   double omega2_des;
   double omega3_des;
   double omega4_des;
+  double torso_des;
+  double LHP_des;
+  double RHP_des;
+  double LK_des;
+  double RK_des;
   //Used for get phase angle method
   double L; //desired leg length.
   double step_angle; //desired step angle
@@ -166,6 +171,8 @@ double *uu;
     double *ya2;
     double *yg1;
     double *yg2;
+
+double (*Data_csv)[11];//Array to store data to save
 
 
 
@@ -814,7 +821,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = -0.02;
+      sf[0][0] = 0.02;
       sf[0][1] = fs1_angle1;
       sf[0][2] = fs2_angle1;
       sf[0][3] = fs1_angle2;
@@ -859,7 +866,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = -0.02;
+      sf[0][0] = 0.02;
       sf[0][1] = mid1_angle1;
       sf[0][2] = mid2_angle1;
       sf[0][3] = mid1_angle2;
@@ -894,7 +901,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = -0.02;
+      sf[0][0] = 0.02;
       sf[0][1] = fs1_angle1;
       sf[0][2] = fs2_angle1;
       sf[0][3] = fs1_angle2;
@@ -930,7 +937,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
-      sf[0][0] = -0.02;
+      sf[0][0] = 0.02;
       sf[0][1] = mid1_angle1;
       sf[0][2] = mid2_angle1;
       sf[0][3] = mid1_angle2;
@@ -956,7 +963,7 @@ void mycontroller(const mjModel* m, mjData* d)
 
         //d->qpos[body_z_joint_adr] = -0.92;
         d->qpos[body_x_joint_adr] = 0.0;
-        d->qpos[body_pitch_joint_adr] = -0.007;//-0.01
+        d->qpos[body_pitch_joint_adr] = -0.01;//-0.01
         printf("--------------------------------------------------------------------------------------");
 
     }
@@ -1044,9 +1051,17 @@ void mycontroller(const mjModel* m, mjData* d)
       traj_des[3]=ss[0][3];
       traj_des[4]=ss[0][4];
 
+
+
       theta2_des=theta2;//swing leg hip angle (not desired)
       theta3_des=theta3;//stance leg knee angle
       theta4_des=theta4;//swing leg knee angle
+
+      torso_des=traj_des[0];
+      LHP_des=traj_des[1];
+      RHP_des=traj_des[2];
+      LK_des=traj_des[3];
+      RK_des=traj_des[4];
       
       traj_des[5]=vv[0][0];
       traj_des[6]=vv[0][1];
@@ -1172,6 +1187,12 @@ void mycontroller(const mjModel* m, mjData* d)
       theta3_des=theta4;
       theta4_des=theta3;//swing leg knee angle
 
+      torso_des=traj_des[0];
+      LHP_des=traj_des[2];
+      RHP_des=traj_des[1];
+      LK_des=traj_des[4];
+      RK_des=traj_des[3];
+
       z[0]=theta0;
       z[1]=omega0;
       z[2]=theta2; //Uncontrolled state
@@ -1263,6 +1284,12 @@ void mycontroller(const mjModel* m, mjData* d)
       theta2_des=theta1;
       theta3_des=theta4;
       theta4_des=theta3;//swing leg knee angle
+
+      torso_des=traj_des[0];
+      LHP_des=traj_des[2];
+      RHP_des=traj_des[1];
+      LK_des=traj_des[4];
+      RK_des=traj_des[3];
 
       z[0]=theta0;
       z[1]=omega0;
@@ -1364,6 +1391,12 @@ void mycontroller(const mjModel* m, mjData* d)
       theta3_des=theta3;
       theta4_des=theta4;//swing leg knee angle
 
+      torso_des=traj_des[0];
+      LHP_des=traj_des[1];
+      RHP_des=traj_des[2];
+      LK_des=traj_des[3];
+      RK_des=traj_des[4];
+
       z[0]=theta0;
       z[1]=omega0;
       z[2]=theta1; //Uncontrolled state
@@ -1425,7 +1458,7 @@ void mycontroller(const mjModel* m, mjData* d)
       if (msd >= stage_time + traj_time){
         stage=4;
         stage_time=msd;
-        plotcounter=2;
+        //plotcounter=2;
       }
 
 
@@ -1449,7 +1482,7 @@ void mycontroller(const mjModel* m, mjData* d)
       }
 
 
-      if (plotcounter<2 && plotbreak==0){
+      if (plotcounter<6 && plotbreak==0){
         yy1 = realloc(yy1, (j+1)*sizeof(double));
         yy2 = realloc(yy2, (j+1)*sizeof(double));
         xx = realloc(xx, (j+1)*sizeof(double));
@@ -1481,16 +1514,34 @@ void mycontroller(const mjModel* m, mjData* d)
         yg2 = realloc(yg2, (j+1)*sizeof(double));
         yg2 [j]= d->qfrc_bias[LK_joint_adr]*1;
 
+        Data_csv = realloc(Data_csv, (j+1)*sizeof(double)*11);
+        Data_csv[j][0]=msd;
+        Data_csv[j][1]=theta0;
+        Data_csv[j][2]=theta1;
+        Data_csv[j][3]=theta2;
+        Data_csv[j][4]=theta3;
+        Data_csv[j][5]=theta4;
+        Data_csv[j][6]=torso_des;
+        Data_csv[j][7]=LHP_des;
+        Data_csv[j][8]=RHP_des;
+        Data_csv[j][9]=LK_des;
+        Data_csv[j][10]=RK_des;
+
+
 
         
       }
 
-      if (plotcounter==2 && plotbreak==0){
+      if (plotcounter==6 && plotbreak==0){
         printf("----------------------------------------");
-        plotcounter=2;
+        plotcounter=6;
         plotbreak=1;
         
         //remove("example77.png");
+
+        char file_name[100] = "data_files/test2_csv";
+
+        matcsv(file_name, j, 11, Data_csv);
 
        
 
@@ -1596,6 +1647,8 @@ int main(int argc, const char** argv)
     ya2 = calloc(1, sizeof(double));
     yg1 = calloc(1, sizeof(double)); //to plot joint gravity torque
     yg2 = calloc(1, sizeof(double));
+    //Data_csv = calloc(11, sizeof(double));
+    Data_csv=calloc(11, sizeof(double));
   
 
 
