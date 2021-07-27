@@ -853,3 +853,11 @@ Tue Jul 13 00:58:41 2021
 ERROR: Load model error: Error: invalid condim in geom '' (id = 2)
 Object name = , id = 2, line = 70, column = 7
 
+Mon Jul 26 13:00:33 2021
+ERROR: Load model error: Error: unrecognized name of sensorized object in sensor 'body-pitch' (id = 24)
+Object name = body-pitch, id = 24
+
+Mon Jul 26 13:01:14 2021
+ERROR: Load model error: Error: unrecognized name of sensorized object in sensor 'body-pitch-vel' (id = 56)
+Object name = body-pitch-vel, id = 56
+

@@ -61,15 +61,14 @@
   </default>
   <worldbody>
     <!--geom name='floor' type='plane' conaffinity='15' condim='3' material='plane' pos='0 0 0' size='5 5 0.125'/> -->
-    <geom name='floor' type='box' conaffinity='7' condim='3' material='box' pos='0 0 -0.1' size='3 5 0.09'/>
-    <geom name='step' type='plane' conaffinity='7' condim='3' material='plane' pos='0 0 -0.045' size='20 5 0.125'/>
+    <geom name='floor' type='plane' conaffinity='7' condim='3' material='plane' pos='0 0 0' size='20 5 0.125'/>
     <!-- body name='base' pos='0 0 1.15' euler='0 0 0'> -->
-    <body name='base' pos='0 0 2' euler='0 0 0'>
+    <body name='base' pos='0 0 0' euler='0 0 0'>
       <inertial pos='0.001637 0.0002 0.259547' mass='15.028392' fullinertia='0.376284 0.342655 0.100648 -8.8e-05 0.008378 6.7e-05'/>
-      <joint name='body_x' type='slide' axis='1 0 0' pos='0 0 0' limited='false'/>
+      <!--oint name='body_x' type='slide' axis='1 0 0' pos='0 0 0' limited='false'/>
       <joint name='body_z' type='slide' axis='0 0 1' pos='0 0 0' limited='false' ref='0.0'/>
-      <joint name='body-pitch' type='hinge' axis='0 1 0' pos='0 0 0' limited='false'/>
-      <!--joint type='free' limited='false'/> -->
+      <joint name='body-pitch' type='hinge' axis='0 1 0' pos='0 0 0' limited='false'/> -->
+      <joint name = 'base' type='free' limited='false'/> 
       <geom type='mesh' mesh='base' material='robot'/>
       <geom type='box' size='0.0975 0.087 0.245' pos='0.008 0 0.21' euler='0 0 0' class='collision'/>
       <geom type='cylinder' size ='0.05 0.0325' pos='0.02 0 0.49' euler='0 0 0' class='collision'/>
@@ -361,9 +360,9 @@
     <jointpos name='right-elbow' joint='right-elbow'/>
     <jointpos name='left-tarsus' joint='left-tarsus'/>
     <jointpos name='right-tarsus' joint='right-tarsus'/>
-    <jointpos name='body-pitch' joint='body-pitch'/>
+    <!--jointpos name='body-pitch' joint='body-pitch'/>
     <jointpos name='body_x' joint='body_x'/>
-    <jointpos name='body_z' joint='body_z'/>
+    <jointpos name='body_z' joint='body_z'/>-->
     <jointpos name="right-toe-pitch" joint="right-toe-pitch"/>
     <jointpos name="left-toe-pitch" joint="left-toe-pitch"/>
     <jointpos name="left-heel-spring" joint="left-heel-spring"/>
@@ -396,7 +395,7 @@
     <jointvel name='right-shoulder-pitch-vel' joint='right-shoulder-pitch'/>
     <jointvel name='right-shoulder-yaw-vel' joint='right-shoulder-yaw'/>
     <jointvel name='right-elbow-vel' joint='right-elbow'/>
-    <jointvel name='body-pitch-vel' joint='body-pitch'/> 
+    <!--jointvel name='body-pitch-vel' joint='body-pitch'/> -->
     <framepos  name='left-toe-pos' objtype='xbody' objname='left-toe-pitch' />
     <framepos  name='right-toe-pos' objtype='xbody' objname='right-toe-pitch' />
     <framepos  name='left-hip-pos' objtype='xbody' objname='left-hip-pitch' />

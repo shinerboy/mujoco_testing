@@ -572,6 +572,18 @@ void mycontroller(const mjModel* m, mjData* d)
     int body_x_sensorID = mj_name2id(m, mjOBJ_SENSOR, body_x_joint_name);
     int body_x_sensor_adr = m->sensor_adr[body_x_sensorID];
 
+    const char* base_joint_name = "base";
+        int base_jointID = mj_name2id(m, mjOBJ_JOINT, base_joint_name);
+        int base_joint_adr = m->jnt_qposadr[base_jointID];
+        d->qpos[base_joint_adr]=0;
+        d->qpos[base_joint_adr+1]=0;
+        d->qpos[base_joint_adr+2]=1.1;
+        d->qpos[base_joint_adr+3]=1;
+        d->qpos[base_joint_adr+4]=0;
+        d->qpos[base_joint_adr+5]=0;
+        d->qpos[base_joint_adr+6]=0;
+
+
     const char* LToe_pos_name = "left-toe-pos";
         int LToe_sensorID = mj_name2id(m, mjOBJ_SENSOR, LToe_pos_name);
         int LToe_sensor_adr = m->sensor_adr[LToe_sensorID];
@@ -1675,7 +1687,7 @@ int main(int argc, const char** argv)
 
     // check command-line arguments
     if( argc<2 )
-        m = mj_loadXML("../model/digit_test2.xml", 0, error, 1000);
+        m = mj_loadXML("../model/digit_test3.xml", 0, error, 1000);
 
     else
         if( strlen(argv[1])>4 && !strcmp(argv[1]+strlen(argv[1])-4, ".mjb") )
@@ -1723,8 +1735,16 @@ int main(int argc, const char** argv)
     const char* RToe_pos_name = "right-toe-pos";
         int RToe_sensorID = mj_name2id(m, mjOBJ_SENSOR, RToe_pos_name);
         int RToe_sensor_adr = m->sensor_adr[RToe_sensorID];
-
-
+    const char* base_joint_name = "base";
+        int base_jointID = mj_name2id(m, mjOBJ_JOINT, base_joint_name);
+        int base_joint_adr = m->jnt_qposadr[base_jointID];
+        d->qpos[base_joint_adr]=0;
+        d->qpos[base_joint_adr+1]=0;
+        d->qpos[base_joint_adr+2]=1;
+        d->qpos[base_joint_adr+3]=0;
+        d->qpos[base_joint_adr+4]=0;
+        d->qpos[base_joint_adr+5]=0;
+        d->qpos[base_joint_adr+6]=1;
 
 
 
@@ -1739,11 +1759,13 @@ int main(int argc, const char** argv)
         d->qpos[RHP_joint_adr]=-theta1_mo+mid2_angle1;//RHP
         //d->ctrl[11] = theta2_mo-mid2_angle2;//RK servo
         d->qpos[RK_joint_adr] = theta2_mo-mid2_angle2;
-        int base = mj_name2id(m, mjOBJ_BODY, "base");
+        //int base = mj_name2id(m, mjOBJ_BODY, "base");
         //d->xpos[base*3+2]=10;
-        d->qpos[body_z_joint_adr] = -0.92;
-        d->qpos[body_x_joint_adr] = 0.0;
-        d->qpos[body_pitch_joint_adr] = 0.0;
+        
+
+        //d->qpos[body_z_joint_adr] = -0.92;
+        //d->qpos[body_x_joint_adr] = 0.0;
+        //d->qpos[body_pitch_joint_adr] = 0.0;
         
          }
 
