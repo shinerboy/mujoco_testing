@@ -337,7 +337,7 @@
   </actuator>
   <sensor>
     <framepos  name='base-pos' objtype='xbody' objname='base' />
-    <framequat name='base-quat' objtype='body' objname='base' />
+    <framequat name='base-quat' objtype='xbody' objname='base' />
     <jointpos name='left-hip-roll' joint='left-hip-roll'/>
     <jointpos name='left-hip-yaw' joint='left-hip-yaw'/>
     <jointpos name='left-hip-pitch' joint='left-hip-pitch'/>
