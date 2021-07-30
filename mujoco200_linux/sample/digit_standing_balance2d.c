@@ -781,6 +781,8 @@ void mycontroller(const mjModel* m, mjData* d)
     if(msd>=tf/5 &&counter == -1){
         LtoeA_pitch=d->sensordata[LTA_sensor_adr];//get actuator position
         LtoeB_pitch=d->sensordata[LTB_sensor_adr];
+        RtoeA_pitch=d->sensordata[RTA_sensor_adr];//get actuator position
+        RtoeB_pitch=d->sensordata[RTB_sensor_adr];
         counter=0;
     }
 
@@ -990,16 +992,21 @@ void mycontroller(const mjModel* m, mjData* d)
       //double LTB_ctrl = (-500*(d->sensordata[LToe_pitch_sensor_adr]-LtoeB_pitch));
       //d->ctrl[LTB_actuatorID] = LTB_ctrl;     
 
-      double RTA_ctrl = (500*(d->sensordata[RToe_pitch_sensor_adr]+Rtoe_pitch));
-      d->ctrl[RTA_actuatorID] = RTA_ctrl;
-      double RTB_ctrl = (-500*(d->sensordata[RToe_pitch_sensor_adr]+Rtoe_pitch));
-      d->ctrl[RTB_actuatorID] = RTB_ctrl;  
+     //double RTA_ctrl = (500*(d->sensordata[RToe_pitch_sensor_adr]+Rtoe_pitch));
+      //d->ctrl[RTA_actuatorID] = RTA_ctrl;
+      //double RTB_ctrl = (-500*(d->sensordata[RToe_pitch_sensor_adr]+Rtoe_pitch));
+      //d->ctrl[RTB_actuatorID] = RTB_ctrl;  
 
       if(msd>=tf/5){
-        double LTA_ctrl = (-500*(d->sensordata[LTA_sensor_adr]-LtoeA_pitch));
+      double LTA_ctrl = (-500*(d->sensordata[LTA_sensor_adr]-LtoeA_pitch));
       d->ctrl[LTA_actuatorID] = LTA_ctrl;
       double LTB_ctrl = (-500*(d->sensordata[LTB_sensor_adr]-LtoeB_pitch));
-      d->ctrl[LTB_actuatorID] = LTB_ctrl;   
+      d->ctrl[LTB_actuatorID] = LTB_ctrl; 
+
+      double RTA_ctrl = (-500*(d->sensordata[RTA_sensor_adr]-RtoeA_pitch));
+      d->ctrl[RTA_actuatorID] = RTA_ctrl;
+      double RTB_ctrl = (-500*(d->sensordata[RTB_sensor_adr]-RtoeB_pitch));
+      d->ctrl[RTB_actuatorID] = RTB_ctrl;   
       }
 
 
@@ -1517,7 +1524,7 @@ int main(int argc, const char** argv)
     step_angle=0*M_PI/180;
     getphaseangles(&mid1_angle1, &mid1_angle2, params, &L, &step_angle);
 
-    L=0.75;
+    L=0.9;
     step_angle=0*M_PI/180;
     getphaseangles(&mid2_angle1, &mid2_angle2, params, &L, &step_angle);
 
