@@ -60,11 +60,11 @@
     <motor ctrllimited='true'/>
   </default>
   <worldbody>
-    <geom name='floor' type='plane' conaffinity='15' condim='3' material='plane' pos='0 0 0' size='5 5 0.125'/>
-    <!--geom name='floor' type='box' conaffinity='7' condim='3' material='box' pos='0 0 -0.1' size='3 5 0.09'/>
-    <geom name='step' type='plane' conaffinity='7' condim='3' material='plane' pos='0 0 -0.045' size='20 5 0.125'/> -->
+    <!--geom name='floor' type='plane' conaffinity='15' condim='3' material='plane' pos='0 0 0' size='5 5 0.125'/> -->
+    <geom name='floor' type='box' conaffinity='7' condim='3' material='box' pos='0 0 -0.1' size='3 5 0.09'/>
+    <geom name='step' type='plane' conaffinity='7' condim='3' material='plane' pos='0 0 -0.045' size='20 5 0.125'/>
+    <!-- body name='base' pos='0 0 1.15' euler='0 0 0'> -->
     <body name='base' pos='0 0 2' euler='0 0 0'>
-    <!--body name='base' pos='0 0 2' euler='0 0 0'>-->
       <inertial pos='0.001637 0.0002 0.259547' mass='15.028392' fullinertia='0.376284 0.342655 0.100648 -8.8e-05 0.008378 6.7e-05'/>
       <joint name='body_x' type='slide' axis='1 0 0' pos='0 0 0' limited='false'/>
       <joint name='body_z' type='slide' axis='0 0 1' pos='0 0 0' limited='false' ref='0.0'/>
