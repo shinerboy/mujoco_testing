@@ -338,7 +338,7 @@
   </actuator>
   <sensor>
     <framepos  name='base-pos' objtype='xbody' objname='base' />
-    <framequat name='base-quat' objtype='body' objname='base' />
+    <framequat name='base-quat' objtype='xbody' objname='base' />
     <jointpos name='left-hip-roll' joint='left-hip-roll'/>
     <jointpos name='left-hip-yaw' joint='left-hip-yaw'/>
     <jointpos name='left-hip-pitch' joint='left-hip-pitch'/>
@@ -370,8 +370,8 @@
     <jointpos name="right-heel-spring" joint="right-heel-spring"/>
     <jointpos name="left-shin" joint="left-shin"/>
     <jointpos name="right-shin" joint="right-shin"/>
-    <frameangvel name='base-angvel' objtype='body' objname='base' />
-    <framelinvel name='base-linvel' objtype='body' objname='base' />
+    <frameangvel name='base-angvel' objtype='xbody' objname='base' />
+    <framelinvel name='base-linvel' objtype='xbody' objname='base' />
     <jointvel name='left-hip-roll-vel' joint='left-hip-roll'/>
     <jointvel name='left-hip-yaw-vel' joint='left-hip-yaw'/>
     <jointvel name='left-hip-pitch-vel' joint='left-hip-pitch'/>

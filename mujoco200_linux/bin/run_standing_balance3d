@@ -1,0 +1,2 @@
+make  digit_standing_balance3d -C ../sample
+./digit_standing_balance3d
