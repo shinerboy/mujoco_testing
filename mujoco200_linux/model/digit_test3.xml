@@ -101,7 +101,7 @@
               <geom type='mesh' mesh='left-knee' material='robot'/>
               <body name='left-shin' pos='0.060677 0.047406 0' euler='0 0 0'>
                 <inertial pos='0.174265 0.010265 0.00107' mass='0.895793' fullinertia='0.001128 0.022492 0.022793 0.001098 0.000196 -3e-06'/>
-                <joint name='left-shin' type='hinge' axis='0 0 1' limited='false' stiffness='6000'/>
+                <joint name='left-shin' type='hinge' axis='0 0 1' limited='false' stiffness='60000'/>
                 <geom type='mesh' mesh='left-shin' material='robot'/>
                 <geom type='cylinder' size ='0.03 0.1715' pos='0.23 0 0' euler='0 90 0' class='collision'/>
                 <geom type='cylinder' size ='0.05 0.1' pos='0.125 0.009 0' euler='90 84 0' class='collision'/>
@@ -112,7 +112,7 @@
                   <geom type='capsule' size ='0.02 0.18' pos='0.21 -0.03 0' euler='0 90 0' class='collision'/>
                   <body name='left-heel-spring' pos='-0.01766 -0.029456 0.00104' euler='4.47 0.32 155.8'>
                     <inertial pos='0.049086 0.004739 -4.5e-05' mass='0.230018' fullinertia='5.5e-05 0.00074 0.000701 1.5e-05 1e-06 -0'/>
-                    <joint name='left-heel-spring' type='hinge' axis='0 0 1' range='-6 6' limited='true' stiffness='4375'/>
+                    <joint name='left-heel-spring' type='hinge' axis='0 0 1' range='-6 6' limited='true' stiffness='43750'/>
                     <geom type='mesh' mesh='left-heel-spring' material='robot'/>
                   </body>
                   <body name='left-toe-A' pos='0.059 -0.034 -0.0276' euler='-180 0 91.96'>
@@ -215,7 +215,7 @@
               <geom type='mesh' mesh='right-knee' material='robot'/>
               <body name='right-shin' pos='0.060677 -0.047406 0' euler='0 0 0'>
                 <inertial pos='0.174265 -0.010265 0.00107' mass='0.895793' fullinertia='0.001128 0.022492 0.022793 -0.001098 0.000196 3e-06'/>
-                <joint name='right-shin' type='hinge' axis='0 0 1' limited='false' stiffness='6000'/>
+                <joint name='right-shin' type='hinge' axis='0 0 1' limited='false' stiffness='60000'/>
                 <geom type='mesh' mesh='right-shin' material='robot'/>
                 <geom type='cylinder' size ='0.03 0.1715' pos='0.23 0 0' euler='0 90 0' class='collision'/>
                 <geom type='cylinder' size ='0.05 0.1' pos='0.125 -0.009 0' euler='-90 84 0' class='collision'/>
@@ -226,7 +226,7 @@
                   <geom type='capsule' size ='0.02 0.18' pos='0.21 0.03 0' euler='0 90 0' class='collision'/>
                   <body name='right-heel-spring' pos='-0.01766 0.029456 0.00104' euler='-4.47 0.32 -155.8'>
                     <inertial pos='0.049086 -0.004739 -4.5e-05' mass='0.230018' fullinertia='5.5e-05 0.00074 0.000701 -1.5e-05 1e-06 0'/>
-                    <joint name='right-heel-spring' type='hinge' axis='0 0 1' range='-6 6' limited='true' stiffness='4375'/>
+                    <joint name='right-heel-spring' type='hinge' axis='0 0 1' range='-6 6' limited='true' stiffness='43750'/>
                     <geom type='mesh' mesh='right-heel-spring' material='robot'/>
                   </body>
                   <body name='right-toe-A' pos='0.059 0.034 -0.0276' euler='180 0 -91.96'>

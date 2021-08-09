@@ -623,6 +623,8 @@ void mycontroller(const mjModel* m, mjData* d)
     RHS_defl=d->sensordata[RHeel_spring_sensor_adr];
     LShin_defl=d->sensordata[LShin_spring_sensor_adr];
     RShin_defl=d->sensordata[RShin_spring_sensor_adr];
+    printf("Left shin spring deflection = %f \n",LShin_defl);
+    printf("Left heel spring deflection = %f \n",LHS_defl);
 
     //int j = 26;
     //double ctrl = -100*(d->qpos[26]-0.75);

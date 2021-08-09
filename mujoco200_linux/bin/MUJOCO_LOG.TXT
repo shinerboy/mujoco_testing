@@ -861,3 +861,9 @@ Mon Jul 26 13:01:14 2021
 ERROR: Load model error: Error: unrecognized name of sensorized object in sensor 'body-pitch-vel' (id = 56)
 Object name = body-pitch-vel, id = 56
 
+Sun Aug  8 22:58:34 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 15. The simulation is unstable. Time = 0.0045.
+
+Sun Aug  8 22:58:45 2021
+WARNING: Nan, Inf or huge value in QACC at DOF 15. The simulation is unstable. Time = 0.0045.
+
