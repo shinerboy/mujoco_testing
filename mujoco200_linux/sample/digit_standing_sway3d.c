@@ -42,7 +42,8 @@ long time_start_l;
 struct timespec spec;
 double time_start;
 double tf = 8;
-double traj_time = 3;//0.7 works well
+double traj_time = 4;//0.7 works well
+double traj_time2 = 0.25;
 double stage_time=0;
 double s0[1][5] = {0, 0, 0, 0, 0};
 double sf[1][5] = {0, 0, 0, 0, 0};
@@ -755,7 +756,7 @@ void mycontroller(const mjModel* m, mjData* d)
     theta4 = theta2_mo-d->sensordata[RK_sensor_adr];
 
     theta5 = d->sensordata[LHR_sensor_adr]-20*M_PI/180; //LHR
-    theta6 = d->sensordata[LHR_sensor_adr]+20*M_PI/180; //RHR
+    theta6 = d->sensordata[RHR_sensor_adr]+20*M_PI/180; //RHR
 
     //omega0 = -1*d->sensordata[body_pitch_vel_sensor_adr];
     double omega00 = -1*d->sensordata[base_angvel_sensor_adr+1];
@@ -912,8 +913,8 @@ void mycontroller(const mjModel* m, mjData* d)
 
       s0r[0][0]=theta5;
       s0r[0][1]=theta6;
-      v0r[0][0]=omega5;
-      v0r[0][1]=omega6;
+      v0r[0][0]=omega5*0;
+      v0r[0][1]=omega6*0;
       a0r[0][0]=0;
       a0r[0][1]=0;
 
@@ -925,8 +926,8 @@ void mycontroller(const mjModel* m, mjData* d)
       sf[0][3] = mid1_angle2;
       sf[0][4] = mid1_angle2;
 
-      sfr[0][0]=0;
-      sfr[0][1]=0;
+      sfr[0][0]=0*M_PI/180;
+      sfr[0][1]=0*M_PI/180;
 
       //sf[0][1] = s0[0][1];
       //sf[0][2] = s0[0][2];
@@ -982,8 +983,8 @@ void mycontroller(const mjModel* m, mjData* d)
       sf[0][3] = mid1_angle2;
       sf[0][4] = mid1_angle2;
 
-      sfr[0][0]=2*M_PI/180;
-      sfr[0][1]=0;
+      sfr[0][0]=4*M_PI/180;
+      sfr[0][1]=4*M_PI/180;
 
       //sf[0][1] = s0[0][1];
       //sf[0][2] = s0[0][2];
@@ -1012,13 +1013,21 @@ void mycontroller(const mjModel* m, mjData* d)
       a0[0][3]=0;
       a0[0][4]=0; 
 
+      s0r[0][0]=theta5;
+      s0r[0][1]=theta6;
+      v0r[0][0]=omega5;
+      v0r[0][1]=omega6;
+
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
       sf[0][0] = -0.02;
-      sf[0][1] = fs2_angle1;
+      sf[0][1] = mid1_angle1;
       sf[0][2] = fs2_angle1;
-      sf[0][3] = fs2_angle2;
+      sf[0][3] = mid1_angle2;
       sf[0][4] = fs2_angle2;
+
+      sfr[0][0]=0*M_PI/180;
+      sfr[0][1]=0*M_PI/180;
 
       //sf[0][1] = s0[0][1];
       //sf[0][2] = s0[0][2];
@@ -1048,13 +1057,21 @@ void mycontroller(const mjModel* m, mjData* d)
       a0[0][3]=0;
       a0[0][4]=0; 
 
+      s0r[0][0]=theta5;
+      s0r[0][1]=theta6;
+      v0r[0][0]=omega5;
+      v0r[0][1]=omega6;
+
       //sf[0][0] = s0[0][0];
       //sf[0][1] = s0[0][1];
       sf[0][0] = 0.5;
-      sf[0][1] = fs1_angle1;
-      sf[0][2] = fs1_angle1;
-      sf[0][3] = fs1_angle2;
-      sf[0][4] = fs1_angle2;
+      sf[0][1] = mid2_angle1;
+      sf[0][2] = mid1_angle1;
+      sf[0][3] = mid2_angle2;
+      sf[0][4] = mid1_angle2;
+
+      sfr[0][0]=-0*M_PI/180;
+      sfr[0][1]=0*M_PI/180;
 
       //sf[0][1] = s0[0][1];
       //sf[0][2] = s0[0][2];
@@ -1159,6 +1176,8 @@ void mycontroller(const mjModel* m, mjData* d)
     else if(msd>=tf && stage==0 && counter==1){
         //theta0=-1*quat_angle;
         printf("stage0--------------------------------------------------------------------------------------");
+        printf("tf: %f \n", tf);
+        printf("msd: %f \n", msd);
         stanceToe_x = LToe_x;
 
         //d->qpos[body_x_joint_adr] = 0.0;
@@ -1171,10 +1190,13 @@ void mycontroller(const mjModel* m, mjData* d)
             ctraj(&ss[0][i],&vv[0][i],&aa[0][i],msd,tf,tf+traj_time, s0[0][i], sf[0][i], v0[0][i], vf[0][i], a0[0][i], af[0][i]);
             }
             for(int i=0;i<2;i++){
-                ctraj(&ssr[0][i],&vvr[0][i],&aar[0][i],msd,stage_time,stage_time+traj_time, s0r[0][i], sfr[0][i], v0r[0][i], vfr[0][i], a0r[0][i], afr[0][i]);
+                ctraj(&ssr[0][i],&vvr[0][i],&aar[0][i],msd,tf,tf+traj_time, s0r[0][i], sfr[0][i], v0r[0][i], vfr[0][i], a0r[0][i], afr[0][i]);
             }
             
         }
+
+        printf("ssr[0][0]: %f \n", ssr[0][0]);
+        printf("ssr[0][1]: %f \n", ssr[0][1]);
 
         
 
@@ -1263,11 +1285,13 @@ void mycontroller(const mjModel* m, mjData* d)
       double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+traj_des[3])))-(-10*omega4);
       d->ctrl[RK_actuatorID] = RK_ctrl;
 
-      double LHR_ctrl = -500*(ssr[0][0]-theta5)-(10*omega5);
-      double RHR_ctrl = -500*(ssr[0][1]-theta6)-(10*omega6);
+      double LHR_ctrl = -500*(theta5-ssr[0][0])-(10*omega5); //double LHR_ctrl = -500*(d->sensordata[LHR_sensor_adr]-20*M_PI/180)-(10*d->sensordata[LHR_vel_sensor_adr]);
+      double RHR_ctrl = -500*(theta6-ssr[0][1])-(10*omega6); //double RHR_ctrl = -500*(d->sensordata[RHR_sensor_adr]+20*M_PI/180)-(10*d->sensordata[RHR_vel_sensor_adr]);
+
       d->ctrl[LHR_actuatorID] = LHR_ctrl;
       d->ctrl[RHR_actuatorID] = RHR_ctrl;
 
+        
       //double LHP_ctrl = (-500*(d->sensordata[LHP_sensor_adr]-(theta1_mo-mid1_angle1)))-(-10*omega1);
       //d->ctrl[LHP_actuatorID] = LHP_ctrl;
       //double LK_ctrl = (-500*(d->sensordata[LK_sensor_adr]-(-theta2_mo+mid1_angle2)))-(10*omega3);
@@ -1305,14 +1329,14 @@ void mycontroller(const mjModel* m, mjData* d)
        // double RTB_ctrl = -15*(d->sensordata[LToe_pitch_sensor_adr]+d->sensordata[RToe_pitch_sensor_adr])-2.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);
        // d->ctrl[RTB_actuatorID] = RTB_ctrl; 
 
-      double RTA_ctrl = (-10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])-1.2*(base_angvel[1])+1.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);;
+      double RTA_ctrl = (-10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])-1.2*(base_angvel[1])+1.0*(Rtoe_pitch+d->sensordata[RToe_pitch_sensor_adr]);;
        d->ctrl[RTA_actuatorID] = RTA_ctrl;
-       double RTB_ctrl = (10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])+1.2*(base_angvel[1])-1.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);
+       double RTB_ctrl = (10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])+1.2*(base_angvel[1])-1.0*(Rtoe_pitch+d->sensordata[RToe_pitch_sensor_adr]);
        d->ctrl[RTB_actuatorID] = RTB_ctrl; 
 
       if (msd>tf+traj_time){ //0.027check spring deflection to ensure weight is on stance leg
-        //stage=1;
-        //stage_time=msd;
+        stage=1;
+        stage_time=msd;
         //plotcounter=10;
       }
 
@@ -1334,7 +1358,9 @@ void mycontroller(const mjModel* m, mjData* d)
             for(int i=0;i<5;i++){
             ctraj(&ss[0][i],&vv[0][i],&aa[0][i],msd,stage_time,stage_time+traj_time, s0[0][i], sf[0][i], v0[0][i], vf[0][i], a0[0][i], af[0][i]);
             }
-            ctraj(&ssr[0][0],&vvr[0][0],&aar[0][0],msd,stage_time,stage_time+traj_time, s0r[0][0], sfr[0][0], v0r[0][0], vfr[0][0], a0r[0][0], afr[0][0]);
+            for(int i=0;i<2;i++){
+                ctraj(&ssr[0][i],&vvr[0][i],&aar[0][i],msd,stage_time,stage_time+traj_time, s0r[0][i], sfr[0][i], v0r[0][i], vfr[0][i], a0r[0][i], afr[0][i]);
+            }
         }
 
         
@@ -1428,6 +1454,12 @@ void mycontroller(const mjModel* m, mjData* d)
       double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+traj_des[3])))-(-10*omega4);
       d->ctrl[RK_actuatorID] = RK_ctrl;
 
+      double LHR_ctrl = -500*(theta5-ssr[0][0])-(10*omega5); //double LHR_ctrl = -500*(d->sensordata[LHR_sensor_adr]-20*M_PI/180)-(10*d->sensordata[LHR_vel_sensor_adr]);
+      double RHR_ctrl = -500*(theta6-ssr[0][1])-(10*omega6); //double RHR_ctrl = -500*(d->sensordata[RHR_sensor_adr]+20*M_PI/180)-(10*d->sensordata[RHR_vel_sensor_adr]);
+
+      d->ctrl[LHR_actuatorID] = LHR_ctrl;
+      d->ctrl[RHR_actuatorID] = RHR_ctrl;
+
       double Ltoe_pitch;
       parallel_toe(&theta0, &theta1, &theta3, &Ltoe_pitch);
       double Rtoe_pitch;
@@ -1443,14 +1475,14 @@ void mycontroller(const mjModel* m, mjData* d)
        // double RTB_ctrl = -15*(d->sensordata[LToe_pitch_sensor_adr]+d->sensordata[RToe_pitch_sensor_adr])-2.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);
        // d->ctrl[RTB_actuatorID] = RTB_ctrl; 
 
-      double RTA_ctrl = (-10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])-1.2*(base_angvel[1])+1.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);;
+      double RTA_ctrl = (-10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])-1.2*(base_angvel[1])+1.0*(Rtoe_pitch+d->sensordata[RToe_pitch_sensor_adr]);;
        d->ctrl[RTA_actuatorID] = RTA_ctrl;
-       double RTB_ctrl = (10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])+1.2*(base_angvel[1])-1.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);
+       double RTB_ctrl = (10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])+1.2*(base_angvel[1])-1.0*(Rtoe_pitch+d->sensordata[RToe_pitch_sensor_adr]);
        d->ctrl[RTB_actuatorID] = RTB_ctrl; 
 
       if (msd >= stage_time+traj_time){
-        //stage=2;
-        //stage_time=msd;
+        stage=2;
+        stage_time=msd;
         //plotcounter=2;
       }
       
@@ -1460,10 +1492,13 @@ void mycontroller(const mjModel* m, mjData* d)
         printf("****************************************************************************9");
         stanceToe_x = RToe_x;
        
-       if (msd < stage_time+traj_time){
+       if (msd < stage_time+traj_time2){
 
             for(int i=0;i<5;i++){
-            ctraj(&ss[0][i],&vv[0][i],&aa[0][i],msd,stage_time,stage_time+traj_time, s0[0][i], sf[0][i], v0[0][i], vf[0][i], a0[0][i], af[0][i]);
+            ctraj(&ss[0][i],&vv[0][i],&aa[0][i],msd,stage_time,stage_time+traj_time2, s0[0][i], sf[0][i], v0[0][i], vf[0][i], a0[0][i], af[0][i]);
+            }
+            for(int i=0;i<2;i++){
+                ctraj(&ssr[0][i],&vvr[0][i],&aar[0][i],msd,stage_time,stage_time+traj_time2, s0r[0][i], sfr[0][i], v0r[0][i], vfr[0][i], a0r[0][i], afr[0][i]);
             }
         }
 
@@ -1558,10 +1593,16 @@ void mycontroller(const mjModel* m, mjData* d)
       d->ctrl[LK_actuatorID] = LK_ctrl;
 
       //double RHP_ctrl = (-5000*(theta0-traj_des[0]))-(200*omega2);
-      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-traj_des[1])))-(10*omega2);
+      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-traj_des[2])))-(10*omega2);
       d->ctrl[RHP_actuatorID] = RHP_ctrl;
-      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+traj_des[3])))-(-10*omega4);
+      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+traj_des[4])))-(-10*omega4);
       d->ctrl[RK_actuatorID] = RK_ctrl;
+
+      double LHR_ctrl = -1000*(theta5-ssr[0][0])-(10*omega5); //double LHR_ctrl = -500*(d->sensordata[LHR_sensor_adr]-20*M_PI/180)-(10*d->sensordata[LHR_vel_sensor_adr]);
+      double RHR_ctrl = -1000*(theta6-ssr[0][1])-(10*omega6); //double RHR_ctrl = -500*(d->sensordata[RHR_sensor_adr]+20*M_PI/180)-(10*d->sensordata[RHR_vel_sensor_adr]);
+
+      d->ctrl[LHR_actuatorID] = LHR_ctrl;
+      d->ctrl[RHR_actuatorID] = RHR_ctrl;
 
       double Ltoe_pitch;
       parallel_toe(&theta0, &theta1, &theta3, &Ltoe_pitch);
@@ -1578,12 +1619,12 @@ void mycontroller(const mjModel* m, mjData* d)
        // double RTB_ctrl = -15*(d->sensordata[LToe_pitch_sensor_adr]+d->sensordata[RToe_pitch_sensor_adr])-2.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);
        // d->ctrl[RTB_actuatorID] = RTB_ctrl; 
 
-      double RTA_ctrl = (-10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])-1.2*(base_angvel[1])+1.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);;
+      double RTA_ctrl = 1*((-10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])-1.2*(base_angvel[1]))+1.0*(Rtoe_pitch+d->sensordata[RToe_pitch_sensor_adr]);;
        d->ctrl[RTA_actuatorID] = RTA_ctrl;
-       double RTB_ctrl = (10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])+1.2*(base_angvel[1])-1.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);
+       double RTB_ctrl = 1*((10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])+1.2*(base_angvel[1]))-1.0*(Rtoe_pitch+d->sensordata[RToe_pitch_sensor_adr]);
        d->ctrl[RTB_actuatorID] = RTB_ctrl; 
 
-      if (msd >= stage_time+traj_time){//-0.027
+      if (msd >= stage_time+traj_time2){//-0.027
         stage=3;
         stage_time=msd;
       }
@@ -1598,10 +1639,13 @@ void mycontroller(const mjModel* m, mjData* d)
         //d->qpos[body_pitch_joint_adr] = 0.0;
         //d->qpos[body_z_joint_adr] = 1.5;
 
-        if (msd < stage_time + traj_time){
+        if (msd < stage_time + traj_time2){
 
             for(int i=0;i<5;i++){
-            ctraj(&ss[0][i],&vv[0][i],&aa[0][i],msd,stage_time,stage_time+traj_time, s0[0][i], sf[0][i], v0[0][i], vf[0][i], a0[0][i], af[0][i]);
+            ctraj(&ss[0][i],&vv[0][i],&aa[0][i],msd,stage_time,stage_time+traj_time2, s0[0][i], sf[0][i], v0[0][i], vf[0][i], a0[0][i], af[0][i]);
+            }
+            for(int i=0;i<2;i++){
+                ctraj(&ssr[0][i],&vvr[0][i],&aar[0][i],msd,stage_time,stage_time+traj_time2, s0r[0][i], sfr[0][i], v0r[0][i], vfr[0][i], a0r[0][i], afr[0][i]);
             }
         }
 
@@ -1705,10 +1749,16 @@ void mycontroller(const mjModel* m, mjData* d)
       d->ctrl[LK_actuatorID] = LK_ctrl;
 
       //double RHP_ctrl = (-5000*(theta0-traj_des[0]))-(200*omega2);
-      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-traj_des[1])))-(10*omega2);
+      double RHP_ctrl = (-500*(d->sensordata[RHP_sensor_adr]+(theta1_mo-traj_des[2])))-(10*omega2);
       d->ctrl[RHP_actuatorID] = RHP_ctrl;
-      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+traj_des[3])))-(-10*omega4);
+      double RK_ctrl = (-500*(d->sensordata[RK_sensor_adr]+(-theta2_mo+traj_des[4])))-(-10*omega4);
       d->ctrl[RK_actuatorID] = RK_ctrl;
+
+      double LHR_ctrl = -500*(theta5-ssr[0][0])-(10*omega5); //double LHR_ctrl = -500*(d->sensordata[LHR_sensor_adr]-20*M_PI/180)-(10*d->sensordata[LHR_vel_sensor_adr]);
+      double RHR_ctrl = -500*(theta6-ssr[0][1])-(10*omega6); //double RHR_ctrl = -500*(d->sensordata[RHR_sensor_adr]+20*M_PI/180)-(10*d->sensordata[RHR_vel_sensor_adr]);
+
+      d->ctrl[LHR_actuatorID] = LHR_ctrl;
+      d->ctrl[RHR_actuatorID] = RHR_ctrl;
 
       double Ltoe_pitch;
       parallel_toe(&theta0, &theta1, &theta3, &Ltoe_pitch);
@@ -1725,13 +1775,13 @@ void mycontroller(const mjModel* m, mjData* d)
        // double RTB_ctrl = -15*(d->sensordata[LToe_pitch_sensor_adr]+d->sensordata[RToe_pitch_sensor_adr])-2.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);
        // d->ctrl[RTB_actuatorID] = RTB_ctrl; 
 
-      double RTA_ctrl = (-10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])-1.2*(base_angvel[1])+1.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);;
+      double RTA_ctrl = 0*((-10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])-1.2*(base_angvel[1]))+1.0*(Rtoe_pitch+d->sensordata[RToe_pitch_sensor_adr]);;
        d->ctrl[RTA_actuatorID] = RTA_ctrl;
-       double RTB_ctrl = (10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])+1.2*(base_angvel[1])-1.0*(Ltoe_pitch-d->sensordata[LToe_pitch_sensor_adr]);
+       double RTB_ctrl = 0*((10*(sensor_comx-LToe_x))-0.0*(d->sensordata[LTA_vel_sensor_adr])+1.2*(base_angvel[1]))-1.0*(Rtoe_pitch+d->sensordata[RToe_pitch_sensor_adr]);
        d->ctrl[RTB_actuatorID] = RTB_ctrl; 
 
 
-      if (msd >= stage_time + traj_time){
+      if (msd >= stage_time + traj_time2){
         stage=4;
         stage_time=msd;
         //plotcounter=2;
@@ -1887,14 +1937,14 @@ int main(int argc, const char** argv)
     getphaseangles(&mid1_angle1, &mid1_angle2, params, &L, &step_angle);
 
     L=0.9;
-    step_angle=-25*M_PI/180;
+    step_angle=0*M_PI/180;
     getphaseangles(&mid2_angle1, &mid2_angle2, params, &L, &step_angle);
 
     L=0.9;
     step_angle=25*M_PI/180;
     getphaseangles(&fs1_angle1, &fs1_angle2, params, &L, &step_angle);
 
-    L=0.60;
+    L=0.7;
     step_angle=0*M_PI/180;
     getphaseangles(&fs2_angle1, &fs2_angle2, params, &L, &step_angle);
 
