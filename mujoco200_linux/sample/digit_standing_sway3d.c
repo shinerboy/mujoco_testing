@@ -620,6 +620,7 @@ void mycontroller(const mjModel* m, mjData* d)
     int com_sensorID = mj_name2id(m, mjOBJ_SENSOR, com_sensor);
     int com_sensor_adr = m->sensor_adr[com_sensorID];
     double sensor_comx = d->sensordata[com_sensor_adr];
+    double sensor_comy = d->sensordata[com_sensor_adr+1];
     printf("Sensor com x = %f \n",sensor_comx);
 
 
@@ -1026,8 +1027,8 @@ void mycontroller(const mjModel* m, mjData* d)
       sf[0][3] = mid1_angle2;
       sf[0][4] = fs2_angle2;
 
-      sfr[0][0]=0*M_PI/180;
-      sfr[0][1]=0*M_PI/180;
+      sfr[0][0]=4*M_PI/180;
+      sfr[0][1]=4*M_PI/180;
 
       //sf[0][1] = s0[0][1];
       //sf[0][2] = s0[0][2];
@@ -1070,7 +1071,7 @@ void mycontroller(const mjModel* m, mjData* d)
       sf[0][3] = mid2_angle2;
       sf[0][4] = mid1_angle2;
 
-      sfr[0][0]=-0*M_PI/180;
+      sfr[0][0]=0*M_PI/180;
       sfr[0][1]=0*M_PI/180;
 
       //sf[0][1] = s0[0][1];
