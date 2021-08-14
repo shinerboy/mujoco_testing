@@ -344,10 +344,11 @@ void mycontroller(const mjModel* m, mjData* d)
     int LHR_sensor_adr = m->sensor_adr[LHR_sensorID];
     int LHR_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, LHR_joint_name);
     int LHR_jointID = mj_name2id(m, mjOBJ_JOINT, LHR_joint_name);
+    printf("LHR: %f \n", d->sensordata[LHR_sensor_adr]);
     
     int LHR_joint_adr = m->jnt_qposadr[LHR_jointID];
-    printf("the LHR joint address is: ");
-    printf("%d \n",LHR_joint_adr); //3
+    //printf("the LHR joint address is: ");
+    //printf("%d \n",LHR_joint_adr); //3
     int LHR_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-hip-roll-vel");
     int LHR_vel_sensor_adr = m->sensor_adr[LHR_vel_sensorID];
     double LHR_ctrl_limit = m->actuator_ctrlrange[LHR_actuatorID];
@@ -361,6 +362,7 @@ void mycontroller(const mjModel* m, mjData* d)
     int LHY_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-hip-yaw-vel");
     int LHY_vel_sensor_adr = m->sensor_adr[LHY_vel_sensorID];
     double LHY_ctrl_limit = m->actuator_ctrlrange[LHY_actuatorID];
+    printf("LHY: %f \n", d->sensordata[LHY_sensor_adr]);
     // Left Hip Pitch
     const char* LHP_joint_name = "left-hip-pitch";
     int LHP_sensorID = mj_name2id(m, mjOBJ_SENSOR, LHP_joint_name);
@@ -368,11 +370,12 @@ void mycontroller(const mjModel* m, mjData* d)
     int LHP_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, LHP_joint_name);
     int LHP_jointID = mj_name2id(m, mjOBJ_JOINT, LHP_joint_name);
     int LHP_joint_adr = m->jnt_qposadr[LHP_jointID];
-    printf("the LHP joint address is: ");
-    printf("%d \n",LHP_joint_adr); //5
+    //printf("the LHP joint address is: ");
+    //printf("%d \n",LHP_joint_adr); //5
     int LHP_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-hip-pitch-vel");
     int LHP_vel_sensor_adr = m->sensor_adr[LHP_vel_sensorID];
     double LHP_ctrl_limit = m->actuator_ctrlrange[LHP_actuatorID];
+    printf("LHP: %f \n", d->sensordata[LHP_sensor_adr]);
     // Left Knee
     const char* LK_joint_name = "left-knee";
     int LK_sensorID = mj_name2id(m, mjOBJ_SENSOR, LK_joint_name);
@@ -380,15 +383,15 @@ void mycontroller(const mjModel* m, mjData* d)
     int LK_actuatorID = mj_name2id(m, mjOBJ_ACTUATOR, LK_joint_name);
     int LK_jointID = mj_name2id(m, mjOBJ_JOINT, LK_joint_name);
     int LK_joint_adr = m->jnt_qposadr[LK_jointID];
-    printf("the LK joint address is: ");
-    printf("%d \n",LK_joint_adr); //10
+    //printf("the LK joint address is: ");
+    //printf("%d \n",LK_joint_adr); //10
     int LK_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "left-knee-vel");
     int LK_vel_sensor_adr = m->sensor_adr[LK_vel_sensorID];
     double LK_ctrl_limit = m->actuator_ctrlrange[LK_actuatorID];
     int LK_servoID = mj_name2id(m, mjOBJ_ACTUATOR, "left-knee-servo");
-    printf("the LK servo ID is: ");
-    printf("%d \n",LK_servoID); //4
-    printf("The LKnee position is: ");
+    //printf("the LK servo ID is: ");
+    //printf("%d \n",LK_servoID); //4
+    printf("LK:");
     printf("%f \n", d->sensordata[LK_sensor_adr]);
     // Left toe A
     const char* LTA_joint_name = "left-toe-A";
@@ -414,6 +417,7 @@ void mycontroller(const mjModel* m, mjData* d)
     const char* LToe_pitch_joint_name = "left-toe-pitch";
     int LToe_pitch_sensorID = mj_name2id(m, mjOBJ_SENSOR, LToe_pitch_joint_name);
     int LToe_pitch_sensor_adr = m->sensor_adr[LToe_pitch_sensorID];
+    printf("LTP: %f \n", d->sensordata[LToe_pitch_sensor_adr]);
     //Left heel spring joint sensor
     const char* LHeel_spring_joint_name = "left-heel-spring";
     int LHeel_spring_sensorID = mj_name2id(m, mjOBJ_SENSOR, LHeel_spring_joint_name);
@@ -422,6 +426,7 @@ void mycontroller(const mjModel* m, mjData* d)
     const char* LShin_spring_joint_name = "left-shin";
     int LShin_spring_sensorID = mj_name2id(m, mjOBJ_SENSOR, LShin_spring_joint_name);
     int LShin_spring_sensor_adr = m->sensor_adr[LShin_spring_sensorID];
+    printf("LS: %f \n", d->sensordata[LShin_spring_sensor_adr]);
     // Left Shoulder Roll
     const char* LSR_joint_name = "left-shoulder-roll";
     int LSR_sensorID = mj_name2id(m, mjOBJ_SENSOR, LSR_joint_name);
@@ -462,8 +467,8 @@ void mycontroller(const mjModel* m, mjData* d)
     int RHR_vel_sensorID = mj_name2id(m, mjOBJ_SENSOR, "right-hip-roll-vel");
     int RHR_vel_sensor_adr = m->sensor_adr[RHR_vel_sensorID];
     double RHR_ctrl_limit = m->actuator_ctrlrange[RHR_actuatorID];
-    printf("the RHR joint address is: ");
-    printf("%d \n",RHR_joint_adr); //30
+    //printf("the RHR joint address is: ");
+    //printf("%d \n",RHR_joint_adr); //30
     // Right Hip yAW
     const char* RHY_joint_name = "right-hip-yaw";
     int RHY_sensorID = mj_name2id(m, mjOBJ_SENSOR, RHY_joint_name);
@@ -586,11 +591,11 @@ void mycontroller(const mjModel* m, mjData* d)
     const char* LTarsus_joint_name = "left-tarsus";
     int LTarsus_jointID = mj_name2id(m, mjOBJ_JOINT, LTarsus_joint_name);
     int LTarsus_joint_adr = m->jnt_qposadr[LTarsus_jointID];
-    printf("the LTarsus joint address is: ");
-    printf("%d \n",LTarsus_joint_adr); //
+    //printf("the LTarsus joint address is: ");
+    //printf("%d \n",LTarsus_joint_adr); //
     int LTarsus_sensorID = mj_name2id(m, mjOBJ_SENSOR, LTarsus_joint_name);
     int LTarsus_sensor_adr = m->sensor_adr[LTarsus_sensorID];
-    printf("The LTarsus position is: ");
+    printf("LT: ");
     printf("%f \n", d->sensordata[LTarsus_sensor_adr]);
 
     const char* body_z_joint_name = "body_z";
@@ -613,6 +618,17 @@ void mycontroller(const mjModel* m, mjData* d)
     const char* LToe_pos_name = "left-toe-pos";
         int LToe_sensorID = mj_name2id(m, mjOBJ_SENSOR, LToe_pos_name);
         int LToe_sensor_adr = m->sensor_adr[LToe_sensorID];
+        printf("Left toe position x: %f \n", d->sensordata[LToe_sensor_adr]);
+        printf("Left toe position y: %f \n", d->sensordata[LToe_sensor_adr+1]);
+        printf("Left toe position z: %f \n", d->sensordata[LToe_sensor_adr+2]);
+    const char* LToe_quat_name = "left-toe-quat";
+        int LToe_quat_sensorID = mj_name2id(m, mjOBJ_SENSOR, LToe_quat_name);
+        int LToe_quat_sensor_adr = m->sensor_adr[LToe_quat_sensorID];
+        printf("Left toe quaternion w: %f \n", d->sensordata[LToe_quat_sensor_adr]);
+        printf("Left toe quaternion x: %f \n", d->sensordata[LToe_quat_sensor_adr+1]);
+        printf("Left toe quaternion y: %f \n", d->sensordata[LToe_quat_sensor_adr+2]);
+        printf("Left toe quaternion z: %f \n", d->sensordata[LToe_quat_sensor_adr+3]);
+
     const char* RToe_pos_name = "right-toe-pos";
         int RToe_sensorID = mj_name2id(m, mjOBJ_SENSOR, RToe_pos_name);
         int RToe_sensor_adr = m->sensor_adr[RToe_sensorID];
@@ -846,6 +862,8 @@ void mycontroller(const mjModel* m, mjData* d)
     printf("%f \n",d->sensordata[base_sensor_adr+2]);
     printf("base z joint pos sensor data Z: ");
     printf("%f \n",d->sensordata[body_z_sensor_adr]);
+    printf("base pos sensor data y: ");
+    printf("%f \n",d->sensordata[base_sensor_adr+1]);
 
     //x_Bf=d->sensordata[body_x_sensor_adr];
     //y_Bf=d->sensordata[body_z_sensor_adr];
