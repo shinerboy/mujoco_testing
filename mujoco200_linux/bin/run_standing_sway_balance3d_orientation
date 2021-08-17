@@ -1,0 +1,2 @@
+make  digit_standing_sway_balance3d_orientation -C ../sample
+./digit_standing_sway_balance3d_orientation
