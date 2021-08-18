@@ -400,6 +400,7 @@
     <framequat name='left-toe-quat' objtype='xbody' objname='left-toe-pitch' />
     <framepos  name='right-toe-pos' objtype='xbody' objname='right-toe-pitch' />
     <framepos  name='left-hip-pos' objtype='xbody' objname='left-hip-pitch' />
+    <framequat  name='left-hip-quat' objtype='xbody' objname='left-hip-pitch' />
     <subtreecom  name='com-sensor' body='base' />
   </sensor>
 </mujoco>

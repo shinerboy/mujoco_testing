@@ -29,6 +29,7 @@
 #include "../../../lowlevelapi_test/parallel_toe.h"
 #include "../../../lowlevelapi_test/getcom.h"
 #include "../../../lowlevelapi_test/getphaseangles.h"
+#include "../../../lowlevelapi_test/quaternion/Quaternion.h"
 
 //#include "./../../lowlevelapi_test/pbplots/pbPlots.h"
 //#include "./../../lowlevelapi_test/pbplots/supportLib.h"
@@ -288,6 +289,30 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
 // control loop callback
 void mycontroller(const mjModel* m, mjData* d)
 {
+
+  
+    const char* LHP_quat_name = "left-hip-quat";
+        int LHP_quat_sensorID = mj_name2id(m, mjOBJ_SENSOR, LHP_quat_name);
+        int LHP_quat_sensor_adr = m->sensor_adr[LHP_quat_sensorID];
+        printf("Left toe quaternion w: %f \n", d->sensordata[LHP_quat_sensor_adr]);
+        printf("Left toe quaternion x: %f \n", d->sensordata[LHP_quat_sensor_adr+1]);
+        printf("Left toe quaternion y: %f \n", d->sensordata[LHP_quat_sensor_adr+2]);
+        printf("Left toe quaternion z: %f \n", d->sensordata[LHP_quat_sensor_adr+3]);
+
+    Quaternion quat;
+    quat.w=d->sensordata[LHP_quat_sensor_adr];
+    quat.v[0]=d->sensordata[LHP_quat_sensor_adr+1]; //x
+    quat.v[1]=d->sensordata[LHP_quat_sensor_adr+2]; //y
+    quat.v[2]=d->sensordata[LHP_quat_sensor_adr+3]; //z
+
+    double eul[3]={0, 0, 0};
+
+   Quaternion_toEulerZYX(&quat, eul);
+
+    printf(" \n %f \n", eul[0]);//x
+    printf("%f \n", eul[1]);//y
+    printf("%f \n", eul[2]);//z
+
 
 
      // MatrixXd m(2,2);
