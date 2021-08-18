@@ -30,6 +30,8 @@
 #include "../../../lowlevelapi_test/getcom.h"
 #include "../../../lowlevelapi_test/getphaseangles.h"
 #include "../../../lowlevelapi_test/quaternion/Quaternion.h"
+#include "../../../lowlevelapi_test/quaternion/eul2rotm.h"
+#include "../../../lowlevelapi_test/quaternion/rotm2eul.h"
 
 //#include "./../../lowlevelapi_test/pbplots/pbPlots.h"
 //#include "./../../lowlevelapi_test/pbplots/supportLib.h"
@@ -312,6 +314,42 @@ void mycontroller(const mjModel* m, mjData* d)
     printf(" \n %f \n", eul[0]);//x
     printf("%f \n", eul[1]);//y
     printf("%f \n", eul[2]);//z
+
+    double R[9]={0,0,0,0,0,0,0,0,0};
+    double eu[3]={M_PI/2,0,-M_PI/3};
+    eul2rotmZYX(eu, R);
+
+    printf("Rotation matrix is: \n");
+
+    printf("%f \n", R[0]);
+    printf("%f \n", R[1]);
+    printf("%f \n", R[2]);
+    printf("%f \n", R[3]);
+    printf("%f \n", R[4]);
+    printf("%f \n", R[5]);
+    printf("%f \n", R[6]);
+    printf("%f \n", R[7]);
+    printf("%f \n", R[8]);
+
+    double eu2[3]={0,0,0};
+
+    rotm2eulXYZ(R, eu2);
+
+    printf("Reversing to euler angles XYZ are: \n");
+
+    printf("%f \n", eu2[0]);
+    printf("%f \n", eu2[1]);
+    printf("%f \n", eu2[2]);
+
+
+
+
+    
+
+
+
+
+
 
 
 
