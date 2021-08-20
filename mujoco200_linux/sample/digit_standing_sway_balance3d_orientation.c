@@ -32,6 +32,9 @@
 #include "../../../lowlevelapi_test/quaternion/Quaternion.h"
 #include "../../../lowlevelapi_test/quaternion/eul2rotm.h"
 #include "../../../lowlevelapi_test/quaternion/rotm2eul.h"
+#include "digit_tree.h"
+#include "digit_store_joint_positions.h";
+#include "../../../lowlevelapi_test/functions/dist_com_foot.h"
 
 //#include "./../../lowlevelapi_test/pbplots/pbPlots.h"
 //#include "./../../lowlevelapi_test/pbplots/supportLib.h"
@@ -101,6 +104,7 @@ double base_angvel[3]={0};
 double base_linvel[3]={0};
 double des_xcom; //Desired location of com for balance
 double des_ycom;
+double testvar[3][1]={{0},{0},{0}};
 
 
 double *uu;
@@ -154,6 +158,8 @@ double *uu;
   double fs2_angle1;  //Foot strike Hip Pitch of leading leg
   double fs2_angle2;  //Foot strike knee of leading leg
   double ground_z;
+
+  struct digit_tree Tree;
 
 
   // double mid1_angle1 = 0.388961234296406; //Midstance Hip Pitch of stance leg
@@ -317,7 +323,11 @@ void mycontroller(const mjModel* m, mjData* d)
 
     double R[9]={0,0,0,0,0,0,0,0,0};
     double eu[3]={M_PI/2,0,-M_PI/3};
-    eul2rotmZYX(eu, R);
+    double eum[1][3]={eu[0],eu[1],eu[2]};
+    double Rm[3][3];
+    eul2rotmZYX_vec(eu, R);
+    eul2rotmZYX_mat(eum,Rm);
+    matPrint(3,3,Rm);
 
     printf("Rotation matrix is: \n");
 
@@ -332,14 +342,26 @@ void mycontroller(const mjModel* m, mjData* d)
     printf("%f \n", R[8]);
 
     double eu2[3]={0,0,0};
+    double eum2[1][3];
 
-    rotm2eulXYZ(R, eu2);
+    rotm2eulXYZ_mat(Rm,eum2);
+    matPrint(1,3,eum2);
+
+    rotm2eulXYZ_vec(R, eu2);
 
     printf("Reversing to euler angles XYZ are: \n");
 
     printf("%f \n", eu2[0]);
     printf("%f \n", eu2[1]);
     printf("%f \n", eu2[2]);
+
+    //testvar=[{1},{2},{3}];
+
+
+
+    printf("The test variable is: %f \n", tree.RE_pos[0][1]);
+
+   
 
 
 
@@ -483,6 +505,10 @@ void mycontroller(const mjModel* m, mjData* d)
     int LToe_pitch_sensorID = mj_name2id(m, mjOBJ_SENSOR, LToe_pitch_joint_name);
     int LToe_pitch_sensor_adr = m->sensor_adr[LToe_pitch_sensorID];
     printf("LTP: %f \n", d->sensordata[LToe_pitch_sensor_adr]);
+    //Left toe roll joint sensor
+    const char* LToe_roll_joint_name = "left-toe-roll";
+    int LToe_roll_sensorID = mj_name2id(m, mjOBJ_SENSOR, LToe_roll_joint_name);
+    int LToe_roll_sensor_adr = m->sensor_adr[LToe_roll_sensorID];
     //Left heel spring joint sensor
     const char* LHeel_spring_joint_name = "left-heel-spring";
     int LHeel_spring_sensorID = mj_name2id(m, mjOBJ_SENSOR, LHeel_spring_joint_name);
@@ -722,6 +748,7 @@ void mycontroller(const mjModel* m, mjData* d)
     int com_sensor_adr = m->sensor_adr[com_sensorID];
     double sensor_comx = d->sensordata[com_sensor_adr];
     double sensor_comy = d->sensordata[com_sensor_adr+1];
+    double sensor_comz = d->sensordata[com_sensor_adr+2];
     printf("Sensor com x = %f \n",sensor_comx);
     printf("Sensor com y = %f \n",sensor_comy);
 
@@ -2076,6 +2103,23 @@ void mycontroller(const mjModel* m, mjData* d)
 
     
     j=j+1;
+
+     double base_pos[3] = {d->sensordata[base_sensor_adr],d->sensordata[base_sensor_adr+1],d->sensordata[base_sensor_adr+2]};
+    //double base_quat[4]
+    double com_pos[3]= {sensor_comx,sensor_comy,sensor_comz};
+    struct digit_joint_pos joint_pos;
+    joint_pos.LHY = d->sensordata[LHY_sensor_adr];
+    joint_pos.LHR = d->sensordata[LHR_sensor_adr];
+    joint_pos.LHP = d->sensordata[LHP_sensor_adr];
+    joint_pos.LK = d->sensordata[LK_sensor_adr];
+    joint_pos.LS = d->sensordata[LShin_spring_sensor_adr];
+    joint_pos.LT = d->sensordata[LTarsus_sensor_adr];
+    joint_pos.LTP = d->sensordata[LToe_pitch_sensor_adr];
+    joint_pos.LTR = d->sensordata[LToe_roll_sensor_adr];
+
+    printf("check below: \n");
+
+    get_com_footL(base_pos, base_quat, com_pos, joint_pos, tree);
 
 }
 
