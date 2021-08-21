@@ -365,6 +365,8 @@
     <jointpos name='body_z' joint='body_z'/>-->
     <jointpos name="right-toe-pitch" joint="right-toe-pitch"/>
     <jointpos name="left-toe-pitch" joint="left-toe-pitch"/>
+    <jointpos name="right-toe-roll" joint="right-toe-roll"/>
+    <jointpos name="left-toe-roll" joint="left-toe-roll"/>
     <jointpos name="left-heel-spring" joint="left-heel-spring"/>
     <jointpos name="right-heel-spring" joint="right-heel-spring"/>
     <jointpos name="left-shin" joint="left-shin"/>

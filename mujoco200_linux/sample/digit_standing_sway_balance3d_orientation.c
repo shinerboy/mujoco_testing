@@ -751,6 +751,7 @@ void mycontroller(const mjModel* m, mjData* d)
     double sensor_comz = d->sensordata[com_sensor_adr+2];
     printf("Sensor com x = %f \n",sensor_comx);
     printf("Sensor com y = %f \n",sensor_comy);
+    printf("Sensor com z = %f \n",sensor_comz);
 
 
     //ground_z=d->sensordata[LToe_sensor_adr+2];

@@ -35,6 +35,9 @@ const struct digit_tree
 	double LTR_eul[1][3];
 	double LTR_axis[1][3];
 
+	double LF_pos[3][1];
+	double LF_eul[1][3];
+
 	//Right leg -----------------------------------
 	double RHR_pos[3][1];
 	double RHR_eul[1][3];
@@ -67,6 +70,9 @@ const struct digit_tree
 	double RTR_pos[3][1];
 	double RTR_eul[1][3];
 	double RTR_axis[1][3];
+
+	double RF_pos[3][1];
+	double RF_eul[1][3];
 
 	//Left Arm ------------------------------------
 	double LSR_pos[3][1];
@@ -140,6 +146,9 @@ struct digit_tree tree = {
 	{0, 90*M_PI/180, 0},                          //LTR_eul
 	{0, 0, 1},                                    //LTR_axiS
 
+	{{0},{-0.05456},{-0.0315}},                      //LF_pos
+	{-60*M_PI/180, 0, -90*M_PI/180},                 //LF_eul
+
 	//Right Leg -------------------------------------------------------------
 
 	{{-0.001},{-0.091},{0}},                       //RHR_pos
@@ -173,6 +182,9 @@ struct digit_tree tree = {
 	{{0},{0},{0}},                                //RTR_pos
 	{0, 90*M_PI/180, 0},                          //RTR_eul
 	{0, 0, 1},                                    //RTR_axiS
+
+	{{0},{0.05456},{-0.0315}},                      //RF_pos
+	{60*M_PI/180, 0, 90*M_PI/180},                 //RF_eul
 
 	//Left Arm -------------------------------------------------------------------
 	{{-0.001},{0.12},{0.4}},                       //LSR_pos
