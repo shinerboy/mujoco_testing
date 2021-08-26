@@ -867,3 +867,15 @@ WARNING: Nan, Inf or huge value in QACC at DOF 15. The simulation is unstable. T
 Sun Aug  8 22:58:45 2021
 WARNING: Nan, Inf or huge value in QACC at DOF 15. The simulation is unstable. Time = 0.0045.
 
+Wed Aug 25 14:27:43 2021
+ERROR: Load model error: Error: unrecognized name of sensorized object in sensor 'left-toe-pos' (id = 58)
+Object name = left-toe-pos, id = 58
+
+Wed Aug 25 14:29:31 2021
+ERROR: Load model error: Error: unrecognized name of sensorized object in sensor 'left-shoulder-pitch-vel' (id = 51)
+Object name = left-shoulder-pitch-vel, id = 51
+
+Wed Aug 25 14:29:53 2021
+ERROR: Load model error: Error: unrecognized name of sensorized object in sensor 'left-shoulder-pitch-vel' (id = 51)
+Object name = left-shoulder-pitch-vel, id = 51
+

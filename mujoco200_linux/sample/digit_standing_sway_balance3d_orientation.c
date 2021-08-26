@@ -716,6 +716,15 @@ void mycontroller(const mjModel* m, mjData* d)
     const char* base_joint_name = "base";
         int base_jointID = mj_name2id(m, mjOBJ_JOINT, base_joint_name);
         int base_joint_adr = m->jnt_qposadr[base_jointID];
+
+    const char* left_foot_site_name = "left-foot";    
+        int left_foot_siteID = mj_name2id(m, mjOBJ_SITE, left_foot_site_name);
+        printf("%d \n", left_foot_siteID);
+        double left_foot_xpos = d->site_xpos[3 * left_foot_siteID + 0];
+        printf("left foot xpos: %f \n", left_foot_xpos);
+        printf("left foot ypos: %f \n", d->site_xpos[3 * left_foot_siteID + 1]);
+        printf("left foot zpos: %f \n", d->site_xpos[3 * left_foot_siteID + 2]);
+    
         
 
 
