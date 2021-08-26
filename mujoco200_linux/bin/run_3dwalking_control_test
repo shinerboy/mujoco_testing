@@ -1,3 +1,0 @@
-make  digit_walking_control3d -C ../sample
-./digit_walking_control_test3d
-

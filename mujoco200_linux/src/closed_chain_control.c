@@ -52,11 +52,11 @@
 //#include "../../../eigen-master/Eigen/Dense"
 //#include "../../../eigen-master/Eigen/Core"
 //extern "C"{
-#include "../../../lowlevelapi_test/libtest.h"
-#include "../../../lowlevelapi_test/matram.h"
-#include "../../../lowlevelapi_test/controller.h"
-#include "../../../lowlevelapi_test/traj.h"
-#include "../../../lowlevelapi_test/get_params.h"
+#include "libtest.h"
+#include "matram.h"
+#include "controller.h"
+#include "traj.h"
+#include "get_params.h"
 
 //#include "./../../lowlevelapi_test/pbplots/pbPlots.h"
 //#include "./../../lowlevelapi_test/pbplots/supportLib.h"
